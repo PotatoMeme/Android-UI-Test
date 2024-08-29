@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.potatomeme.android_ui_test.MainActivity
 import com.potatomeme.android_ui_test.R
+import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.Route
 
 @Composable
@@ -79,17 +80,18 @@ fun ItemScreen(itemRoute: Route.ItemRoute) {
 @Composable
 @Preview(showBackground = true)
 fun ItemScreenPreview() {
-    val a = MainActivity::class.java
     ItemScreen(
         Route.ItemRoute(
             "Sample Item",
             "Sample Item Description",
             R.drawable.ic_launcher_foreground,
+            ItemType.LIBRARY,
             arrayOf(
                 Pair("Sample1", MainActivity::class.java),
-                Pair("Sample1", MainActivity::class.java),
-                Pair("Sample1", MainActivity::class.java),
-                Pair("Sample1", MainActivity::class.java),
+                Pair("Sample2", MainActivity::class.java),
+                Pair("Sample3", MainActivity::class.java),
+                Pair("Sample4", MainActivity::class.java),
+                Pair("Sample5", MainActivity::class.java),
             )
         )
     )

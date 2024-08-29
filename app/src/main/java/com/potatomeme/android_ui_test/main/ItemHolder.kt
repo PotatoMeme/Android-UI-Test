@@ -74,6 +74,7 @@ fun ItemHolderPreview() {
             "SampleRoute",
             "SampleRoute Description",
             R.drawable.ic_launcher_foreground,
+            ItemType.UI_SCREEN
         )
     ) {}
 }

@@ -1,10 +1,13 @@
 package com.potatomeme.android_ui_test
 
+import android.content.ClipData.Item
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.MainNavHost
 import com.potatomeme.android_ui_test.main.Route
+import com.potatomeme.android_ui_test.main.sampleRoute
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,14 +17,13 @@ class MainActivity : ComponentActivity() {
 
 
     private val routeList: List<Route.ItemRoute> = listOf(
-        sampleRoute(),
-    )
-
-    private fun sampleRoute(): Route.ItemRoute = Route.ItemRoute(
-        "SampleUI",
-        "SampleUI Description",
-        R.drawable.ic_launcher_foreground,
-        arrayOf()
+        sampleRoute(0),
+        sampleRoute(1),
+        sampleRoute(2),
+        sampleRoute(3),
+        sampleRoute(4),
+        sampleRoute(5),
+        sampleRoute(6),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

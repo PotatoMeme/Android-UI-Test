@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavHost(
     itemList: List<Route.ItemRoute>,
