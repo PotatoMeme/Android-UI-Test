@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.potatomeme.android_ui_test.item.ItemScreen
 
 
 @Composable
@@ -42,7 +43,7 @@ fun MainNavHost(
                     }
                     itemList.forEach { itemRoute ->
                         composable(itemRoute.route) {
-
+                            ItemScreen(itemRoute = itemRoute)
                         }
                     }
                 }

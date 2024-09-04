@@ -1,5 +1,6 @@
 package com.potatomeme.android_ui_test
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,9 +30,15 @@ class MainActivity : ComponentActivity() {
             itemType = ItemType.CUSTOM_VIEW,
             subItems = arrayOf(
                 Pair(
-                    "xml",
-                    com.potatomeme.custom_ui.sample.MainActivity::class.java
-                )
+                    "xml"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            com.potatomeme.custom_ui.sample.MainActivity::class.java
+                        )
+                    )
+                }
             )
         )
     )

@@ -34,8 +34,6 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun MainScreen(list: List<Route.ItemRoute>, onItemClick: (String) -> Unit) {
-    val scrollState = rememberScrollState()
-
     var isShow = remember {
         mutableStateMapOf<ItemType, Boolean>()
     }
