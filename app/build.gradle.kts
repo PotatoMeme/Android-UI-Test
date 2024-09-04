@@ -58,6 +58,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":custom-ui:sample"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
