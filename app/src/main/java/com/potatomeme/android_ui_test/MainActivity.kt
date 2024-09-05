@@ -63,8 +63,8 @@ class MainActivity : ComponentActivity() {
             )
         ),
         Route.ItemRoute(
-            route = "Profit CloneCoding",
-            contentDescription = "Profit CloneCoding description",
+            route = "Planfit CloneCoding",
+            contentDescription = "Planfit CloneCoding description",
             drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
             itemType = ItemType.UI_SCREEN,
             subItems = arrayOf(
@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
                     startActivity(
                         Intent(
                             this,
-                            com.potatomeme.screen.profit.on_board.ProfitOnBoardingActivity::class.java
+                            com.potatomeme.screen.planfit.on_board.PlanfitOnBoardingActivity::class.java
                         )
                     )
                 }

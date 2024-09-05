@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.potatomeme.screen.profit"
+    namespace = "com.potatomeme.screen.planfit"
     compileSdk = 34
 
     defaultConfig {
@@ -29,6 +29,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    viewBinding {
+        enable = true
     }
 }
 

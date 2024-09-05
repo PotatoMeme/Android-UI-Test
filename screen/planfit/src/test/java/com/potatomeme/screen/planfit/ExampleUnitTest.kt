@@ -1,4 +1,4 @@
-package com.potatomeme.screen.profit
+package com.potatomeme.screen.planfit
 
 import org.junit.Test
 

@@ -60,7 +60,7 @@ android {
 dependencies {
     implementation(project(":custom-ui:sample"))
     implementation(project(":custom-ui:chart"))
-    implementation(project(":screen:profit"))
+    implementation(project(":screen:planfit"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

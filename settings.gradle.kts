@@ -23,4 +23,4 @@ rootProject.name = "Android-UI-Test"
 include(":app")
 include(":custom-ui:sample")
 include(":custom-ui:chart")
-include(":screen:profit")
+include(":screen:planfit")
