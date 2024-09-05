@@ -3,8 +3,8 @@
 
     <application>
         <activity
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
-            android:name=".on_board.ProfitOnBoardingActivity"
+            android:theme="@style/Theme.Planfit"
+            android:name=".on_board.PlanfitOnBoardingActivity"
             android:exported="false" />
     </application>
 
