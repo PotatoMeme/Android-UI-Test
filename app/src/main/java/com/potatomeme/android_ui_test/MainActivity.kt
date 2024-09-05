@@ -40,6 +40,24 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             )
+        ),
+        Route.ItemRoute(
+            route = "CustomView Chart",
+            contentDescription = "CustomView Chart description",
+            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            itemType = ItemType.CUSTOM_VIEW,
+            subItems = arrayOf(
+                Pair(
+                    "xml"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            com.potatomeme.custom_ui.chart.MainActivity::class.java
+                        )
+                    )
+                }
+            )
         )
     )
 
