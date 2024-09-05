@@ -59,6 +59,7 @@ android {
 
 dependencies {
     implementation(project(":custom-ui:sample"))
+    implementation(project(":custom-ui:chart"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

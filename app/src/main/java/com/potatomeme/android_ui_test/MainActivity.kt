@@ -2,6 +2,7 @@ package com.potatomeme.android_ui_test
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.potatomeme.android_ui_test.main.ItemType
@@ -32,10 +33,30 @@ class MainActivity : ComponentActivity() {
                 Pair(
                     "xml"
                 ) {
+                    Log.d(TAG, "CustomView Sample")
                     startActivity(
                         Intent(
                             this,
                             com.potatomeme.custom_ui.sample.MainActivity::class.java
+                        )
+                    )
+                }
+            )
+        ),
+        Route.ItemRoute(
+            route = "CustomView Chart",
+            contentDescription = "CustomView Chart description",
+            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            itemType = ItemType.CUSTOM_VIEW,
+            subItems = arrayOf(
+                Pair(
+                    "xml"
+                ) {
+                    Log.d(TAG, "CustomView Chart")
+                    startActivity(
+                        Intent(
+                            this,
+                            com.potatomeme.custom_ui.chart.CustomViewChartActivity::class.java
                         )
                     )
                 }
