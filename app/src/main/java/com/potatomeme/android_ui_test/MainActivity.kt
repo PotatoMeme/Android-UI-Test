@@ -2,6 +2,7 @@ package com.potatomeme.android_ui_test
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.potatomeme.android_ui_test.main.ItemType
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
                 Pair(
                     "xml"
                 ) {
+                    Log.d(TAG, "CustomView Sample")
                     startActivity(
                         Intent(
                             this,
@@ -50,10 +52,11 @@ class MainActivity : ComponentActivity() {
                 Pair(
                     "xml"
                 ) {
+                    Log.d(TAG, "CustomView Chart")
                     startActivity(
                         Intent(
                             this,
-                            com.potatomeme.custom_ui.chart.MainActivity::class.java
+                            com.potatomeme.custom_ui.chart.CustomViewChartActivity::class.java
                         )
                     )
                 }

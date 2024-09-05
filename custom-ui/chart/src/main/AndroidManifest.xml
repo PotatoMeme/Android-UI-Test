@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".MainActivity"
+            android:name=".CustomViewChartActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
     </application>
