@@ -1,10 +1,11 @@
-package com.potatomeme.screen.profit
+package com.potatomeme.screen.profit.on_board
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.potatomeme.screen.profit.R
 
 class ProfitOnBoardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

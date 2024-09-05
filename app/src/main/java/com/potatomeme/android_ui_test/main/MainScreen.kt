@@ -42,6 +42,7 @@ fun MainScreen(list: List<Route.ItemRoute>, onItemClick: (String) -> Unit) {
         isShow = isShow.apply {
             put(ItemType.LIBRARY, true)
             put(ItemType.UI_SCREEN, true)
+            put(ItemType.CUSTOM_VIEW, true)
         }
     }
 

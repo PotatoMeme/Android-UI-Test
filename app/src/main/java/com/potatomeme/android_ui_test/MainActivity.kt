@@ -61,7 +61,26 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             )
+        ),
+        Route.ItemRoute(
+            route = "Profit CloneCoding",
+            contentDescription = "Profit CloneCoding description",
+            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            itemType = ItemType.UI_SCREEN,
+            subItems = arrayOf(
+                Pair(
+                    "xml"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            com.potatomeme.screen.profit.on_board.ProfitOnBoardingActivity::class.java
+                        )
+                    )
+                }
+            )
         )
+
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

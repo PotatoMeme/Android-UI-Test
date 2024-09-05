@@ -3,7 +3,8 @@
 
     <application>
         <activity
-            android:name=".ProfitOnBoardingActivity"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+            android:name=".on_board.ProfitOnBoardingActivity"
             android:exported="false" />
     </application>
 
