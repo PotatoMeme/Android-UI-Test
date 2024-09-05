@@ -11,7 +11,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/custom-ui" />
+            <option value="$PROJECT_DIR$/custom-ui/chart" />
             <option value="$PROJECT_DIR$/custom-ui/sample" />
+            <option value="$PROJECT_DIR$/screen" />
+            <option value="$PROJECT_DIR$/screen/profit" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
