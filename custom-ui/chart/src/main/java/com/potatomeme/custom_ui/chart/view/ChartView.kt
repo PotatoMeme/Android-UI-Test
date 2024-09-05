@@ -15,7 +15,7 @@ class ChartView @JvmOverloads constructor(
 
     private val paint = Paint()
     private val textPaint = Paint()
-    private val dataPoints = listOf(10f, 20f, 30f, 25f, 15f)
+    private var dataPoints = listOf(10f, 20f, 30f, 25f, 15f)
 
     private val padding = 50f
 
@@ -27,6 +27,11 @@ class ChartView @JvmOverloads constructor(
         textPaint.color = Color.BLACK
         textPaint.textSize = 30f
         textPaint.isAntiAlias = true
+    }
+
+    fun setData(data:List<Float>){
+        dataPoints = data
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {

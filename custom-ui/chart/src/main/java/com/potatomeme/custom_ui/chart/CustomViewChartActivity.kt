@@ -10,5 +10,10 @@ class CustomViewChartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomViewChartBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val data = mutableListOf(
+            20f,70f,150f,10f,60f,90f
+        )
+        binding.chart.setData(data)
     }
 }
