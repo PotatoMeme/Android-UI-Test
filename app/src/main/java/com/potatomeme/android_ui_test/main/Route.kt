@@ -18,7 +18,7 @@ sealed class Route(
         contentDescription: String,
         @DrawableRes val drawableId: Int,
         val itemType: ItemType,
-        val subItems: Array<Pair<String, Class<out ComponentActivity>>> = arrayOf(),
+        val subItems: Array<Pair<String, () -> Unit>> = arrayOf(),
     ) : Route(
         route = route,
         contentDescription = contentDescription
@@ -34,7 +34,8 @@ fun sampleRoute(num: Int): Route.ItemRoute = Route.ItemRoute(
 )
 
 
-enum class ItemType(val str : String){
+enum class ItemType(val str: String) {
     LIBRARY("라이브러리 적용"),
-    UI_SCREEN("UI 구현")
+    UI_SCREEN("UI 구현"),
+    CUSTOM_VIEW("커스텀 뷰 구현"),
 }

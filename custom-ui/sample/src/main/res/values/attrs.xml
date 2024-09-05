@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DrawBoard">
+        <attr format="dimension" name="dotSize" />
+        <attr format="color" name="dotColor" />
+    </declare-styleable>
+</resources>

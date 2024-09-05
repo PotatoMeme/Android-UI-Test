@@ -62,13 +62,13 @@ fun ItemScreen(itemRoute: Route.ItemRoute) {
             overflow = TextOverflow.Ellipsis,
             fontSize = 15.sp,
         )
-        itemRoute.subItems.forEach { (str, cls) ->
+        itemRoute.subItems.forEach { (str, action) ->
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 3.dp),
                 onClick = {
-                    context.startActivity(Intent(context, cls))
+                    action()
                 }) {
                 Text(text = str)
             }
@@ -87,11 +87,11 @@ fun ItemScreenPreview() {
             R.drawable.ic_launcher_foreground,
             ItemType.LIBRARY,
             arrayOf(
-                Pair("Sample1", MainActivity::class.java),
-                Pair("Sample2", MainActivity::class.java),
-                Pair("Sample3", MainActivity::class.java),
-                Pair("Sample4", MainActivity::class.java),
-                Pair("Sample5", MainActivity::class.java),
+                Pair("Sample1"){},
+                Pair("Sample2"){},
+                Pair("Sample3"){},
+                Pair("Sample4"){},
+                Pair("Sample5"){},
             )
         )
     )

@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Android-UI-Test"
 include(":app")
- 
+include(":custom-ui:sample")
