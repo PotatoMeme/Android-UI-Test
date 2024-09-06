@@ -4,7 +4,7 @@
     <application>
         <activity
             android:theme="@style/Theme.Planfit"
-            android:name=".on_board.PlanfitOnBoardingActivity"
+            android:name=".presentation.on_board.PlanfitOnBoardingActivity"
             android:exported="false" />
     </application>
 

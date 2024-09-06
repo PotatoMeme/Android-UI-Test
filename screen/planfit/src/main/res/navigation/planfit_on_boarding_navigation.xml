@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.potatomeme.screen.planfit.on_board.SplashFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.SplashFragment"
         android:label="SplashFragment" >
         <action
             android:id="@+id/action_splashFragment_to_signupSigninFragment"
@@ -14,6 +14,6 @@
     </fragment>
     <fragment
         android:id="@+id/signupSigninFragment"
-        android:name="com.potatomeme.screen.planfit.on_board.SignupSigninFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.SignupSigninFragment"
         android:label="SignupSigninFragment" />
 </navigation>

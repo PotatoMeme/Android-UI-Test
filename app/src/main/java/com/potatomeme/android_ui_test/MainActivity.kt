@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
                     startActivity(
                         Intent(
                             this,
-                            com.potatomeme.screen.planfit.on_board.PlanfitOnBoardingActivity::class.java
+                            com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity::class.java
                         )
                     )
                 }
