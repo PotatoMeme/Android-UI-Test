@@ -1,6 +1,7 @@
 package com.potatomeme.screen.planfit.presentation.on_board
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavHostController
 import androidx.navigation.findNavController
 import com.potatomeme.screen.planfit.R
 import com.potatomeme.screen.planfit.data.model.PlanfitLoginType
@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 class SplashFragment : Fragment() {
     private lateinit var binding: FragmentSplashBinding
     private val viewModel: PlanfitSplashViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,21 +34,21 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.textView.text = "로그인 확인중 입니다..."
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isLoginFlow.collectLatest { loginEvent: LoginEvent ->
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.isLoginFlow.collect { loginEvent: LoginEvent ->
                     when (loginEvent) {
                         is LoginEvent.Login -> {
                             when (loginEvent.loginType) {
                                 PlanfitLoginType.None -> {
+                                    Log.d(TAG, "onViewCreated PlanfitLoginType.None")
                                     view.findNavController().navigate(
                                         R.id.action_splashFragment_to_signupSigninFragment
                                     )
                                 }
 
                                 PlanfitLoginType.KakaoTalk, PlanfitLoginType.Google, PlanfitLoginType.Facebook -> {
+                                    Log.d(TAG, "onViewCreated PlanfitLoginType.KakaoTalk, PlanfitLoginType.Google, PlanfitLoginType.Facebook")
                                     binding.textView.text =
                                         "로그인이 되었습니다. ${loginEvent.loginType}"
                                 }
@@ -55,6 +56,7 @@ class SplashFragment : Fragment() {
                         }
 
                         LoginEvent.UnChecked -> {
+                            Log.d(TAG, "onViewCreated LoginEvent.UnChecked")
                             binding.textView.text =
                                 "로그인 확인중입니다."
                         }
@@ -69,4 +71,7 @@ class SplashFragment : Fragment() {
         viewModel.checkLoginState()
     }
 
+    companion object{
+        private const val TAG = "SplashFragment"
+    }
 }

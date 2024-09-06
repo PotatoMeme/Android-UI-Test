@@ -158,7 +158,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_kakao_signin"
+        android:id="@+id/btn_kakao_login"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -179,7 +179,9 @@
         android:adjustViewBounds="true"
         android:padding="10dp"
         android:src="@drawable/kakaotalk_logo"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_kakao_signin"
-        app:layout_constraintStart_toStartOf="@id/btn_kakao_signin"
-        app:layout_constraintTop_toTopOf="@+id/btn_kakao_signin" />
+        android:scaleType="fitCenter"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_kakao_login"
+        app:layout_constraintStart_toStartOf="@id/btn_kakao_login"
+        app:layout_constraintTop_toTopOf="@+id/btn_kakao_login" />
 </androidx.constraintlayout.widget.ConstraintLayout>
