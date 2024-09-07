@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primaryDark">#1F2123</color>
+    <color name="black">#000000</color>
     <color name="white">#FDFDFD</color>
+    <color name="white_clicked">#A8FDFDFD</color>
     <color name="gray">#D1D3D5</color>
     <color name="secondaryDark">#3D3F45</color>
     <color name="highlightMint">#70E9C9</color>
     <color name="blue">#3875E9</color>
+    <color name="blue_clicked">#A83875E9</color>
     <color name="yellow">#F3DC25</color>
+    <color name="yellow_clicked">#A8F3DC25</color>
 </resources>
