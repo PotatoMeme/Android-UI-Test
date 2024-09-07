@@ -51,6 +51,9 @@ class SplashFragment : Fragment() {
                                     Log.d(TAG, "onViewCreated PlanfitLoginType.KakaoTalk, PlanfitLoginType.Google, PlanfitLoginType.Facebook")
                                     binding.textView.text =
                                         "로그인이 되었습니다. ${loginEvent.loginType}"
+                                    view.findNavController().navigate(
+                                        R.id.action_splashFragment_to_selectInfoFragment
+                                    )
                                 }
                             }
                         }
