@@ -6,7 +6,9 @@
     <color name="white_clicked">#A8FDFDFD</color>
     <color name="gray">#D1D3D5</color>
     <color name="secondaryDark">#3D3F45</color>
+    <color name="secondaryDark_clicked">#A83D3F45</color>
     <color name="highlightMint">#70E9C9</color>
+    <color name="highlightMint_clicked">#A870E9C9</color>
     <color name="blue">#3875E9</color>
     <color name="blue_clicked">#A83875E9</color>
     <color name="yellow">#F3DC25</color>
