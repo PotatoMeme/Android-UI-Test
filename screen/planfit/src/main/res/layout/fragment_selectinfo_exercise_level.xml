@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="@+id/btn_next">
 
         <LinearLayout
-            android:id="@+id/toggle_first_level"
+            android:id="@+id/toggle_introduction_level"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginBottom="16dp"
@@ -74,7 +74,7 @@
                 android:textSize="15dp" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/toggle_middle_level"
+            android:id="@+id/toggle_beginner_level"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginBottom="16dp"
@@ -105,7 +105,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/toggle_start_level"
+            android:id="@+id/toggle_middle_level"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginBottom="16dp"
