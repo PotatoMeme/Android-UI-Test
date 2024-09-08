@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,9 +33,174 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintEnd_toEndOf="@+id/btn_next"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btn_next">
+
+        <LinearLayout
+            android:id="@+id/toggle_first_level"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/toggle_roundcorner"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:selectable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="입문"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="운동 자세, 운동 루틴 등 아무것도 몰라요"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/toggle_middle_level"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/toggle_roundcorner"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:selectable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="초급"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="자세는 조금 알지만 무슨 운동을 해야 할지 몰라요"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/toggle_start_level"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/toggle_roundcorner"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:selectable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="중급"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="운동 자세를 잘 알고, 나만의 루틴이 있어요"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/toggle_high_level"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/toggle_roundcorner"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:selectable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="고급"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="운동을 작업으로 삼을 만큼의 지식이 있어요"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/toggle_master_level"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/toggle_roundcorner"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:selectable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="전문가"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="운동 선수급의 지식과 경험을 갖고 있어요"
+                android:textColor="@drawable/text_white_color_selector"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
+        android:id="@+id/btn_next"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -43,7 +209,7 @@
         android:background="@drawable/mint_roundcorner"
         android:gravity="center"
         android:text="다음"
-        android:textSize="25dp"
+        android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
