@@ -15,7 +15,7 @@
         android:layout_marginEnd="16dp"
         android:text="주로 어디서 운동하시나요?"
         android:textColor="@color/white"
-        android:textSize="32dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
