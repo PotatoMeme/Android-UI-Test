@@ -24,12 +24,20 @@ class SelectInfoViewModel @Inject constructor() : ViewModel() {
         MutableStateFlow(SelectInfo.None)
     val infoPlace: StateFlow<SelectInfo> = _infoPlace
 
+    //장비 타입 : 3
+    private val _infoEquipmentType: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
+    val infoEquipmentType: StateFlow<SelectInfo> = _infoEquipmentType
+
     fun setExerciseLevel(level: Int) = viewModelScope.launch {
         _infoExerciseLevel.value = SelectInfo.SelectInfoSelected(level)
     }
 
     fun setPlace(level: Int) = viewModelScope.launch {
         _infoPlace.value = SelectInfo.SelectInfoSelected(level)
+    }
+
+    fun setEquipmentType(level: Int) = viewModelScope.launch {
+        _infoEquipmentType.value = SelectInfo.SelectInfoSelected(level)
     }
 }
 
