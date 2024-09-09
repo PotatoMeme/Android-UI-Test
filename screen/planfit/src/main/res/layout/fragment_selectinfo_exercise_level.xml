@@ -26,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textSize="18dp"
         android:text="적절한 운동 추천에 필요해요! 외부에 공개되지 않아요"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
