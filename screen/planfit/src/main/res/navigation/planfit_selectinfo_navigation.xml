@@ -20,5 +20,17 @@
     <fragment
         android:id="@+id/selectInfoPlaceFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoPlaceFragment"
-        android:label="SelectInfoPlaceFragment" />
+        android:label="SelectInfoPlaceFragment" >
+        <action
+            android:id="@+id/action_selectInfoPlaceFragment_to_selectInfoEquipmentTypeFragment"
+            app:destination="@id/selectInfoEquipmentTypeFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state"  />
+    </fragment>
+    <fragment
+        android:id="@+id/selectInfoEquipmentTypeFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoEquipmentTypeFragment"
+        android:label="SelectInfoEquipmentTypeFragment" />
 </navigation>

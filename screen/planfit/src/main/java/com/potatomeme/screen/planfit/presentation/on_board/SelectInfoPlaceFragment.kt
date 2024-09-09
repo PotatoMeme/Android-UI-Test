@@ -65,7 +65,16 @@ class SelectInfoPlaceFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             //TODO: 다음 화면으로 이동
-            //
+            when (viewModel.infoPlace.value) {
+                SelectInfo.None -> {}
+                is SelectInfo.SelectInfoSelected -> {
+                    when ((viewModel.infoPlace.value as SelectInfo.SelectInfoSelected).level) {
+                        0 -> {}
+                        1 -> view.findNavController()
+                            .navigate(R.id.action_selectInfoPlaceFragment_to_selectInfoEquipmentTypeFragment)
+                    }
+                }
+            }
         }
 
     }

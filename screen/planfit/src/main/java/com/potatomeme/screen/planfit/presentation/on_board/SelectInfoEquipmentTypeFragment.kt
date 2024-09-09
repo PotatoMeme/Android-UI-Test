@@ -42,7 +42,7 @@ class SelectInfoEquipmentTypeFragment : Fragment() {
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.infoPlace.collect {
+                viewModel.infoEquipmentType.collect {
                     when (it) {
                         SelectInfo.None -> {
                             toggleList.forEach { it.isSelected = false }
@@ -61,7 +61,7 @@ class SelectInfoEquipmentTypeFragment : Fragment() {
 
         toggleList.forEachIndexed { index, view ->
             view.setOnClickListener {
-                viewModel.setPlace(index)
+                viewModel.setEquipmentType(index)
             }
         }
 
