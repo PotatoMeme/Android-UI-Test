@@ -10,9 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.potatomeme.screen.planfit.data.model.PlanfitLoginType
 import com.potatomeme.screen.planfit.databinding.FragmentSignupSigninBinding
-import com.potatomeme.screen.planfit.domain.usecase.SetPlanfitLoginType
+import com.potatomeme.screen.planfit.domain.usecase.SetPlanfitLoginTypeUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ class SignupSigninFragment : Fragment() {
     private lateinit var binding: FragmentSignupSigninBinding
 
     @Inject
-    lateinit var setPlanfitLoginType: SetPlanfitLoginType
+    lateinit var setPlanfitLoginTypeUseCase: SetPlanfitLoginTypeUseCase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,14 +36,14 @@ class SignupSigninFragment : Fragment() {
         binding.btnKakaoLogin.setOnClickListener {
             Log.d(TAG, "onViewCreated: btnKakaoLogin clicked")
             lifecycleScope.launch {
-                setPlanfitLoginType(PlanfitLoginType.KakaoTalk)
+                setPlanfitLoginTypeUseCase(PlanfitLoginType.KakaoTalk)
                 view.findNavController().popBackStack()
             }
         }
         binding.btnFacebookLogin.setOnClickListener {
             Log.d(TAG, "onViewCreated: btnFacebookLogin clicked")
             lifecycleScope.launch {
-                setPlanfitLoginType(PlanfitLoginType.Facebook)
+                setPlanfitLoginTypeUseCase(PlanfitLoginType.Facebook)
                 view.findNavController().popBackStack()
             }
         }
@@ -52,7 +51,7 @@ class SignupSigninFragment : Fragment() {
             Log.d(TAG, "onViewCreated: btnGoogleLogin clicked")
             lifecycleScope.launch {
                 view.findNavController().popBackStack()
-                setPlanfitLoginType(PlanfitLoginType.Google)
+                setPlanfitLoginTypeUseCase(PlanfitLoginType.Google)
             }
         }
     }

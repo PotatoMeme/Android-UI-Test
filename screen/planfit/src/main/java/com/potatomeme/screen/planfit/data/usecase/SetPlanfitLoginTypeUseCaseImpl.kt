@@ -2,12 +2,12 @@ package com.potatomeme.screen.planfit.data.usecase
 
 import com.potatomeme.screen.planfit.data.model.PlanfitLoginType
 import com.potatomeme.screen.planfit.data.source.PlanfitPreferencesDataStore
-import com.potatomeme.screen.planfit.domain.usecase.SetPlanfitLoginType
+import com.potatomeme.screen.planfit.domain.usecase.SetPlanfitLoginTypeUseCase
 import javax.inject.Inject
 
-class SetPlanfitLoginTypeImpl @Inject constructor(
+class SetPlanfitLoginTypeUseCaseImpl @Inject constructor(
     private val planfitPreferencesDataStore: PlanfitPreferencesDataStore
-) : SetPlanfitLoginType {
+) : SetPlanfitLoginTypeUseCase {
     override suspend fun invoke(type: PlanfitLoginType) {
         planfitPreferencesDataStore.setPlanfitLoginType(type)
     }

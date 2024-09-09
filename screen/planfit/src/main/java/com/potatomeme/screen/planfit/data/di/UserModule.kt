@@ -1,9 +1,11 @@
 package com.potatomeme.screen.planfit.data.di
 
-import com.potatomeme.screen.planfit.data.usecase.GetPlanfitLoginTypeImpl
-import com.potatomeme.screen.planfit.data.usecase.SetPlanfitLoginTypeImpl
-import com.potatomeme.screen.planfit.domain.usecase.GetPlanfitLoginType
-import com.potatomeme.screen.planfit.domain.usecase.SetPlanfitLoginType
+import com.potatomeme.screen.planfit.data.usecase.GetPlanfitLoginTypeUseCaseImpl
+import com.potatomeme.screen.planfit.data.usecase.RequestGymListUseCaseImpl
+import com.potatomeme.screen.planfit.data.usecase.SetPlanfitLoginTypeUseCaseImpl
+import com.potatomeme.screen.planfit.domain.usecase.GetPlanfitLoginTypeUseCase
+import com.potatomeme.screen.planfit.domain.usecase.RequestGymListUseCase
+import com.potatomeme.screen.planfit.domain.usecase.SetPlanfitLoginTypeUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,8 +15,11 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class UserModule {
     @Binds
-    abstract fun bindGetPlanfitLoginType(uc: GetPlanfitLoginTypeImpl): GetPlanfitLoginType
+    abstract fun bindGetPlanfitLoginTypeUseCase(uc: GetPlanfitLoginTypeUseCaseImpl): GetPlanfitLoginTypeUseCase
 
     @Binds
-    abstract fun bindSetPlanfitLoginType(uc: SetPlanfitLoginTypeImpl): SetPlanfitLoginType
+    abstract fun bindSetPlanfitLoginTypeUseCase(uc: SetPlanfitLoginTypeUseCaseImpl): SetPlanfitLoginTypeUseCase
+
+    @Binds
+    abstract fun bindRequestGymListUseCase(uc: RequestGymListUseCaseImpl): RequestGymListUseCase
 }

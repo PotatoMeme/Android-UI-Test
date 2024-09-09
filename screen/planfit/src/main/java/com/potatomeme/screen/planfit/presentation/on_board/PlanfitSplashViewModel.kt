@@ -4,22 +4,18 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.potatomeme.screen.planfit.data.model.PlanfitLoginType
-import com.potatomeme.screen.planfit.domain.usecase.GetPlanfitLoginType
+import com.potatomeme.screen.planfit.domain.usecase.GetPlanfitLoginTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.runningFold
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PlanfitSplashViewModel @Inject constructor(
-    private val getPlanfitLoginType: GetPlanfitLoginType,
+    private val getPlanfitLoginTypeUseCase: GetPlanfitLoginTypeUseCase,
 ) : ViewModel() {
     private val _isLoginChanel = Channel<LoginEvent>(Channel.BUFFERED)
     val isLoginFlow: Flow<LoginEvent> = _isLoginChanel.receiveAsFlow()
@@ -27,7 +23,7 @@ class PlanfitSplashViewModel @Inject constructor(
     fun checkLoginState() = viewModelScope.launch {
         _isLoginChanel.send(LoginEvent.UnChecked)
         delay(3000L)
-        val loginType = getPlanfitLoginType()
+        val loginType = getPlanfitLoginTypeUseCase()
         Log.d(TAG, "checkLoginState: ${loginType.name}")
         _isLoginChanel.send(LoginEvent.Login(loginType))
         if (loginType == PlanfitLoginType.None)
