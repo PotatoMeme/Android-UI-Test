@@ -11,6 +11,12 @@
     <color name="highlightMint_clicked">#A870E9C9</color>
     <color name="blue">#3875E9</color>
     <color name="blue_clicked">#A83875E9</color>
+    <color name="lightBlue">#D7E8FE</color>
+    <color name="lightBlue_clicked">#A8D7E8FE</color>
     <color name="yellow">#F3DC25</color>
     <color name="yellow_clicked">#A8F3DC25</color>
+    <color name="deepGray">#636773</color>
+    <color name="deepGray_clicked">#A8636773</color>
+    <color name="lightGray">#CDD1DD</color>
+    <color name="lightGray_clicked">#A8CDD1DD</color>
 </resources>

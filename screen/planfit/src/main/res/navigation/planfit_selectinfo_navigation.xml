@@ -28,9 +28,16 @@
             app:exitAnim="@anim/keep_state"
             app:popEnterAnim="@anim/side_in_left"
             app:popExitAnim="@anim/keep_state"  />
+        <action
+            android:id="@+id/action_selectInfoPlaceFragment_to_selectInfoGymFragment"
+            app:destination="@id/selectInfoGymFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectInfoEquipmentTypeFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoEquipmentTypeFragment"
         android:label="SelectInfoEquipmentTypeFragment" />
+    <fragment
+        android:id="@+id/selectInfoGymFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoGymFragment"
+        android:label="SelectInfoGymFragment" />
 </navigation>

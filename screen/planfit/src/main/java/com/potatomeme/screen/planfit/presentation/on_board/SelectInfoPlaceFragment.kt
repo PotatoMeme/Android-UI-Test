@@ -69,7 +69,8 @@ class SelectInfoPlaceFragment : Fragment() {
                 SelectInfo.None -> {}
                 is SelectInfo.SelectInfoSelected -> {
                     when ((viewModel.infoPlace.value as SelectInfo.SelectInfoSelected).level) {
-                        0 -> {}
+                        0 -> view.findNavController()
+                            .navigate(R.id.action_selectInfoPlaceFragment_to_selectInfoGymFragment)
                         1 -> view.findNavController()
                             .navigate(R.id.action_selectInfoPlaceFragment_to_selectInfoEquipmentTypeFragment)
                     }
