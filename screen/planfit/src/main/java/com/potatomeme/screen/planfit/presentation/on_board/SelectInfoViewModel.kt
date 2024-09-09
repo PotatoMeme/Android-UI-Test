@@ -15,23 +15,16 @@ class SelectInfoViewModel @Inject constructor() : ViewModel() {
     val state: StateFlow<Int> = _state
 
     //운동 level
-    private val _infoExerciseLevel: MutableStateFlow<ExerciseLevel> =
-        MutableStateFlow(ExerciseLevel.None)
-    val infoExerciseLevel: StateFlow<ExerciseLevel> = _infoExerciseLevel
+    private val _infoExerciseLevel: MutableStateFlow<SelectInfo> =
+        MutableStateFlow(SelectInfo.None)
+    val infoExerciseLevel: StateFlow<SelectInfo> = _infoExerciseLevel
 
     fun setExerciseLevel(level: Int) = viewModelScope.launch {
-        _infoExerciseLevel.value = ExerciseLevel.ExerciseLevelSelected(level)
+        _infoExerciseLevel.value = SelectInfo.SelectInfoSelected(level)
     }
 }
 
-sealed class ExerciseLevel {
-    data object None : ExerciseLevel()
-    data class ExerciseLevelSelected(val level: Int) : ExerciseLevel()
-    companion object {
-        const val INTRODUCTION = 0
-        const val BEGINNER = 1
-        const val MIDDLE = 2
-        const val HIGH = 3
-        const val MASTER = 4
-    }
+sealed class SelectInfo {
+    data object None : SelectInfo()
+    data class SelectInfoSelected(val level: Int) : SelectInfo()
 }

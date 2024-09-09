@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoExerciseLevelBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,11 +42,11 @@ class SelectInfoExerciseLevelFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.infoExerciseLevel.collect {
                     when(it){
-                        ExerciseLevel.None -> {
+                        SelectInfo.None -> {
                             toggleList.forEach { it.isSelected = false }
                             binding.btnNext.isEnabled = false
                         }
-                        is ExerciseLevel.ExerciseLevelSelected -> {
+                        is SelectInfo.SelectInfoSelected -> {
                             toggleList.forEach { it.isSelected = false }
                             toggleList[it.level].isSelected = true
                             binding.btnNext.isEnabled = true
