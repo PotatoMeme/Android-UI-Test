@@ -12,12 +12,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.potatomeme.screen.planfit.R
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoExerciseLevelBinding
+import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoPlaceBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SelectInfoExerciseLevelFragment : Fragment() {
-    private lateinit var binding: FragmentSelectinfoExerciseLevelBinding
+class SelectInfoPlaceFragment : Fragment() {
+    private lateinit var binding: FragmentSelectinfoPlaceBinding
     private val viewModel: SelectInfoViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -25,7 +26,7 @@ class SelectInfoExerciseLevelFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentSelectinfoExerciseLevelBinding.inflate(inflater, container, false)
+        binding = FragmentSelectinfoPlaceBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -33,16 +34,13 @@ class SelectInfoExerciseLevelFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val toggleList = listOf(
-            binding.toggleIntroductionLevel,
-            binding.toggleBeginnerLevel,
-            binding.toggleMiddleLevel,
-            binding.toggleHighLevel,
-            binding.toggleMasterLevel
+            binding.toggleGym,
+            binding.toggleHome
         )
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.infoExerciseLevel.collect {
+                viewModel.infoPlace.collect {
                     when (it) {
                         SelectInfo.None -> {
                             toggleList.forEach { it.isSelected = false }
@@ -61,14 +59,13 @@ class SelectInfoExerciseLevelFragment : Fragment() {
 
         toggleList.forEachIndexed { index, view ->
             view.setOnClickListener {
-                viewModel.setExerciseLevel(index)
+                viewModel.setPlace(index)
             }
         }
 
         binding.btnNext.setOnClickListener {
             //TODO: 다음 화면으로 이동
-            view.findNavController()
-                .navigate(R.id.action_selectInfoExerciseLevelFragment_to_selectInfoPlaceFragment)
+            //
         }
 
     }

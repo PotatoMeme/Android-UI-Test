@@ -8,5 +8,13 @@
     <fragment
         android:id="@+id/selectInfoExerciseLevelFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoExerciseLevelFragment"
-        android:label="SelectInfoExerciseLevelFragment" />
+        android:label="SelectInfoExerciseLevelFragment" >
+        <action
+            android:id="@+id/action_selectInfoExerciseLevelFragment_to_selectInfoPlaceFragment"
+            app:destination="@id/selectInfoPlaceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectInfoPlaceFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoPlaceFragment"
+        android:label="SelectInfoPlaceFragment" />
 </navigation>
