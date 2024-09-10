@@ -28,6 +28,7 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/light_blue_roundcorner"
             android:gravity="center"
             android:paddingVertical="4dp"
@@ -43,10 +44,12 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:paddingVertical="4dp"
-            android:text="서울특별시 서초구 서초대로 78길 44 (서초동, 동일빌딩)"
             android:singleLine="true"
-            android:textColor="@drawable/text_white_color_selector" />
+            android:text="서울특별시 서초구 서초대로 78길 44 (서초동, 동일빌딩)"
+            android:textColor="@drawable/text_white_color_selector"
+            android:textSize="17dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +58,7 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/deep_gray_roundcorner"
             android:gravity="center"
             android:paddingVertical="4dp"
@@ -70,9 +74,10 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:paddingVertical="4dp"
-            android:text="02835"
             android:singleLine="true"
-            android:textColor="@drawable/text_light_gray_color_selector" />
+            android:text="02835"
+            android:textColor="@drawable/text_light_gray_color_selector"
+            android:textSize="17dp" />
     </LinearLayout>
 
 
