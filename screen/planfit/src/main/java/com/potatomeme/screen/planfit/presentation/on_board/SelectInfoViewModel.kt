@@ -39,6 +39,10 @@ class SelectInfoViewModel @Inject constructor(
     private val _infoEquipmentType: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
     val infoEquipmentType: StateFlow<SelectInfo> = _infoEquipmentType
 
+    //운동회수 : 5
+    private val _infoExerciseTimes: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
+    val infoExerciseTimes: StateFlow<SelectInfo> = _infoExerciseTimes
+
 
     //setter
     fun setExerciseLevel(level: Int) = viewModelScope.launch {
@@ -55,6 +59,10 @@ class SelectInfoViewModel @Inject constructor(
 
     fun setSelectedGym(gym: Gym) = viewModelScope.launch {
         _selectedGym.value = gym
+    }
+
+    fun setExerciseTimes(times: Int) = viewModelScope.launch {
+        _infoExerciseTimes.value = SelectInfo.SelectInfoSelected(times)
     }
 
     //request

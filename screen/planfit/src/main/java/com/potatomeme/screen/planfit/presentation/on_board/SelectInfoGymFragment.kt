@@ -16,6 +16,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.potatomeme.screen.planfit.R
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoGymBinding
@@ -30,7 +31,7 @@ class SelectInfoGymFragment : Fragment() {
     private val adapter: GymListAdapter = GymListAdapter { gym ->
         val modal = GymCheckBottomSheet(gym) { gym ->
             viewModel.setSelectedGym(gym)
-            //findNavController().navigate(R.id.action_selectInfoGymFragment_to_selectInfoPlaceFragment)
+            findNavController().navigate(R.id.action_selectInfoGymFragment_to_selectInfoTimesFragment)
         }
         modal.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
         modal.show(childFragmentManager, GymCheckBottomSheet.TAG)
@@ -91,16 +92,13 @@ class SelectInfoGymFragment : Fragment() {
             return@setOnKeyListener false
         }
 
-        //d
+        //EditText 사용중 다른곳 누르면 키보드 내리기
         binding.root.setOnTouchListener { _, _ ->
             if (activity != null && activity?.currentFocus != null) {
                 hideKeyboard()
             }
             return@setOnTouchListener false
         }
-
-
-
     }
 
     private fun hideKeyboard() {
@@ -110,6 +108,5 @@ class SelectInfoGymFragment : Fragment() {
             activity?.currentFocus!!.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS
         )
-
     }
 }
