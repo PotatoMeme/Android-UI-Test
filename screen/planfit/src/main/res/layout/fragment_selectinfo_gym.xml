@@ -40,7 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/dark_roundcorner"
+        android:background="@drawable/secondary_dark_roundcorner"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/textView5"

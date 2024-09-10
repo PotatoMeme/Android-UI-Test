@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primaryDark">#1F2123</color>
+    <color name="primaryDark_clicked">#A81F2123</color>
     <color name="black">#000000</color>
     <color name="white">#FDFDFD</color>
     <color name="white_clicked">#A8FDFDFD</color>
