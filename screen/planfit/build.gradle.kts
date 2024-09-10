@@ -63,4 +63,8 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    //flexbox
+    implementation(libs.flexbox)
+
 }
