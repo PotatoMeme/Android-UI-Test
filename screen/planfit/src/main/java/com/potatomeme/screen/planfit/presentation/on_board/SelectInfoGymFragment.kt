@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -23,7 +24,12 @@ class SelectInfoGymFragment : Fragment() {
     private lateinit var binding: FragmentSelectinfoGymBinding
     private val viewModel: SelectInfoViewModel by activityViewModels()
     private val adapter: GymListAdapter = GymListAdapter { gym ->
-
+        val modal = GymCheckBottomSheet(gym) { gym ->
+            viewModel.setSelectedGym(gym)
+            //findNavController().navigate(R.id.action_selectInfoGymFragment_to_selectInfoPlaceFragment)
+        }
+        modal.setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
+        modal.show(childFragmentManager, GymCheckBottomSheet.TAG)
     }
 
     override fun onCreateView(

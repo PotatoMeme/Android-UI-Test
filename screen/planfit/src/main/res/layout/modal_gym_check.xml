@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/secondaryDark"
+    tools:background="@color/secondaryDark"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -16,7 +16,7 @@
         android:textColor="@drawable/text_white_color_selector"
         android:textSize="20dp"
         android:textStyle="bold"
-        tools:text="아래 헬스장에 다니고 계신게 맞나요?" />
+        android:text="아래 헬스장에 다니고 계신게 맞나요?" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,6 +99,7 @@
         android:layout_marginTop="40dp"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/btn_research"
             android:text="다시검색"
             android:textStyle="bold"
             android:layout_weight="1"
@@ -108,6 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
+            android:id="@+id/btn_confirm"
             android:text="네, 맞아요"
             android:textStyle="bold"
             android:layout_weight="1"
