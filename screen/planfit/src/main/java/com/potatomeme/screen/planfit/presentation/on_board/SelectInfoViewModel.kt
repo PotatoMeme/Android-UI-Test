@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectInfoViewModel @Inject constructor(
-    private val requestGymListUseCase: RequestGymListUseCase
+    private val requestGymListUseCase: RequestGymListUseCase,
 ) : ViewModel() {
     //select info state
     private val _state = MutableStateFlow(1)
@@ -43,6 +43,11 @@ class SelectInfoViewModel @Inject constructor(
     private val _infoExerciseTimes: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
     val infoExerciseTimes: StateFlow<SelectInfo> = _infoExerciseTimes
 
+    //신체 목표 : 6
+    private val _infoBodyGoal: MutableStateFlow<List<Boolean>> =
+        MutableStateFlow(List(12) { false })
+    val infoBodyGoal: StateFlow<List<Boolean>> = _infoBodyGoal
+
 
     //setter
     fun setExerciseLevel(level: Int) = viewModelScope.launch {
@@ -63,6 +68,13 @@ class SelectInfoViewModel @Inject constructor(
 
     fun setExerciseTimes(times: Int) = viewModelScope.launch {
         _infoExerciseTimes.value = SelectInfo.SelectInfoSelected(times)
+    }
+
+    //update
+    fun updateSelectedBodyGoalListWithIndex(index: Int) = viewModelScope.launch {
+        val newList = _infoBodyGoal.value.toMutableList()
+        newList[index] = !newList[index]
+        _infoBodyGoal.value = newList
     }
 
     //request

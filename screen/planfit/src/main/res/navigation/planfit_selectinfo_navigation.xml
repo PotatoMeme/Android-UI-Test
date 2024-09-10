@@ -51,5 +51,17 @@
     <fragment
         android:id="@+id/selectInfoTimesFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoTimesFragment"
-        android:label="SelectInfoTimesFragment" />
+        android:label="SelectInfoTimesFragment">
+        <action
+            android:id="@+id/action_selectInfoTimesFragment_to_selectInfoBodyGoalFragment"
+            app:destination="@id/selectInfoBodyGoalFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectInfoBodyGoalFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoBodyGoalFragment"
+        android:label="SelectInfoBodyGoalFragment" />
 </navigation>

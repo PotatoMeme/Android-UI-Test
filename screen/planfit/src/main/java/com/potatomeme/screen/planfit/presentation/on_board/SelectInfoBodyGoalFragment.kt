@@ -10,17 +10,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.potatomeme.screen.planfit.R
+import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoBodygoalBinding
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoExerciseLevelBinding
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoPlaceBinding
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoTimesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SelectInfoTimesFragment : Fragment() {
-    private lateinit var binding: FragmentSelectinfoTimesBinding
+class SelectInfoBodyGoalFragment : Fragment() {
+    private lateinit var binding: FragmentSelectinfoBodygoalBinding
     private val viewModel: SelectInfoViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -28,7 +27,7 @@ class SelectInfoTimesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentSelectinfoTimesBinding.inflate(inflater, container, false)
+        binding = FragmentSelectinfoBodygoalBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,28 +35,25 @@ class SelectInfoTimesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val toggleList = listOf(
-            binding.toggleTimesOne,
-            binding.toggleTimesTwo,
-            binding.toggleTimesThree,
-            binding.toggleTimesFour,
-            binding.toggleTimesFive,
-            binding.toggleTimesSix,
+            binding.toggleGoal1,
+            binding.toggleGoal2,
+            binding.toggleGoal3,
+            binding.toggleGoal4,
+            binding.toggleGoal5,
+            binding.toggleGoal6,
+            binding.toggleGoal7,
+            binding.toggleGoal8,
+            binding.toggleGoal9,
+            binding.toggleGoal10,
+            binding.toggleGoal11,
+            binding.toggleGoal12,
         )
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.infoExerciseTimes.collect {
-                    when (it) {
-                        SelectInfo.None -> {
-                            toggleList.forEach { it.isSelected = false }
-                            binding.btnNext.isEnabled = false
-                        }
-
-                        is SelectInfo.SelectInfoSelected -> {
-                            toggleList.forEach { it.isSelected = false }
-                            toggleList[it.level].isSelected = true
-                            binding.btnNext.isEnabled = true
-                        }
+                viewModel.infoBodyGoal.collect { list ->
+                    for (i in toggleList.indices) {
+                        toggleList[i].isSelected = list[i]
                     }
                 }
             }
@@ -65,13 +61,13 @@ class SelectInfoTimesFragment : Fragment() {
 
         toggleList.forEachIndexed { index, view ->
             view.setOnClickListener {
-                viewModel.setExerciseTimes(index)
+                viewModel.updateSelectedBodyGoalListWithIndex(index)
             }
         }
 
         binding.btnNext.setOnClickListener {
             //TODO: 다음 화면으로 이동
-            findNavController().navigate(R.id.action_selectInfoTimesFragment_to_selectInfoBodyGoalFragment)
+
         }
 
     }
