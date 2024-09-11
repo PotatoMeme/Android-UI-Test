@@ -48,6 +48,10 @@ class SelectInfoViewModel @Inject constructor(
         MutableStateFlow(List(12) { false })
     val infoBodyGoal: StateFlow<List<Boolean>> = _infoBodyGoal
 
+    //신체 정보,성별 : 7
+    private val _infoSex: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
+    val infoSex: StateFlow<SelectInfo> = _infoSex
+
 
     //setter
     fun setExerciseLevel(level: Int) = viewModelScope.launch {
@@ -68,6 +72,10 @@ class SelectInfoViewModel @Inject constructor(
 
     fun setExerciseTimes(times: Int) = viewModelScope.launch {
         _infoExerciseTimes.value = SelectInfo.SelectInfoSelected(times)
+    }
+
+    fun setSex(sex: Int) = viewModelScope.launch {
+        _infoSex.value = SelectInfo.SelectInfoSelected(sex)
     }
 
     //update
