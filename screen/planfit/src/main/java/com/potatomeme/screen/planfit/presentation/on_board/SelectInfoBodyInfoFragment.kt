@@ -69,7 +69,8 @@ class SelectInfoBodyInfoFragment : Fragment() {
             val onConfirm = { year: Int, month: Int, day: Int ->
                 binding.tvDate.text = "%d.%02d.%02d".format(year, month + 1, day)
             }
-            val (year, month, day) = binding.tvDate.text.toString().split(".").mapNotNull { it.toIntOrNull() }.takeIf { it.size == 3 }
+            val (year, month, day) = binding.tvDate.text.toString().split(".")
+                .mapNotNull { it.toIntOrNull() }.takeIf { it.size == 3 }
                 ?: listOf(2000, 0, 1)
             BirthPickerBottomSheet(year, month - 1, day, onConfirm).apply {
                 setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundCornerBottomSheetDialogTheme)
@@ -107,6 +108,7 @@ class SelectInfoBodyInfoFragment : Fragment() {
             }
             //TODO: 다음 화면으로 이동
             viewModel.setBodyInfo(date, weight.toString(), height.toString())
+            findNavController().navigate(R.id.action_selectInfoBodyInfoFragment_to_selectInfoRouteFragment)
         }
     }
 
@@ -116,7 +118,8 @@ class SelectInfoBodyInfoFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val value = s.toString().toIntOrNull()
-                editText.error = if (value != null && (value < min || value > max)) errorMsg else null
+                editText.error =
+                    if (value != null && (value < min || value > max)) errorMsg else null
             }
         })
     }

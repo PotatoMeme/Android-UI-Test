@@ -39,28 +39,32 @@ class SelectInfoViewModel @Inject constructor(
     private val _infoEquipmentType: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
     val infoEquipmentType: StateFlow<SelectInfo> = _infoEquipmentType
 
-    //운동회수 : 5
+    //운동회수 : 4
     private val _infoExerciseTimes: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
     val infoExerciseTimes: StateFlow<SelectInfo> = _infoExerciseTimes
 
-    //신체 목표 : 6
+    //신체 목표 : 5
     private val _infoBodyGoal: MutableStateFlow<List<Boolean>> =
         MutableStateFlow(List(12) { false })
     val infoBodyGoal: StateFlow<List<Boolean>> = _infoBodyGoal
 
-    //신체 정보,성별 : 7
+    //신체 정보,성별 : 6
     private val _infoSex: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
     val infoSex: StateFlow<SelectInfo> = _infoSex
 
-    //신체 정보,생년월일 : 8
+    //신체 정보,생년월일 : 7
     private val _infoBirth: MutableStateFlow<String> = MutableStateFlow("")
     val infoBirth: StateFlow<String> = _infoBirth
-    //신체 정보,몸무게 : 8
+    //신체 정보,몸무게 : 7
     private val _infoWeight: MutableStateFlow<String> = MutableStateFlow("")
     val infoWeight: StateFlow<String> = _infoWeight
-    //신체 정보,키 : 8
+    //신체 정보,키 : 7
     private val _infoHeight: MutableStateFlow<String> = MutableStateFlow("")
     val infoHeight: StateFlow<String> = _infoHeight
+
+    //신체 정보, 경로 : 8
+    private val _infoRoute: MutableStateFlow<SelectInfo> = MutableStateFlow(SelectInfo.None)
+    val infoRoute: StateFlow<SelectInfo> = _infoRoute
 
 
     //setter
@@ -87,11 +91,15 @@ class SelectInfoViewModel @Inject constructor(
     fun setSex(sex: Int) = viewModelScope.launch {
         _infoSex.value = SelectInfo.SelectInfoSelected(sex)
     }
-    
+
     fun setBodyInfo(date:String, weight:String, height:String) = viewModelScope.launch {
         _infoBirth.value = date
         _infoWeight.value = weight
         _infoHeight.value = height
+    }
+
+    fun setRoute(route: Int) = viewModelScope.launch {
+        _infoRoute.value = SelectInfo.SelectInfoSelected(route)
     }
 
     //update

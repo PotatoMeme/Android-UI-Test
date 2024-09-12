@@ -35,7 +35,15 @@
     <fragment
         android:id="@+id/selectInfoEquipmentTypeFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoEquipmentTypeFragment"
-        android:label="SelectInfoEquipmentTypeFragment" />
+        android:label="SelectInfoEquipmentTypeFragment">
+        <action
+            android:id="@+id/action_selectInfoEquipmentTypeFragment_to_selectInfoTimesFragment"
+            app:destination="@id/selectInfoTimesFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
     <fragment
         android:id="@+id/selectInfoGymFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoGymFragment"
@@ -63,19 +71,19 @@
     <fragment
         android:id="@+id/selectInfoBodyGoalFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoBodyGoalFragment"
-        android:label="SelectInfoBodyGoalFragment" >
+        android:label="SelectInfoBodyGoalFragment">
         <action
             android:id="@+id/action_selectInfoBodyGoalFragment_to_selectInfoSexFragment"
             app:destination="@id/selectInfoSexFragment"
             app:enterAnim="@anim/side_in_right"
             app:exitAnim="@anim/keep_state"
             app:popEnterAnim="@anim/side_in_left"
-            app:popExitAnim="@anim/keep_state"/>
+            app:popExitAnim="@anim/keep_state" />
     </fragment>
     <fragment
         android:id="@+id/selectInfoSexFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoSexFragment"
-        android:label="SelectInfoSexFragment" >
+        android:label="SelectInfoSexFragment">
         <action
             android:id="@+id/action_selectInfoSexFragment_to_selectInfoBodyInfoFragment"
             app:destination="@id/selectInfoBodyInfoFragment"
@@ -87,5 +95,17 @@
     <fragment
         android:id="@+id/selectInfoBodyInfoFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoBodyInfoFragment"
-        android:label="SelectInfoBodyInfoFragment" />
+        android:label="SelectInfoBodyInfoFragment" >
+        <action
+            android:id="@+id/action_selectInfoBodyInfoFragment_to_selectInfoRouteFragment"
+            app:destination="@id/selectInfoRouteFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state"  />
+    </fragment>
+    <fragment
+        android:id="@+id/selectInfoRouteFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoRouteFragment"
+        android:label="SelectInfoRouteFragment" />
 </navigation>
