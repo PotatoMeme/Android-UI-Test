@@ -54,5 +54,17 @@
     <fragment
         android:id="@+id/selectInfoRoutineFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoRoutineFragment"
-        android:label="SelectInfoRoutineFragment" />
+        android:label="SelectInfoRoutineFragment" >
+        <action
+            android:id="@+id/action_selectInfoRoutineFragment_to_loadingRoutineFragment"
+            app:destination="@id/loadingRoutineFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadingRoutineFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.loading_routine.LoadingRoutineFragment"
+        android:label="LoadingRoutineFragment" />
 </navigation>
