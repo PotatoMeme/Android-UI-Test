@@ -1,5 +1,6 @@
 package com.potatomeme.screen.planfit.presentation.on_board
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.NonCancellable.start
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,10 +33,11 @@ class SelectInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
-                    when (it) {
+                viewModel.state.collect { state ->
+                    when (state) {
                         in SelectInfoState.STATE_EXERCISE_LEVEL..SelectInfoState.STATE_ROUTE -> {
-                            binding.pbSelectinfo.progress = (it * 12.5).toInt()
+                            val newProgress = (state * 12.5).toInt()
+                            animateProgress(binding.pbSelectinfo.progress, newProgress)
                         }
 
                         SelectInfoState.STATE_COMPLETE -> {
@@ -43,6 +46,13 @@ class SelectInfoFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun animateProgress(startProgress: Int, endProgress: Int) {
+        ObjectAnimator.ofInt(binding.pbSelectinfo, "progress", startProgress, endProgress).apply {
+            duration = 500
+            start()
         }
     }
 }
