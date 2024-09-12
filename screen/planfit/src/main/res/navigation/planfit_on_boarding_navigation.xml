@@ -42,5 +42,17 @@
     <fragment
         android:id="@+id/selectInfoNotificationFragment"
         android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoNotificationFragment"
-        android:label="SelectInfoNotifiationFragment" />
+        android:label="SelectInfoNotifiationFragment" >
+        <action
+            android:id="@+id/action_selectInfoNotificationFragment_to_selectInfoRoutineFragment"
+            app:destination="@id/selectInfoRoutineFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectInfoRoutineFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoRoutineFragment"
+        android:label="SelectInfoRoutineFragment" />
 </navigation>
