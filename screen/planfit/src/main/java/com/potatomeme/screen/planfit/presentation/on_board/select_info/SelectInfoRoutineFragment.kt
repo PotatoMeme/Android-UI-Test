@@ -66,8 +66,8 @@ class SelectInfoRoutineFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener {
+            viewModel.postRoutine()
             //TODO: 다음 화면으로 이동
-
         }
     }
 }
