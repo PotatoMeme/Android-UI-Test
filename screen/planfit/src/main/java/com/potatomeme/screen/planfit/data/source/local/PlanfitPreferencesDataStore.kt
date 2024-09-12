@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.data.source
+package com.potatomeme.screen.planfit.data.source.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore
