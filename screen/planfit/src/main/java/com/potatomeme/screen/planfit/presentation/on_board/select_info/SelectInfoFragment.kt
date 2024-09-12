@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.potatomeme.screen.planfit.R
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -41,6 +43,9 @@ class SelectInfoFragment : Fragment() {
 
                         SelectInfoState.STATE_COMPLETE -> {
                             //TODO: 다음 화면으로 이동
+                            viewModel.postUserInfo()
+                            viewModel.setState(SelectInfoState.STATE_ROUTE)
+                            findNavController().navigate(R.id.action_selectInfoFragment_to_selectInfoNotifiationFragment)
                         }
                     }
                     binding.ivBack.setOnClickListener{
