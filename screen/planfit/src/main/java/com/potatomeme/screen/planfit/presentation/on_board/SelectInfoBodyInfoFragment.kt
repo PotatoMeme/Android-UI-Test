@@ -112,6 +112,11 @@ class SelectInfoBodyInfoFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_BODY_INFO)
+    }
+
     private fun addTextWatcher(editText: EditText, min: Int, max: Int, errorMsg: String) {
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

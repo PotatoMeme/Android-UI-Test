@@ -77,6 +77,10 @@ class SelectInfoPlaceFragment : Fragment() {
                 }
             }
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_PLACE)
     }
 }

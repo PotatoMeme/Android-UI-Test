@@ -71,6 +71,10 @@ class SelectInfoSexFragment : Fragment() {
             //TODO: 다음 화면으로 이동
             findNavController().navigate(R.id.action_selectInfoSexFragment_to_selectInfoBodyInfoFragment)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_SEX)
     }
 }

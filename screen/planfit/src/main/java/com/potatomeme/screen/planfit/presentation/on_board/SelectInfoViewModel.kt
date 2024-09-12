@@ -68,6 +68,10 @@ class SelectInfoViewModel @Inject constructor(
 
 
     //setter
+    fun setState(state: Int) = viewModelScope.launch {
+        _state.value = state
+    }
+
     fun setExerciseLevel(level: Int) = viewModelScope.launch {
         _infoExerciseLevel.value = SelectInfo.SelectInfoSelected(level)
     }

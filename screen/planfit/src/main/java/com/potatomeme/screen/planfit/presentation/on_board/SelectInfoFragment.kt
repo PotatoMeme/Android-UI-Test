@@ -32,7 +32,15 @@ class SelectInfoFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect {
-                    binding.pbSelectinfo.progress = it
+                    when (it) {
+                        in SelectInfoState.STATE_EXERCISE_LEVEL..SelectInfoState.STATE_ROUTE -> {
+                            binding.pbSelectinfo.progress = (it * 12.5).toInt()
+                        }
+
+                        SelectInfoState.STATE_COMPLETE -> {
+                            //TODO: 다음 화면으로 이동
+                        }
+                    }
                 }
             }
         }

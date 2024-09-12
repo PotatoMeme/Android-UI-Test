@@ -101,6 +101,11 @@ class SelectInfoGymFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_GYM)
+    }
+
     private fun hideKeyboard() {
         val inputManager =
             activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

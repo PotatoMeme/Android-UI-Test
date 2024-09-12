@@ -70,6 +70,10 @@ class SelectInfoExerciseLevelFragment : Fragment() {
             view.findNavController()
                 .navigate(R.id.action_selectInfoExerciseLevelFragment_to_selectInfoPlaceFragment)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_EXERCISE_LEVEL)
     }
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.potatomeme.screen.planfit.R
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoEquipmentTypeBinding
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoExerciseLevelBinding
@@ -67,8 +68,12 @@ class SelectInfoEquipmentTypeFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             //TODO: 다음 화면으로 이동
-            //
+            findNavController().navigate(R.id.action_selectInfoEquipmentTypeFragment_to_selectInfoTimesFragment)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_EQUIPMENT_TYPE)
     }
 }

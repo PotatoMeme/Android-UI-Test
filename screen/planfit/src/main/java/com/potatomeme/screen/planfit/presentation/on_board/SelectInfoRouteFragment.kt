@@ -45,7 +45,7 @@ class SelectInfoRouteFragment : Fragment() {
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.infoEquipmentType.collect {
+                viewModel.infoRoute.collect {
                     when (it) {
                         SelectInfo.None -> {
                             toggleList.forEach { it.isSelected = false }
@@ -70,8 +70,12 @@ class SelectInfoRouteFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             //TODO: 다음 화면으로 이동
-            //
+            viewModel.setState(SelectInfoState.STATE_COMPLETE)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_ROUTE)
     }
 }

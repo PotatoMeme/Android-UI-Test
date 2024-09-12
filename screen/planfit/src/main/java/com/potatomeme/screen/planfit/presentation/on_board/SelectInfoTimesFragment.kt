@@ -73,6 +73,10 @@ class SelectInfoTimesFragment : Fragment() {
             //TODO: 다음 화면으로 이동
             findNavController().navigate(R.id.action_selectInfoTimesFragment_to_selectInfoBodyGoalFragment)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setState(SelectInfoState.STATE_EXERCISE_TIMES)
     }
 }
