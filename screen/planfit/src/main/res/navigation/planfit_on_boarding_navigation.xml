@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SplashFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.splash.SplashFragment"
         android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_signupSigninFragment"
@@ -25,10 +25,10 @@
     </fragment>
     <fragment
         android:id="@+id/signupSigninFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SignupSigninFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.signup_signin.SignupSigninFragment"
         android:label="SignupSigninFragment" />
     <fragment
         android:id="@+id/selectInfoFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoFragment"
         android:label="SelectInfoFragment" />
 </navigation>

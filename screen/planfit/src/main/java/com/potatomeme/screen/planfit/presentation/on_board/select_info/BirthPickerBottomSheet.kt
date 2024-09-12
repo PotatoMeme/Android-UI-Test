@@ -1,13 +1,11 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.select_info
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.potatomeme.screen.planfit.data.model.Gym
 import com.potatomeme.screen.planfit.databinding.ModalDatepickerBinding
-import com.potatomeme.screen.planfit.databinding.ModalGymCheckBinding
 
 class BirthPickerBottomSheet(
     private val year: Int,

@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.select_info
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,19 +9,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.potatomeme.screen.planfit.R
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoEquipmentTypeBinding
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoExerciseLevelBinding
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoPlaceBinding
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoSexBinding
+import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoTimesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SelectInfoSexFragment : Fragment() {
-    private lateinit var binding: FragmentSelectinfoSexBinding
+class SelectInfoTimesFragment : Fragment() {
+    private lateinit var binding: FragmentSelectinfoTimesBinding
     private val viewModel: SelectInfoViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -29,7 +25,7 @@ class SelectInfoSexFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentSelectinfoSexBinding.inflate(inflater, container, false)
+        binding = FragmentSelectinfoTimesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,14 +33,17 @@ class SelectInfoSexFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val toggleList = listOf(
-            binding.toggleMale,
-            binding.toggleFemale,
-            binding.toggleEtc
+            binding.toggleTimesOne,
+            binding.toggleTimesTwo,
+            binding.toggleTimesThree,
+            binding.toggleTimesFour,
+            binding.toggleTimesFive,
+            binding.toggleTimesSix,
         )
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.infoSex.collect {
+                viewModel.infoExerciseTimes.collect {
                     when (it) {
                         SelectInfo.None -> {
                             toggleList.forEach { it.isSelected = false }
@@ -63,18 +62,18 @@ class SelectInfoSexFragment : Fragment() {
 
         toggleList.forEachIndexed { index, view ->
             view.setOnClickListener {
-                viewModel.setSex(index)
+                viewModel.setExerciseTimes(index)
             }
         }
 
         binding.btnNext.setOnClickListener {
             //TODO: 다음 화면으로 이동
-            findNavController().navigate(R.id.action_selectInfoSexFragment_to_selectInfoBodyInfoFragment)
+            findNavController().navigate(R.id.action_selectInfoTimesFragment_to_selectInfoBodyGoalFragment)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.setState(SelectInfoState.STATE_SEX)
+        viewModel.setState(SelectInfoState.STATE_EXERCISE_TIMES)
     }
 }

@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.select_info
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

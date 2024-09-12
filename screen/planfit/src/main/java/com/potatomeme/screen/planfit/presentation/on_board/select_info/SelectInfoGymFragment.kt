@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.select_info
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle

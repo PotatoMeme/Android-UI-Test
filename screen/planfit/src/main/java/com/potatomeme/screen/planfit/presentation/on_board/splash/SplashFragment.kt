@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.splash
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,6 @@ import com.potatomeme.screen.planfit.R
 import com.potatomeme.screen.planfit.data.model.PlanfitLoginType
 import com.potatomeme.screen.planfit.databinding.FragmentSplashBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

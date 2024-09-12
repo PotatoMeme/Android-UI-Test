@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.select_info
 
 object SelectInfoState {
     const val STATE_EXERCISE_LEVEL = 1

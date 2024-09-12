@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.select_info
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.NonCancellable.start
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/selectInfoExerciseLevelFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoExerciseLevelFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoExerciseLevelFragment"
         android:label="SelectInfoExerciseLevelFragment">
         <action
             android:id="@+id/action_selectInfoExerciseLevelFragment_to_selectInfoPlaceFragment"
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoPlaceFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoPlaceFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoPlaceFragment"
         android:label="SelectInfoPlaceFragment">
         <action
             android:id="@+id/action_selectInfoPlaceFragment_to_selectInfoEquipmentTypeFragment"
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoEquipmentTypeFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoEquipmentTypeFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoEquipmentTypeFragment"
         android:label="SelectInfoEquipmentTypeFragment">
         <action
             android:id="@+id/action_selectInfoEquipmentTypeFragment_to_selectInfoTimesFragment"
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoGymFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoGymFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoGymFragment"
         android:label="SelectInfoGymFragment">
         <action
             android:id="@+id/action_selectInfoGymFragment_to_selectInfoTimesFragment"
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoTimesFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoTimesFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoTimesFragment"
         android:label="SelectInfoTimesFragment">
         <action
             android:id="@+id/action_selectInfoTimesFragment_to_selectInfoBodyGoalFragment"
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoBodyGoalFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoBodyGoalFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoBodyGoalFragment"
         android:label="SelectInfoBodyGoalFragment">
         <action
             android:id="@+id/action_selectInfoBodyGoalFragment_to_selectInfoSexFragment"
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoSexFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoSexFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoSexFragment"
         android:label="SelectInfoSexFragment">
         <action
             android:id="@+id/action_selectInfoSexFragment_to_selectInfoBodyInfoFragment"
@@ -94,7 +94,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoBodyInfoFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoBodyInfoFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoBodyInfoFragment"
         android:label="SelectInfoBodyInfoFragment" >
         <action
             android:id="@+id/action_selectInfoBodyInfoFragment_to_selectInfoRouteFragment"
@@ -106,6 +106,6 @@
     </fragment>
     <fragment
         android:id="@+id/selectInfoRouteFragment"
-        android:name="com.potatomeme.screen.planfit.presentation.on_board.SelectInfoRouteFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoRouteFragment"
         android:label="SelectInfoRouteFragment" />
 </navigation>

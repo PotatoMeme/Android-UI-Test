@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.splash
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

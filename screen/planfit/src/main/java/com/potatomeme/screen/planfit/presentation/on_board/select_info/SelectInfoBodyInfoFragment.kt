@@ -1,4 +1,4 @@
-package com.potatomeme.screen.planfit.presentation.on_board
+package com.potatomeme.screen.planfit.presentation.on_board.select_info
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
@@ -16,14 +16,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.potatomeme.screen.planfit.R
 import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoBodyInfoBinding
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoBodygoalBinding
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoExerciseLevelBinding
-import com.potatomeme.screen.planfit.databinding.FragmentSelectinfoPlaceBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
