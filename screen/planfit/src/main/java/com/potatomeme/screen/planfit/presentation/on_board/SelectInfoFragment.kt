@@ -44,6 +44,9 @@ class SelectInfoFragment : Fragment() {
                             //TODO: 다음 화면으로 이동
                         }
                     }
+                    binding.ivBack.setOnClickListener{
+                        requireActivity().onBackPressed()
+                    }
                 }
             }
         }
