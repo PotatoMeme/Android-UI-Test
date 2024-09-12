@@ -37,115 +37,138 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="100dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@+id/btn_next"
         app:layout_constraintStart_toStartOf="@+id/btn_next"
         app:layout_constraintTop_toBottomOf="@+id/textView5">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
             <TextView
-                android:text="생년월일"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_gravity="center_vertical"
-                android:textSize="22dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="생년월일"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
             <FrameLayout
                 android:id="@+id/frame_date_picker"
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:background="@drawable/secondary_dark_roundcorner">
+
                 <TextView
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="2000.01.01"
-                    android:textStyle="bold"
-                    android:textSize="22dp"
-                    android:textColor="@color/white"
                     android:layout_gravity="center"
-                    />
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    tools:text="2000.01.01" />
             </FrameLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
             <TextView
-                android:text="키"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_gravity="center_vertical"
-                android:textSize="22dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="키"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
             <FrameLayout
                 android:id="@+id/frame_height"
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:background="@drawable/secondary_dark_roundcorner">
+
                 <EditText
                     android:id="@+id/et_height"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="40dp"
                     android:layout_height="wrap_content"
-                    tools:text="160"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:background="@color/secondaryDark"
-                    android:textSize="22dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/white"
-                    android:layout_gravity="center"/>
+                    android:textSize="22dp"
+                    tools:text="160" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="cm"
-                    android:background="@color/secondaryDark"
-                    android:textSize="22dp"
+                    android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="10dp"
+                    android:background="@color/secondaryDark"
+                    android:text="cm"
                     android:textColor="@color/white_clicked"
-                    android:layout_gravity="end|center_vertical"/>
+                    android:textSize="22dp" />
             </FrameLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
             <TextView
-                android:text="몸무게"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_gravity="center_vertical"
-                android:textSize="22dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="몸무게"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
             <FrameLayout
                 android:id="@+id/frame_weight"
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:background="@drawable/secondary_dark_roundcorner">
+
                 <EditText
                     android:id="@+id/et_weight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="40dp"
                     android:layout_height="wrap_content"
-                    tools:text="50"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:background="@color/secondaryDark"
-                    android:textSize="22dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/white"
-                    android:layout_gravity="center"/>
+                    android:textSize="22dp"
+                    tools:text="50" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="kg"
-                    android:background="@color/secondaryDark"
-                    android:textSize="22dp"
+                    android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="10dp"
+                    android:background="@color/secondaryDark"
+                    android:text="kg"
                     android:textColor="@color/white_clicked"
-                    android:layout_gravity="end|center_vertical"/>
+                    android:textSize="22dp" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>
