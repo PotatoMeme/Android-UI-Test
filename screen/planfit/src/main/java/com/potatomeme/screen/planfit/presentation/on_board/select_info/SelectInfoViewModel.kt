@@ -3,6 +3,8 @@ package com.potatomeme.screen.planfit.presentation.on_board.select_info
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.potatomeme.screen.planfit.data.model.Gym
+import com.potatomeme.screen.planfit.data.model.UserInfo
+import com.potatomeme.screen.planfit.domain.usecase.PostPlanfitUserInfoUseCase
 import com.potatomeme.screen.planfit.domain.usecase.RequestGymListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectInfoViewModel @Inject constructor(
     private val requestGymListUseCase: RequestGymListUseCase,
+    private val postPlanfitUserInfoUseCase: PostPlanfitUserInfoUseCase
 ) : ViewModel() {
     //select info state
     private val _state = MutableStateFlow(1)
@@ -55,9 +58,11 @@ class SelectInfoViewModel @Inject constructor(
     //신체 정보,생년월일 : 7
     private val _infoBirth: MutableStateFlow<String> = MutableStateFlow("")
     val infoBirth: StateFlow<String> = _infoBirth
+
     //신체 정보,몸무게 : 7
     private val _infoWeight: MutableStateFlow<String> = MutableStateFlow("")
     val infoWeight: StateFlow<String> = _infoWeight
+
     //신체 정보,키 : 7
     private val _infoHeight: MutableStateFlow<String> = MutableStateFlow("")
     val infoHeight: StateFlow<String> = _infoHeight
@@ -96,7 +101,7 @@ class SelectInfoViewModel @Inject constructor(
         _infoSex.value = SelectInfo.SelectInfoSelected(sex)
     }
 
-    fun setBodyInfo(date:String, weight:String, height:String) = viewModelScope.launch {
+    fun setBodyInfo(date: String, weight: String, height: String) = viewModelScope.launch {
         _infoBirth.value = date
         _infoWeight.value = weight
         _infoHeight.value = height
@@ -116,6 +121,42 @@ class SelectInfoViewModel @Inject constructor(
     //request
     fun requestGymList(keyword: String) = viewModelScope.launch {
         _infoGymList.value = requestGymListUseCase(keyword)
+    }
+
+    //post
+    fun postUserInfo() = viewModelScope.launch {
+        val level = (infoExerciseLevel.value as SelectInfo.SelectInfoSelected).level
+        val place = (infoPlace.value as SelectInfo.SelectInfoSelected).level
+
+        val gym = selectedGym.value
+        val equipment = (infoEquipmentType.value as? SelectInfo.SelectInfoSelected)?.level
+
+        val times = (infoExerciseTimes.value as SelectInfo.SelectInfoSelected).level
+        val bodyGoal = infoBodyGoal.value
+            .mapIndexed { index, b -> Pair(index, b) }
+            .filter { it.second }
+            .map { it.first }
+        val sex = infoSex.value
+        val birth = infoBirth.value
+        val weight = infoWeight.value
+        val height = infoHeight.value
+        val route = infoRoute.value
+
+         val userInfo = UserInfo(
+            level = level,
+            place = place,
+            gym = gym,
+            equipmentType = equipment,
+            times = times,
+            bodyGoal = bodyGoal,
+            sex = sex,
+            birth = birth,
+            weight = weight,
+            height = height,
+            route = route
+        )
+
+        postPlanfitUserInfoUseCase(userInfo)
     }
 }
 
