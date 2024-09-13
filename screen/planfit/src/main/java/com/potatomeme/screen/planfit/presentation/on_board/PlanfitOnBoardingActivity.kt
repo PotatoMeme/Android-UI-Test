@@ -41,4 +41,8 @@ class PlanfitOnBoardingActivity : AppCompatActivity() {
         }
     }
 
+    fun moveNextActivity() {
+        //todo move next activity
+    }
+
 }

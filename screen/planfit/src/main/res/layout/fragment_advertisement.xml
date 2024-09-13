@@ -263,12 +263,12 @@
         android:text="7일 무료체험, 언제든 취소할 수 있어요"
         android:textColor="@color/white_clicked"
         android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
-        app:layout_constraintEnd_toEndOf="@+id/btn_next"
-        app:layout_constraintStart_toStartOf="@+id/btn_next" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_subscribe"
+        app:layout_constraintEnd_toEndOf="@+id/btn_subscribe"
+        app:layout_constraintStart_toStartOf="@+id/btn_subscribe" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_next"
+        android:id="@+id/btn_subscribe"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
