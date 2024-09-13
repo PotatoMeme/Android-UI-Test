@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/planfit_on_boarding_navigation"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.splash.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splashFragment_to_signupSigninFragment"
+            app:destination="@id/signupSigninFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state"/>
+        <action
+            android:id="@+id/action_splashFragment_to_selectInfoFragment"
+            app:destination="@id/selectInfoFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupSigninFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.signup_signin.SignupSigninFragment"
+        android:label="SignupSigninFragment" />
+    <fragment
+        android:id="@+id/selectInfoFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoFragment"
+        android:label="SelectInfoFragment" >
+        <action
+            android:id="@+id/action_selectInfoFragment_to_selectInfoNotifiationFragment"
+            app:destination="@id/selectInfoNotificationFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state"/>
+    </fragment>
+    <fragment
+        android:id="@+id/selectInfoNotificationFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoNotificationFragment"
+        android:label="SelectInfoNotifiationFragment" >
+        <action
+            android:id="@+id/action_selectInfoNotificationFragment_to_selectInfoRoutineFragment"
+            app:destination="@id/selectInfoRoutineFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectInfoRoutineFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.select_info.SelectInfoRoutineFragment"
+        android:label="SelectInfoRoutineFragment" >
+        <action
+            android:id="@+id/action_selectInfoRoutineFragment_to_loadingRoutineFragment"
+            app:destination="@id/loadingRoutineFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadingRoutineFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.loading_routine.LoadingRoutineFragment"
+        android:label="LoadingRoutineFragment" >
+        <action
+            android:id="@+id/action_loadingRoutineFragment_to_advertisementFragment"
+            app:destination="@id/advertisementFragment"
+            app:enterAnim="@anim/side_in_right"
+            app:exitAnim="@anim/keep_state"
+            app:popEnterAnim="@anim/side_in_left"
+            app:popExitAnim="@anim/keep_state" />
+    </fragment>
+    <fragment
+        android:id="@+id/advertisementFragment"
+        android:name="com.potatomeme.screen.planfit.presentation.on_board.advertisement.AdvertisementFragment"
+        android:label="AdvertisementFragment" />
+</navigation>

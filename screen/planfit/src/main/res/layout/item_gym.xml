@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primaryDark"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_gym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textColor="@drawable/text_white_color_selector"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        tools:text="스포애니 강남역점" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/light_blue_roundcorner"
+            android:gravity="center"
+            android:paddingVertical="4dp"
+            android:text="도로명"
+            android:textColor="@drawable/text_blue_color_selector"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_road_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:text="서울특별시 서초구 서초대로 78길 44 (서초동, 동일빌딩)"
+            android:textColor="@drawable/text_white_color_selector"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/deep_gray_roundcorner"
+            android:gravity="center"
+            android:paddingVertical="4dp"
+            android:text="우편번호"
+            android:textColor="@drawable/text_light_gray_color_selector"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_post_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingVertical="4dp"
+            android:singleLine="true"
+            android:text="02835"
+            android:textColor="@drawable/text_light_gray_color_selector"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+
+</LinearLayout>

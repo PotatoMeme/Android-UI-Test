@@ -61,7 +61,26 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             )
+        ),
+        Route.ItemRoute(
+            route = "Planfit CloneCoding",
+            contentDescription = "Planfit CloneCoding description",
+            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            itemType = ItemType.UI_SCREEN,
+            subItems = arrayOf(
+                Pair(
+                    "xml"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity::class.java
+                        )
+                    )
+                }
+            )
         )
+
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
