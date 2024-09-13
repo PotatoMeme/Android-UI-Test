@@ -61,6 +61,10 @@ dependencies {
     implementation(project(":custom-ui:sample"))
     implementation(project(":custom-ui:chart"))
     implementation(project(":screen:planfit"))
+    //tba - ticket booking app
+    implementation(project(":screen:ticket-booking-app:presentation"))
+    implementation(project(":screen:ticket-booking-app:domain"))
+    implementation(project(":screen:ticket-booking-app:data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
