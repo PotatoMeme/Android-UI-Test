@@ -58,4 +58,8 @@ dependencies {
     //hilt
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+
+    implementation (libs.glide)
+    implementation (libs.chip.navigation.bar)
+    implementation (libs.blurview)
 }
