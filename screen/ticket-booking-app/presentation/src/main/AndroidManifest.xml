@@ -3,6 +3,9 @@
 
     <application>
         <activity
+            android:name=".on_boarding.TBAMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".on_boarding.TBAOnBoardingActivity"
             android:exported="false" />
     </application>
