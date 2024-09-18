@@ -13,3 +13,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
+
+
+dependencies {
+    implementation("javax.inject:javax.inject:1")
+}

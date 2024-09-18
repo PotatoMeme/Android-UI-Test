@@ -31,12 +31,12 @@ class TBAMainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     //확인용
-                    /*viewModel.films.collect {
+                    viewModel.films.collect {
                         Log.d(TAG, "onCreate: ${it.size}")
                         it.forEach {
                             Log.d(TAG, "onCreate: ${it.casts.size}")
                         }
-                    }*/
+                    }
                 }
             }
         }
