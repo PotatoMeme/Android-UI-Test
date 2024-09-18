@@ -3,10 +3,12 @@
 
     <application>
         <activity
-            android:name=".on_boarding.TBAMainActivity"
+            android:name=".on_boarding.main.TBAMainActivity"
+            android:theme="@style/Theme.TicketBookingApp"
             android:exported="false" />
         <activity
             android:name=".on_boarding.TBAOnBoardingActivity"
+            android:theme="@style/Theme.TicketBookingApp"
             android:exported="false" />
     </application>
 
