@@ -62,4 +62,7 @@ dependencies {
     implementation (libs.glide)
     implementation (libs.chip.navigation.bar)
     implementation (libs.blurview)
+
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
 }

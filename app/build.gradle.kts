@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     id("kotlin-kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -89,4 +90,7 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //firebase
+    implementation(libs.firebase.database)
 }
