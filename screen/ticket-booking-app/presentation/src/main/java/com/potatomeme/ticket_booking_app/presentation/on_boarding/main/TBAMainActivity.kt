@@ -70,6 +70,13 @@ class TBAMainActivity : AppCompatActivity() {
                     }
                 }
             )
+
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    handlePageChange(position)
+                }
+            })
         }
 
 
@@ -82,7 +89,9 @@ class TBAMainActivity : AppCompatActivity() {
                             binding.progressBarSlider.visibility = View.VISIBLE
                         } else {
                             binding.progressBarSlider.visibility = View.GONE
-                            bannerAdapter.submitList(it)
+                            val circularList = makeCircularList(it)
+                            bannerAdapter.submitList(circularList)
+                            binding.vpBanner.setCurrentItem(1, false)
                         }
                     }
                 }
@@ -101,6 +110,25 @@ class TBAMainActivity : AppCompatActivity() {
         }
     }
 
+    private fun makeCircularList(banners: List<BannerEntity>): List<BannerEntity> {
+        val circularList = mutableListOf<BannerEntity>()
+        if (banners.isNotEmpty()) {
+            circularList.add(banners.last())
+            circularList.addAll(banners)
+            circularList.add(banners.first())
+        }
+        return circularList
+    }
+
+    private fun handlePageChange(position: Int) {
+        val itemCount = bannerAdapter.itemCount
+        if (position == 0) {
+            binding.vpBanner.setCurrentItem(itemCount - 2, false)
+        }
+        else if (position == itemCount - 1) {
+            binding.vpBanner.setCurrentItem(1, false)
+        }
+    }
 
     companion object {
         private const val TAG = "TBAMainActivity"
