@@ -18,6 +18,13 @@ class FirebaseRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun requestUpcomingFilms(): List<FilmEntity> {
+        return when (val result = firebaseSource.requestUpcomingFilms()) {
+            is FirebaseResult.Failure -> emptyList()
+            is FirebaseResult.Success -> TBAMapper.mapperFirebaseFilm(result.items)
+        }
+    }
+
     override suspend fun requestBanners(): List<BannerEntity> {
         return when (val result = firebaseSource.requestBanners()) {
             is FirebaseResult.Failure -> emptyList()
