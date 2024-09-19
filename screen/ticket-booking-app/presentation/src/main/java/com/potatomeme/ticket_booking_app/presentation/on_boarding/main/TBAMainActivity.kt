@@ -21,6 +21,7 @@ import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaMai
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -38,19 +39,6 @@ class TBAMainActivity : AppCompatActivity() {
 
         viewModel.requestFilms()
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    //확인용
-                    viewModel.films.collect {
-                        /* Log.d(TAG, "onCreate: ${it.size}")
-                         it.forEach {
-                             Log.d(TAG, "onCreate: ${it.casts.size}")
-                         }*/
-                    }
-                }
-            }
-        }
         initBanner()
     }
 
@@ -81,10 +69,11 @@ class TBAMainActivity : AppCompatActivity() {
 
                 override fun onPageScrollStateChanged(state: Int) {
                     super.onPageScrollStateChanged(state)
-                    // 스크롤 상태가 변경될 때 자동 슬라이드를 제어
                     when (state) {
-                        ViewPager2.SCROLL_STATE_DRAGGING -> stopAutoSlide() // 사용자가 수동으로 스크롤 중이면 자동 슬라이드를 멈춤
-                        ViewPager2.SCROLL_STATE_IDLE -> startAutoSlide()    // 스크롤이 끝나면 자동 슬라이드 다시 시작
+                        ViewPager2.SCROLL_STATE_DRAGGING -> stopAutoSlide()
+                        ViewPager2.SCROLL_STATE_IDLE -> if (autoSlideJob == null || !autoSlideJob!!.isActive) {
+                            startAutoSlide()
+                        }
                     }
                 }
             })
@@ -103,6 +92,9 @@ class TBAMainActivity : AppCompatActivity() {
                             val circularList = makeCircularList(it)
                             bannerAdapter.submitList(circularList)
                             binding.vpBanner.setCurrentItem(1, false)
+                            if (autoSlideJob == null || !autoSlideJob!!.isActive) {
+                                startAutoSlide()
+                            }
                         }
                     }
                 }
@@ -113,7 +105,7 @@ class TBAMainActivity : AppCompatActivity() {
     private fun startAutoSlide() {
         autoSlideJob?.cancel()
         autoSlideJob = lifecycleScope.launch {
-            while (true) {
+            while (isActive) {
                 delay(AUTO_SLIDE_DURATION)
                 val itemCount = binding.vpBanner.adapter?.itemCount ?: 0
                 if (itemCount > 0) {
@@ -126,6 +118,7 @@ class TBAMainActivity : AppCompatActivity() {
 
     private fun stopAutoSlide() {
         autoSlideJob?.cancel()
+        autoSlideJob = null
     }
 
     private fun makeCircularList(banners: List<BannerEntity>): List<BannerEntity> {
