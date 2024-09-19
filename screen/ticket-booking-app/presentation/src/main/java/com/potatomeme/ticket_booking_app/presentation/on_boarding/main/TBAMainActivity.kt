@@ -1,15 +1,11 @@
 package com.potatomeme.ticket_booking_app.presentation.on_boarding.main
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,7 +15,6 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.potatomeme.ticket_booking_app.domain.entity.BannerEntity
-import com.potatomeme.ticket_booking_app.presentation.R
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -113,7 +108,7 @@ class TBAMainActivity : AppCompatActivity() {
     }
 
     private fun initTopMovies() {
-        viewModel.requestFilms()
+        viewModel.requestTopFilms()
 
         binding.rvTopMovies.apply {
             layoutManager = LinearLayoutManager(
@@ -128,7 +123,7 @@ class TBAMainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 //viewmodel flow collect
                 launch {
-                    viewModel.films.collect {
+                    viewModel.topFilms.collect {
                         if (it.isEmpty()) {
                             binding.progressBarTopMovies.visibility = View.VISIBLE
                         } else {
