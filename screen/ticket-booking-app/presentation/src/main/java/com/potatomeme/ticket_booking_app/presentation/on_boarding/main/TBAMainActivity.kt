@@ -28,7 +28,10 @@ class TBAMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTbaMainBinding
     private val viewModel: TBAMainViewModel by viewModels()
     private val bannerAdapter = BannerAdapter()
-    private val filmListAdapter = FilmListAdapter{
+    private val topFilmListAdapter = FilmListAdapter{
+        Log.d(TAG, "onItemClicked: $it")
+    }
+    private val upcomingFilmListAdapter = FilmListAdapter{
         Log.d(TAG, "onItemClicked: $it")
     }
     private var autoSlideJob: Job? = null
@@ -45,6 +48,7 @@ class TBAMainActivity : AppCompatActivity() {
 
         initBanner()
         initTopMovies()
+        initUpComingMovies()
     }
 
     private fun initBanner() {
@@ -116,7 +120,7 @@ class TBAMainActivity : AppCompatActivity() {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-            adapter = filmListAdapter
+            adapter = topFilmListAdapter
         }
 
         lifecycleScope.launch {
@@ -128,7 +132,36 @@ class TBAMainActivity : AppCompatActivity() {
                             binding.progressBarTopMovies.visibility = View.VISIBLE
                         } else {
                             binding.progressBarTopMovies.visibility = View.GONE
-                            filmListAdapter.submitList(it)
+                            topFilmListAdapter.submitList(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initUpComingMovies() {
+        viewModel.requestUpcomingFilms()
+
+        binding.rvUpcoming.apply {
+            layoutManager = LinearLayoutManager(
+                this@TBAMainActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = upcomingFilmListAdapter
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //viewmodel flow collect
+                launch {
+                    viewModel.upcomingFilms.collect {
+                        if (it.isEmpty()) {
+                            binding.progressBarupcoming.visibility = View.VISIBLE
+                        } else {
+                            binding.progressBarupcoming.visibility = View.GONE
+                            upcomingFilmListAdapter.submitList(it)
                         }
                     }
                 }
