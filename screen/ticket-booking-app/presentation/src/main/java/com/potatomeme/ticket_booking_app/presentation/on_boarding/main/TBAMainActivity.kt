@@ -1,8 +1,10 @@
 package com.potatomeme.ticket_booking_app.presentation.on_boarding.main
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -30,6 +33,9 @@ class TBAMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTbaMainBinding
     private val viewModel: TBAMainViewModel by viewModels()
     private val bannerAdapter = BannerAdapter()
+    private val filmListAdapter = FilmListAdapter{
+        Log.d(TAG, "onItemClicked: $it")
+    }
     private var autoSlideJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +43,13 @@ class TBAMainActivity : AppCompatActivity() {
         binding = ActivityTbaMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.requestFilms()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
 
         initBanner()
+        initTopMovies()
     }
 
     private fun initBanner() {
@@ -102,6 +112,35 @@ class TBAMainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initTopMovies() {
+        viewModel.requestFilms()
+
+        binding.rvTopMovies.apply {
+            layoutManager = LinearLayoutManager(
+                this@TBAMainActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = filmListAdapter
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //viewmodel flow collect
+                launch {
+                    viewModel.films.collect {
+                        if (it.isEmpty()) {
+                            binding.progressBarTopMovies.visibility = View.VISIBLE
+                        } else {
+                            binding.progressBarTopMovies.visibility = View.GONE
+                            filmListAdapter.submitList(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private fun startAutoSlide() {
         autoSlideJob?.cancel()
         autoSlideJob = lifecycleScope.launch {
@@ -110,7 +149,9 @@ class TBAMainActivity : AppCompatActivity() {
                 val itemCount = binding.vpBanner.adapter?.itemCount ?: 0
                 if (itemCount > 0) {
                     val nextItem = (binding.vpBanner.currentItem + 1) % itemCount
-                    binding.vpBanner.setCurrentItem(nextItem, true)
+                    if (binding.vpBanner.scrollState == ViewPager2.SCROLL_STATE_IDLE) {
+                        binding.vpBanner.setCurrentItem(nextItem, true)
+                    }
                 }
             }
         }
@@ -126,6 +167,7 @@ class TBAMainActivity : AppCompatActivity() {
         if (banners.isNotEmpty()) {
             circularList.add(banners.last())
             circularList.addAll(banners)
+            circularList.addAll(banners)
             circularList.add(banners.first())
         }
         return circularList
@@ -134,10 +176,9 @@ class TBAMainActivity : AppCompatActivity() {
     private fun handlePageChange(position: Int) {
         val itemCount = bannerAdapter.itemCount
         if (position == 0) {
-            binding.vpBanner.setCurrentItem(itemCount - 2, false)
-        }
-        else if (position == itemCount - 1) {
-            binding.vpBanner.setCurrentItem(1, false)
+            binding.vpBanner.setCurrentItem(itemCount - 2, false) // 첫 페이지 -> 마지막 실제 페이지
+        } else if (position == itemCount - 1) {
+            binding.vpBanner.setCurrentItem(1, false) // 마지막 페이지 -> 첫 번째 실제 페이지
         }
     }
 
