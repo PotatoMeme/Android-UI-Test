@@ -1,7 +1,9 @@
 package com.potatomeme.ticket_booking_app.data
 
+import com.potatomeme.ticket_booking_app.data.model.Banner
 import com.potatomeme.ticket_booking_app.data.model.Cast
 import com.potatomeme.ticket_booking_app.data.model.Film
+import com.potatomeme.ticket_booking_app.domain.entity.BannerEntity
 import com.potatomeme.ticket_booking_app.domain.entity.CastEntity
 import com.potatomeme.ticket_booking_app.domain.entity.FilmEntity
 
@@ -32,6 +34,18 @@ object TBAMapper {
             CastEntity(
                 picUrl = it.picUrl,
                 actor = it.actor
+            )
+        }
+    }
+
+    fun mapperFirebaseBanner(response: List<Banner>): List<BannerEntity> {
+        return response.toBannerEntity()
+    }
+
+    private fun List<Banner>.toBannerEntity(): List<BannerEntity> {
+        return this.map {
+            BannerEntity(
+                image = it.image
             )
         }
     }
