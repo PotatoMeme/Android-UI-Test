@@ -5,5 +5,6 @@ import com.potatomeme.ticket_booking_app.domain.entity.FilmEntity
 
 interface FirebaseRepository {
     suspend fun requestTopFilms(): List<FilmEntity>
+    suspend fun requestUpcomingFilms(): List<FilmEntity>
     suspend fun requestBanners(): List<BannerEntity>
 }
