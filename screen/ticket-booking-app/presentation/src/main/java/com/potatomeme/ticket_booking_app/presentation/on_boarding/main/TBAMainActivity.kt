@@ -19,6 +19,7 @@ import com.potatomeme.ticket_booking_app.domain.entity.BannerEntity
 import com.potatomeme.ticket_booking_app.presentation.R
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -28,6 +29,7 @@ class TBAMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTbaMainBinding
     private val viewModel: TBAMainViewModel by viewModels()
     private val bannerAdapter = BannerAdapter()
+    private var autoSlideJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +78,15 @@ class TBAMainActivity : AppCompatActivity() {
                     super.onPageSelected(position)
                     handlePageChange(position)
                 }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    // 스크롤 상태가 변경될 때 자동 슬라이드를 제어
+                    when (state) {
+                        ViewPager2.SCROLL_STATE_DRAGGING -> stopAutoSlide() // 사용자가 수동으로 스크롤 중이면 자동 슬라이드를 멈춤
+                        ViewPager2.SCROLL_STATE_IDLE -> startAutoSlide()    // 스크롤이 끝나면 자동 슬라이드 다시 시작
+                    }
+                }
             })
         }
 
@@ -95,19 +106,26 @@ class TBAMainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                //viewpager auto slide banner
-                launch {
-                    while (true) {
-                        delay(AUTO_SLIDE_DURATION)
-                        val itemCount = binding.vpBanner.adapter?.itemCount ?: 0
-                        if (itemCount > 0) {
-                            val nextItem = (binding.vpBanner.currentItem + 1) % itemCount
-                            binding.vpBanner.setCurrentItem(nextItem, true)
-                        }
-                    }
+            }
+        }
+    }
+
+    private fun startAutoSlide() {
+        autoSlideJob?.cancel()
+        autoSlideJob = lifecycleScope.launch {
+            while (true) {
+                delay(AUTO_SLIDE_DURATION)
+                val itemCount = binding.vpBanner.adapter?.itemCount ?: 0
+                if (itemCount > 0) {
+                    val nextItem = (binding.vpBanner.currentItem + 1) % itemCount
+                    binding.vpBanner.setCurrentItem(nextItem, true)
                 }
             }
         }
+    }
+
+    private fun stopAutoSlide() {
+        autoSlideJob?.cancel()
     }
 
     private fun makeCircularList(banners: List<BannerEntity>): List<BannerEntity> {
