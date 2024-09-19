@@ -10,10 +10,25 @@ import javax.inject.Inject
 class TBAFirebaseSource @Inject constructor(
     private val database: FirebaseDatabase,
 ) {
-    suspend fun requestFilms(): FirebaseResult<Film> {
+    suspend fun requestTopFilms(): FirebaseResult<Film> {
         return try {
             val items = mutableListOf<Film>()
             val ref = database.getReference(DATABASE_NAME_ITEMS)
+            ref.get().await().children.forEach { snapshot ->
+                snapshot.getValue(Film::class.java)?.let {
+                    items.add(it)
+                }
+            }
+            FirebaseResult.Success(items)
+        } catch (e: Exception) {
+            FirebaseResult.Failure(e)
+        }
+    }
+
+    suspend fun requestUpcomingFilms(): FirebaseResult<Film> {
+        return try {
+            val items = mutableListOf<Film>()
+            val ref = database.getReference(DATABASE_NAME_UPCOMING)
             ref.get().await().children.forEach { snapshot ->
                 snapshot.getValue(Film::class.java)?.let {
                     items.add(it)
@@ -44,6 +59,7 @@ class TBAFirebaseSource @Inject constructor(
         private const val TAG = "TBAFirebaseSource"
         private const val DATABASE_NAME_ITEMS = "items"
         private const val DATABASE_NAME_BANNERS = "banners"
+        private const val DATABASE_NAME_UPCOMING = "upcoming"
     }
 }
 

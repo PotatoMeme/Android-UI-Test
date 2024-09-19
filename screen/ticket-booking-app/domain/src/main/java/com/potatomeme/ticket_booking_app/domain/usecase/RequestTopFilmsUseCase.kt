@@ -4,10 +4,10 @@ import com.potatomeme.ticket_booking_app.domain.entity.FilmEntity
 import com.potatomeme.ticket_booking_app.domain.repository.FirebaseRepository
 import javax.inject.Inject
 
-class RequestFilmsUseCase @Inject constructor(
+class RequestTopFilmsUseCase @Inject constructor(
     private val firebaseRepository: FirebaseRepository,
 ) {
     suspend fun invoke(): List<FilmEntity> {
-        return firebaseRepository.requestFilms()
+        return firebaseRepository.requestTopFilms()
     }
 }

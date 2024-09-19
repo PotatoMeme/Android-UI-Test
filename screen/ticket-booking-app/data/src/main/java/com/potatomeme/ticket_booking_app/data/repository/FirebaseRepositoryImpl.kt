@@ -11,8 +11,8 @@ import javax.inject.Inject
 class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseSource: TBAFirebaseSource,
 ) : FirebaseRepository {
-    override suspend fun requestFilms(): List<FilmEntity> {
-        return when (val result = firebaseSource.requestFilms()) {
+    override suspend fun requestTopFilms(): List<FilmEntity> {
+        return when (val result = firebaseSource.requestTopFilms()) {
             is FirebaseResult.Failure -> emptyList()
             is FirebaseResult.Success -> TBAMapper.mapperFirebaseFilm(result.items)
         }

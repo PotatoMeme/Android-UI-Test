@@ -2,19 +2,10 @@ package com.potatomeme.ticket_booking_app.presentation.on_boarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
-import com.potatomeme.ticket_booking_app.domain.usecase.RequestFilmsUseCase
-import com.potatomeme.ticket_booking_app.presentation.R
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaOnBoadingBinding
 import com.potatomeme.ticket_booking_app.presentation.on_boarding.main.TBAMainActivity
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class TBAOnBoardingActivity : AppCompatActivity() {
 
