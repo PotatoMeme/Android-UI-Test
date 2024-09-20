@@ -16,9 +16,10 @@ import javax.inject.Inject
 class TBASeatListViewModel @Inject constructor(
     private val requestSeatsUseCase: RequestSeatsUseCase
 ) : ViewModel() {
-    private val _seatFlow = MutableStateFlow<SeatLoad>(SeatLoad.Loading)
-    val seatFlow: StateFlow<SeatLoad> = _seatFlow.asStateFlow()
+    private val _seatFlow = MutableStateFlow<SeatLoad<SeatEntity>>(SeatLoad.Loading)
+    val seatFlow: StateFlow<SeatLoad<SeatEntity>> = _seatFlow.asStateFlow()
 
+    //request
     fun requestSeat(id: String) = viewModelScope.launch{
         if (seatFlow.value is SeatLoad.Loaded) _seatFlow.value = SeatLoad.Loading
         delay(1000)
@@ -26,6 +27,7 @@ class TBASeatListViewModel @Inject constructor(
         _seatFlow.value = SeatLoad.Loaded.Requested(seatList)
     }
 
+    //update
     fun updateSeat(position: Int, seatEntity: SeatEntity) {
         val seatLoad = seatFlow.value
         if (seatLoad is SeatLoad.Loaded) {
@@ -37,10 +39,10 @@ class TBASeatListViewModel @Inject constructor(
     }
 }
 
-sealed class SeatLoad {
-    sealed class Loaded(val list: List<SeatEntity>) : SeatLoad(){
-        class Requested(list: List<SeatEntity>) : Loaded(list)
-        class Updated(val pos : Int,list: List<SeatEntity>) : Loaded(list)
+sealed class SeatLoad<out T> {
+    sealed class Loaded<T>(val list: List<T>) : SeatLoad<T>(){
+        class Requested<T>(list: List<T>) : Loaded<T>(list)
+        class Updated<T>(val pos : Int,list: List<T>) : Loaded<T>(list)
     }
-    data object Loading : SeatLoad()
+    data object Loading : SeatLoad<Nothing>()
 }
