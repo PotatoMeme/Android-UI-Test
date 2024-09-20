@@ -1,6 +1,5 @@
-package com.potatomeme.ticket_booking_app.presentation.on_boarding.main
+package com.potatomeme.ticket_booking_app.presentation.main
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
