@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".ui.film_detail.FilmDetailActivity"
+            android:name=".ui.film_detail.TBAFilmDetailActivity"
             android:exported="false"
             android:theme="@style/Theme.TicketBookingApp" />
         <activity

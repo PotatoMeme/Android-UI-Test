@@ -18,7 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.potatomeme.ticket_booking_app.domain.entity.BannerEntity
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaMainBinding
 import com.potatomeme.ticket_booking_app.presentation.mapper.DomainEntityParcelableMapper
-import com.potatomeme.ticket_booking_app.presentation.ui.film_detail.FilmDetailActivity
+import com.potatomeme.ticket_booking_app.presentation.ui.film_detail.TBAFilmDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -33,14 +33,14 @@ class TBAMainActivity : AppCompatActivity() {
     private val bannerAdapter = BannerAdapter()
     private val topFilmListAdapter = FilmListAdapter{
         Log.d(TAG, "topFilm onItemClicked: $it")
-        val intent = Intent(this, FilmDetailActivity::class.java).apply {
+        val intent = Intent(this, TBAFilmDetailActivity::class.java).apply {
             putExtra("film", DomainEntityParcelableMapper.mapToParcelable(it))
         }
         startActivity(intent)
     }
     private val upcomingFilmListAdapter = FilmListAdapter{
         Log.d(TAG, "upcomingFilm onItemClicked: $it")
-        val intent = Intent(this, FilmDetailActivity::class.java).apply {
+        val intent = Intent(this, TBAFilmDetailActivity::class.java).apply {
             putExtra("film", DomainEntityParcelableMapper.mapToParcelable(it))
         }
         startActivity(intent)

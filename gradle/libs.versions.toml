@@ -1,6 +1,6 @@
 [versions]
 agp = "8.5.2"
-blurview = "version-2.0.3"
+blurview = "version-2.0.5"
 chipNavigationBar = "1.4.0"
 datastorePreferences = "1.1.1"
 flexbox = "3.0.0"
