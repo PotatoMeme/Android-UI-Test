@@ -1,5 +1,6 @@
 package com.potatomeme.ticket_booking_app.presentation.ui.film_detail
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
@@ -11,7 +12,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaFilmDetailBinding
+import com.potatomeme.ticket_booking_app.presentation.mapper.DomainEntityParcelableMapper
 import com.potatomeme.ticket_booking_app.presentation.model.ParcelableFilm
+import com.potatomeme.ticket_booking_app.presentation.ui.seat_list.TBASeatListActivity
 import eightbitlab.com.blurview.RenderEffectBlur
 import eightbitlab.com.blurview.RenderScriptBlur
 
@@ -55,6 +58,10 @@ class TBAFilmDetailActivity : AppCompatActivity() {
 
         binding.buyTicketBtn.setOnClickListener {
             //todo move next Activity with film
+            val intent = Intent(this, TBASeatListActivity::class.java).apply {
+                putExtra("film", film)
+            }
+            startActivity(intent)
         }
 
         val radius = 10f
