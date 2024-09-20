@@ -1,5 +1,6 @@
-package com.potatomeme.ticket_booking_app.presentation.main
+package com.potatomeme.ticket_booking_app.presentation.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,8 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.potatomeme.ticket_booking_app.domain.entity.BannerEntity
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaMainBinding
+import com.potatomeme.ticket_booking_app.presentation.mapper.DomainEntityParcelableMapper
+import com.potatomeme.ticket_booking_app.presentation.ui.film_detail.FilmDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -29,10 +32,18 @@ class TBAMainActivity : AppCompatActivity() {
     private val viewModel: TBAMainViewModel by viewModels()
     private val bannerAdapter = BannerAdapter()
     private val topFilmListAdapter = FilmListAdapter{
-        Log.d(TAG, "onItemClicked: $it")
+        Log.d(TAG, "topFilm onItemClicked: $it")
+        val intent = Intent(this, FilmDetailActivity::class.java).apply {
+            putExtra("film", DomainEntityParcelableMapper.mapToParcelable(it))
+        }
+        startActivity(intent)
     }
     private val upcomingFilmListAdapter = FilmListAdapter{
-        Log.d(TAG, "onItemClicked: $it")
+        Log.d(TAG, "upcomingFilm onItemClicked: $it")
+        val intent = Intent(this, FilmDetailActivity::class.java).apply {
+            putExtra("film", DomainEntityParcelableMapper.mapToParcelable(it))
+        }
+        startActivity(intent)
     }
     private var autoSlideJob: Job? = null
 

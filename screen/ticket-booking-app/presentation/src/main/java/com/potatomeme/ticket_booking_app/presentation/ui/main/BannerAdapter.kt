@@ -1,4 +1,4 @@
-package com.potatomeme.ticket_booking_app.presentation.main
+package com.potatomeme.ticket_booking_app.presentation.ui.main
 
 
 import android.view.LayoutInflater

@@ -9,7 +9,7 @@ import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.MainNavHost
 import com.potatomeme.android_ui_test.main.Route
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
-import com.potatomeme.ticket_booking_app.presentation.on_boarding.TBAOnBoardingActivity
+import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                     startActivity(
                         Intent(
                             this,
-                            com.potatomeme.ticket_booking_app.presentation.on_boarding.TBAOnBoardingActivity::class.java
+                            TBAOnBoardingActivity::class.java
                         )
                     )
                 }

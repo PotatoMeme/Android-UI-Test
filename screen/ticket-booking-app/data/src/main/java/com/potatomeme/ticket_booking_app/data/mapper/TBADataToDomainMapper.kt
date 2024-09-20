@@ -1,4 +1,4 @@
-package com.potatomeme.ticket_booking_app.data
+package com.potatomeme.ticket_booking_app.data.mapper
 
 import com.potatomeme.ticket_booking_app.data.model.Banner
 import com.potatomeme.ticket_booking_app.data.model.Cast
@@ -7,7 +7,7 @@ import com.potatomeme.ticket_booking_app.domain.entity.BannerEntity
 import com.potatomeme.ticket_booking_app.domain.entity.CastEntity
 import com.potatomeme.ticket_booking_app.domain.entity.FilmEntity
 
-object TBAMapper {
+object TBADataToDomainMapper {
     fun mapperFirebaseFilm(response: List<Film>): List<FilmEntity> {
         return response.toFilmEntity()
     }

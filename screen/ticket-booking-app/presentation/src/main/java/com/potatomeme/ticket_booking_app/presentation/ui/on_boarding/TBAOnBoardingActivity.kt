@@ -1,11 +1,11 @@
-package com.potatomeme.ticket_booking_app.presentation.on_boarding
+package com.potatomeme.ticket_booking_app.presentation.ui.on_boarding
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaOnBoadingBinding
-import com.potatomeme.ticket_booking_app.presentation.on_boarding.main.TBAMainActivity
+import com.potatomeme.ticket_booking_app.presentation.ui.main.TBAMainActivity
 
 class TBAOnBoardingActivity : AppCompatActivity() {
 
