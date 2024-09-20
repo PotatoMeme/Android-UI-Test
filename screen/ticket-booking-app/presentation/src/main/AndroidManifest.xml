@@ -3,13 +3,16 @@
 
     <application>
         <activity
-            android:name=".main.TBAMainActivity"
-            android:theme="@style/Theme.TicketBookingApp"
+            android:name=".film_detail.FilmDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".main.TBAMainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TicketBookingApp" />
+        <activity
             android:name=".on_boarding.TBAOnBoardingActivity"
-            android:theme="@style/Theme.TicketBookingApp"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.TicketBookingApp" />
     </application>
 
 </manifest>
