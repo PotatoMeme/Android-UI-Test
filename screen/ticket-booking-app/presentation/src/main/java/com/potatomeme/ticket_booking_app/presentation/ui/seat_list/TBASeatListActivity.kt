@@ -1,5 +1,6 @@
 package com.potatomeme.ticket_booking_app.presentation.ui.seat_list
 
+import android.icu.text.DecimalFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.potatomeme.ticket_booking_app.domain.entity.SeatEntity
 import com.potatomeme.ticket_booking_app.presentation.R
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaSeatListBinding
 import com.potatomeme.ticket_booking_app.presentation.model.ParcelableFilm
@@ -106,12 +108,14 @@ class TBASeatListActivity : AppCompatActivity() {
                                 binding.seatRecyclerview.visibility = android.view.View.VISIBLE
                                 binding.seatProgressBar.visibility = android.view.View.GONE
                                 seatAdapter.submitList(it.list)
+                                setPriceInfos(it.list)
                             }
 
                             is VmLoad.Loaded.Updated -> {
                                 binding.seatRecyclerview.visibility = android.view.View.VISIBLE
                                 binding.seatProgressBar.visibility = android.view.View.GONE
                                 seatAdapter.updatePosition(it.pos, it.list)
+                                setPriceInfos(it.list)
                             }
 
                             VmLoad.Loading -> {
@@ -128,6 +132,7 @@ class TBASeatListActivity : AppCompatActivity() {
                             is VmLoad.Loaded -> {
                                 dateAdapter.submitList(it.list)
                             }
+
                             VmLoad.Loading -> {
 
                             }
@@ -149,6 +154,7 @@ class TBASeatListActivity : AppCompatActivity() {
                             is VmLoad.Loaded -> {
                                 timeAdapter.submitList(it.list)
                             }
+
                             VmLoad.Loading -> {
 
                             }
@@ -164,6 +170,15 @@ class TBASeatListActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setPriceInfos(list: List<SeatEntity>) {
+        val selectedCount = list.count { it.status == SeatEntity.SeatStatus.SELECTED }
+        binding.numberSelectedTxt.text = "$selectedCount Seat Selected"
+        val df = DecimalFormat("#.##")
+        val price = df.format(selectedCount * film.price).toDouble()
+        binding.priceTxt.text = price.toString()
+
     }
 
     override fun onResume() {
