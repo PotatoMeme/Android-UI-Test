@@ -11,4 +11,12 @@ class FakeRepositoryImpl @Inject constructor(
     override suspend fun requestSeats(id: String): List<SeatEntity> {
         return fakeDataSource.requestSeats(id)
     }
+
+    override suspend fun requestDateSlots(id: String): List<String> {
+        return fakeDataSource.requestDateSlots(id)
+    }
+
+    override suspend fun requestTimeSlots(id: String, date: String): List<String> {
+        return fakeDataSource.requestTimeSlots(id, date)
+    }
 }
