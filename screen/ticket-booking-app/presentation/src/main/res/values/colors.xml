@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#252b45</color>
     <color name="black2">#28292b</color>
+    <color name="black2_clicked">#A828292B</color>
     <color name="orange">#d14706</color>
     <color name="orange_clicked">#A8D14706</color>
     <color name="gray">#333333</color>

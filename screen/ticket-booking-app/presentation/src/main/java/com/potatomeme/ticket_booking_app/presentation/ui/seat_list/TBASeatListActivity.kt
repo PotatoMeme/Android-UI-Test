@@ -2,6 +2,7 @@ package com.potatomeme.ticket_booking_app.presentation.ui.seat_list
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.potatomeme.ticket_booking_app.presentation.R
 import com.potatomeme.ticket_booking_app.presentation.databinding.ActivityTbaSeatListBinding
 import com.potatomeme.ticket_booking_app.presentation.model.ParcelableFilm
@@ -34,10 +36,19 @@ class TBASeatListActivity : AppCompatActivity() {
                 getColor(R.color.black2),
             )
         ) { position, seatEntity ->
-            viewModel.updateSeat(position, seatEntity )
+            viewModel.updateSeat(position, seatEntity)
         }
     }
-
+    private val dateAdapter: DateAdapter by lazy {
+        DateAdapter { selectPosition ->
+            viewModel.updateSelectedDate(selectPosition)
+        }
+    }
+    private val timeAdapter: TimeAdapter by lazy {
+        TimeAdapter { selectPosition ->
+            viewModel.updateSelectedTime(selectPosition)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +67,7 @@ class TBASeatListActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             finish()
         }
+        //seatRecyclerview init
         binding.seatRecyclerview.apply {
             val gridLayoutManager = GridLayoutManager(this@TBASeatListActivity, 7)
             gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -68,28 +80,86 @@ class TBASeatListActivity : AppCompatActivity() {
             isNestedScrollingEnabled = false
         }
 
+        //dateRecyclerview init
+        binding.dateRecyclerview.apply {
+            layoutManager =
+                LinearLayoutManager(this@TBASeatListActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = dateAdapter
+            isNestedScrollingEnabled = false
+        }
+
+        //timeRecyclerview init
+        binding.timeRecyclerview.apply {
+            layoutManager =
+                LinearLayoutManager(this@TBASeatListActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = timeAdapter
+            isNestedScrollingEnabled = false
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //seatRecyclerview
                 launch {
                     viewModel.seatFlow.collect {
                         when (it) {
-                            is SeatLoad.Loaded.Requested -> {
+                            is VmLoad.Loaded.Requested -> {
                                 binding.seatRecyclerview.visibility = android.view.View.VISIBLE
                                 binding.seatProgressBar.visibility = android.view.View.GONE
                                 seatAdapter.submitList(it.list)
                             }
 
-                            is SeatLoad.Loaded.Updated -> {
+                            is VmLoad.Loaded.Updated -> {
                                 binding.seatRecyclerview.visibility = android.view.View.VISIBLE
                                 binding.seatProgressBar.visibility = android.view.View.GONE
                                 seatAdapter.updatePosition(it.pos, it.list)
                             }
 
-                            SeatLoad.Loading -> {
+                            VmLoad.Loading -> {
                                 binding.seatRecyclerview.visibility = android.view.View.INVISIBLE
                                 binding.seatProgressBar.visibility = android.view.View.VISIBLE
                             }
                         }
+                    }
+                }
+                //dateRecyclerview
+                launch {
+                    viewModel.dateFlow.collect {
+                        when (it) {
+                            is VmLoad.Loaded -> {
+                                dateAdapter.submitList(it.list)
+                            }
+                            VmLoad.Loading -> {
+
+                            }
+                        }
+
+                    }
+                }
+                //date selected
+                launch {
+                    viewModel.selectedDatePositionFlow.collect {
+                        Log.d("TAG", "initViews: selectedDatePositionFlow updated")
+                        dateAdapter.updateSelected(it.first, it.second)
+                    }
+                }
+                //timeRecyclerview
+                launch {
+                    viewModel.timeFlow.collect {
+                        when (it) {
+                            is VmLoad.Loaded -> {
+                                timeAdapter.submitList(it.list)
+                            }
+                            VmLoad.Loading -> {
+
+                            }
+                        }
+                    }
+                }
+                //time selected
+                launch {
+                    viewModel.selectedTimePositionFlow.collect {
+                        Log.d("TAG", "initViews: selectedTimePositionFlow updated")
+                        timeAdapter.updateSelected(it.first, it.second)
                     }
                 }
             }
@@ -99,6 +169,8 @@ class TBASeatListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.requestSeat(film.title!!)
+        viewModel.requestDate(film.title!!)
+        viewModel.requestTime(film.title!!)
     }
 }
 
