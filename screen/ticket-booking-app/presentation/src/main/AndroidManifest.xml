@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".ui.seat_list.TBASeatListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TicketBookingApp"/>
+        <activity
+            android:name=".ui.film_detail.TBAFilmDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TicketBookingApp" />
+        <activity
+            android:name=".ui.main.TBAMainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TicketBookingApp" />
+        <activity
+            android:name=".ui.on_boarding.TBAOnBoardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TicketBookingApp" />
+    </application>
+
+</manifest>

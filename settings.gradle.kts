@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://www.jitpack.io" ) }
     }
 }
 dependencyResolutionManagement {
@@ -16,6 +17,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://www.jitpack.io" ) }
     }
 }
 
@@ -24,3 +26,6 @@ include(":app")
 include(":custom-ui:sample")
 include(":custom-ui:chart")
 include(":screen:planfit")
+include(":screen:ticket-booking-app:presentation")
+include(":screen:ticket-booking-app:data")
+include(":screen:ticket-booking-app:domain")

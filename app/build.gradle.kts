@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     id("kotlin-kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -61,6 +62,10 @@ dependencies {
     implementation(project(":custom-ui:sample"))
     implementation(project(":custom-ui:chart"))
     implementation(project(":screen:planfit"))
+    //tba - ticket booking app
+    implementation(project(":screen:ticket-booking-app:presentation"))
+    implementation(project(":screen:ticket-booking-app:domain"))
+    implementation(project(":screen:ticket-booking-app:data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -85,4 +90,7 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //firebase
+    implementation(libs.firebase.database)
 }

@@ -9,6 +9,7 @@ import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.MainNavHost
 import com.potatomeme.android_ui_test.main.Route
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
+import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -74,7 +75,25 @@ class MainActivity : ComponentActivity() {
                     startActivity(
                         Intent(
                             this,
-                            com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity::class.java
+                            TBAOnBoardingActivity::class.java
+                        )
+                    )
+                }
+            )
+        ),
+        Route.ItemRoute(
+            route = "TBA Ticket Booking App CloneCoding",
+            contentDescription = "TBA Ticket Booking App CloneCoding",
+            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            itemType = ItemType.UI_SCREEN,
+            subItems = arrayOf(
+                Pair(
+                    "xml"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            TBAOnBoardingActivity::class.java
                         )
                     )
                 }
