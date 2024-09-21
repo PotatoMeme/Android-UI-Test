@@ -82,6 +82,8 @@ class TBASeatListViewModel @Inject constructor(
 
     fun updateSelectedTime(position: Int) = viewModelScope.launch {
         _selectedTimePositionFlow.value = Pair(selectedTimePositionFlow.value.second, position)
+        val seatList = requestSeatsUseCase.invoke("")
+        _seatFlow.value = VmLoad.Loaded.Requested(seatList)
     }
 
     private fun initSelectedTimeAndSeat() = viewModelScope.launch {
