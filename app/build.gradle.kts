@@ -66,6 +66,10 @@ dependencies {
     implementation(project(":screen:ticket-booking-app:presentation"))
     implementation(project(":screen:ticket-booking-app:domain"))
     implementation(project(":screen:ticket-booking-app:data"))
+    //cip - cat image provider
+    implementation(project(":screen:cat-image-provider:presentation"))
+    implementation(project(":screen:cat-image-provider:domain"))
+    implementation(project(":screen:cat-image-provider:data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
