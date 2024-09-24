@@ -9,6 +9,7 @@ import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.MainNavHost
 import com.potatomeme.android_ui_test.main.Route
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
+import com.potatomeme.cat_image_provider.presentation.on_boarding.CIPOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
 class MainActivity : ComponentActivity() {
@@ -94,6 +95,24 @@ class MainActivity : ComponentActivity() {
                         Intent(
                             this,
                             TBAOnBoardingActivity::class.java
+                        )
+                    )
+                }
+            )
+        ),
+        Route.ItemRoute(
+            route = "CIP Cat Image Provider",
+            contentDescription = "CIP Cat Image Provider develop",
+            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            itemType = ItemType.UI_SCREEN,
+            subItems = arrayOf(
+                Pair(
+                    "xml"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CIPOnBoardingActivity::class.java
                         )
                     )
                 }

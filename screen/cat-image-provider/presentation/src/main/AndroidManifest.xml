@@ -3,6 +3,7 @@
 
     <application>
         <activity
+            android:theme="@style/Theme.CIP"
             android:name=".on_boarding.CIPOnBoardingActivity"
             android:exported="false" />
     </application>

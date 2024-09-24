@@ -14,5 +14,4 @@ class CatRoomDataSource @Inject constructor(private val catDao: CatDao) {
     //delete
     suspend fun deleteCatById(id: String) = catDao.deleteCatById(id)
     suspend fun deleteAllCats() = catDao.deleteAllCats()
-
 }

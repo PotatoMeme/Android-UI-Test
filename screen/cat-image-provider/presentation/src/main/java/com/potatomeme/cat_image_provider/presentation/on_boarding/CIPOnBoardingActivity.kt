@@ -1,21 +1,23 @@
 package com.potatomeme.cat_image_provider.presentation.on_boarding
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.potatomeme.cat_image_provider.presentation.R
+import androidx.lifecycle.lifecycleScope
+import com.potatomeme.cat_image_provider.presentation.databinding.ActivityCipOnBoardingBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CIPOnBoardingActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityCipOnBoardingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_cip_on_boarding)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityCipOnBoardingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        lifecycleScope.launch {
+            delay(3000)
+            //startActivity(Intent(this@CIPOnBoardingActivity, MainActivity::class.java))
+            //finish()
         }
     }
 }
