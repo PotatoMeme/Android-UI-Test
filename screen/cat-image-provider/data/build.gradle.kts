@@ -63,7 +63,7 @@ dependencies {
     // optional - Test helpers
     testImplementation(libs.androidx.room.testing)
     // optional - Paging 3 Integration
-    implementation(libs.androidx.room.paging)
+    //implementation(libs.androidx.room.paging)
 
 
     //retrofit
@@ -76,6 +76,6 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     //paging
-    implementation(libs.common)
-    implementation(libs.runtime)
+    //implementation(libs.common)
+    //implementation(libs.runtime)
 }
