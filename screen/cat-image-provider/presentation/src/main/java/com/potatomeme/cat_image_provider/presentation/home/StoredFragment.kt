@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import com.potatomeme.cat_image_provider.presentation.R
 import com.potatomeme.cat_image_provider.presentation.databinding.FragmentHomeBinding
 import com.potatomeme.cat_image_provider.presentation.databinding.FragmentStoredBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class StoredFragment : Fragment() {
     private var binding: FragmentStoredBinding? = null
 

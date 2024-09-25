@@ -11,7 +11,9 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.potatomeme.cat_image_provider.presentation.R
 import com.potatomeme.cat_image_provider.presentation.databinding.ActivityCipHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CIPHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCipHomeBinding
 
