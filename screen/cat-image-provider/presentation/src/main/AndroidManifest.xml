@@ -3,9 +3,13 @@
 
     <application>
         <activity
-            android:theme="@style/Theme.CIP"
+            android:name=".home.CIPHomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CIP" />
+        <activity
             android:name=".on_boarding.CIPOnBoardingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.CIP" />
     </application>
 
 </manifest>
