@@ -8,8 +8,8 @@ interface CatRepository {
     //retrofit
     suspend fun requestCats(limit: Int, page: Int, order: String): Result<List<CatEntity>>
     fun requestPagingCats(): Flow<PagingData<CatEntity>>
-
     //room
+    fun getSavedCats(): Flow<PagingData<CatEntity>>
     suspend fun getSizedCats(size: Int): List<CatEntity>
     suspend fun getCatById(id: String): Result<CatEntity>
     suspend fun getCatByUrl(url: String): Result<CatEntity>

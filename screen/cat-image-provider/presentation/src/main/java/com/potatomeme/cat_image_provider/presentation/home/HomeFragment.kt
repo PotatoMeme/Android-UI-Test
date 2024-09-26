@@ -7,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.potatomeme.cat_image_provider.presentation.R
 import com.potatomeme.cat_image_provider.presentation.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,6 +27,7 @@ class HomeFragment : Fragment() {
     private val adapter: CatPagingAdapter by lazy {
         CatPagingAdapter {
             //todo item click
+            viewModel.insertCat(it)
         }
     }
 
@@ -44,7 +42,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //viewModel.requestCats()
-        viewModel.requestPagingCats()
+        //viewModel.requestPagingCats()
         binding?.run {
             rvRequestedCatImages.apply {
                 adapter = this@HomeFragment.adapter
@@ -53,7 +51,6 @@ class HomeFragment : Fragment() {
                         gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
                     }
             }
-
         }
 
         lifecycleScope.launch {
