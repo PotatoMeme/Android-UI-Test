@@ -1,12 +1,17 @@
 package com.potatomeme.cat_image_provider.data.repository
 
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.potatomeme.cat_image_provider.data.mapper.CIPDataToDomainMapper.toData
 import com.potatomeme.cat_image_provider.data.mapper.CIPDataToDomainMapper.toDomain
+import com.potatomeme.cat_image_provider.data.paging.CatPagingSource
 import com.potatomeme.cat_image_provider.data.source.local.CatRoomDataSource
 import com.potatomeme.cat_image_provider.data.source.remote.CatRetrofitDataSource
 import com.potatomeme.cat_image_provider.domain.entity.CatEntity
 import com.potatomeme.cat_image_provider.domain.repository.CatRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CatRepositoryImpl @Inject constructor(
@@ -32,6 +37,16 @@ class CatRepositoryImpl @Inject constructor(
         ) {
             Result.failure(e)
         }
+    }
+
+    override fun requestPagingCats(): Flow<PagingData<CatEntity>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { CatPagingSource(catRetrofitDataSource) }
+        ).flow
     }
 
     override suspend fun getSizedCats(size: Int): List<CatEntity> {

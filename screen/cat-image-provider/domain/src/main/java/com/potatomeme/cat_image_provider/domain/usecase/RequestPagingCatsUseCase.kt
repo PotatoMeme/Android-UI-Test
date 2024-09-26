@@ -3,8 +3,8 @@ package com.potatomeme.cat_image_provider.domain.usecase
 import com.potatomeme.cat_image_provider.domain.repository.CatRepository
 import javax.inject.Inject
 
-class DeleteAllCatsUseCase @Inject constructor(
+class RequestPagingCatsUseCase @Inject constructor(
     private val catRepository: CatRepository,
 ) {
-    suspend operator fun invoke() = catRepository.deleteAllCats()
+    operator fun invoke() = catRepository.requestPagingCats()
 }

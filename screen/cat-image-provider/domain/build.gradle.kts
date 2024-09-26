@@ -17,5 +17,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 dependencies {
     implementation("javax.inject:javax.inject:1")
-    testImplementation(libs.paging.common)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation("androidx.paging:paging-common-ktx:3.3.2")
 }
