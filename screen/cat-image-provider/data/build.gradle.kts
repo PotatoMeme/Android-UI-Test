@@ -76,6 +76,5 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     //paging
-    //implementation(libs.common)
-    //implementation(libs.runtime)
+    implementation(libs.paging.runtime)
 }

@@ -17,4 +17,5 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 dependencies {
     implementation("javax.inject:javax.inject:1")
+    testImplementation(libs.paging.common)
 }
