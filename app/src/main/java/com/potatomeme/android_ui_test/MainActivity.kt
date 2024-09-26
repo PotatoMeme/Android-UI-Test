@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.content.ContextCompat.startActivity
 import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.MainNavHost
 import com.potatomeme.android_ui_test.main.Route
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
 import com.potatomeme.cat_image_provider.presentation.on_boarding.CIPOnBoardingActivity
+import com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
 class MainActivity : ComponentActivity() {
@@ -17,19 +19,11 @@ class MainActivity : ComponentActivity() {
         private const val TAG = "MainActivity"
     }
 
-
-    private val routeList: List<Route.ItemRoute> = listOf(
-        /*sampleRoute(0),
-        sampleRoute(1),
-        sampleRoute(2),
-        sampleRoute(3),
-        sampleRoute(4),
-        sampleRoute(5),
-        sampleRoute(6),*/
+    private val customViewList = listOf(
         Route.ItemRoute(
             route = "CustomView Sample",
-            contentDescription = "CustomView Sample description",
-            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            contentDescription = "CustomView : Draw Canvas description",
+            drawableId = R.drawable.drawcanvas,
             itemType = ItemType.CUSTOM_VIEW,
             subItems = arrayOf(
                 Pair(
@@ -47,8 +41,8 @@ class MainActivity : ComponentActivity() {
         ),
         Route.ItemRoute(
             route = "CustomView Chart",
-            contentDescription = "CustomView Chart description",
-            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            contentDescription = "CustomView : Chart description",
+            drawableId = R.drawable.chart,
             itemType = ItemType.CUSTOM_VIEW,
             subItems = arrayOf(
                 Pair(
@@ -63,11 +57,14 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             )
-        ),
+        )
+    )
+
+    private val screenList = listOf(
         Route.ItemRoute(
             route = "Planfit CloneCoding",
-            contentDescription = "Planfit CloneCoding description",
-            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            contentDescription = "Planfit : CloneCoding description",
+            drawableId = R.drawable.planfit,
             itemType = ItemType.UI_SCREEN,
             subItems = arrayOf(
                 Pair(
@@ -76,7 +73,7 @@ class MainActivity : ComponentActivity() {
                     startActivity(
                         Intent(
                             this,
-                            TBAOnBoardingActivity::class.java
+                            PlanfitOnBoardingActivity::class.java
                         )
                     )
                 }
@@ -84,8 +81,8 @@ class MainActivity : ComponentActivity() {
         ),
         Route.ItemRoute(
             route = "TBA Ticket Booking App CloneCoding",
-            contentDescription = "TBA Ticket Booking App CloneCoding",
-            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            contentDescription = "TBA : Ticket Booking App CloneCoding",
+            drawableId = R.drawable.tba,
             itemType = ItemType.UI_SCREEN,
             subItems = arrayOf(
                 Pair(
@@ -102,8 +99,8 @@ class MainActivity : ComponentActivity() {
         ),
         Route.ItemRoute(
             route = "CIP Cat Image Provider",
-            contentDescription = "CIP Cat Image Provider develop",
-            drawableId = R.drawable.ic_launcher_foreground,//나중에 스크린샷으로 변경
+            contentDescription = "CIP : Cat Image Provider develop",
+            drawableId = R.drawable.cip,
             itemType = ItemType.UI_SCREEN,
             subItems = arrayOf(
                 Pair(
@@ -118,8 +115,10 @@ class MainActivity : ComponentActivity() {
                 }
             )
         )
-
     )
+
+
+    private val routeList: List<Route.ItemRoute> = customViewList + screenList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

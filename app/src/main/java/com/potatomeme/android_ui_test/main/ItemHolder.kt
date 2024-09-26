@@ -45,7 +45,7 @@ fun ItemHolder(route: Route.ItemRoute, onItemClick: () -> Unit) {
                     .background(MaterialTheme.colorScheme.secondary),
                 painter = painterResource(id = route.drawableId),
                 contentDescription = route.contentDescription,
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Crop
             )
             Text(
                 fontWeight = FontWeight.Bold,
