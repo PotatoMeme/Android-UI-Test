@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".home.CIPHomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CIP" />
+        <activity
+            android:name=".on_boarding.CIPOnBoardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CIP" />
+    </application>
+
+</manifest>

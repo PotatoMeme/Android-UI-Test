@@ -14,6 +14,10 @@
             <option value="$PROJECT_DIR$/custom-ui/chart" />
             <option value="$PROJECT_DIR$/custom-ui/sample" />
             <option value="$PROJECT_DIR$/screen" />
+            <option value="$PROJECT_DIR$/screen/cat-image-provider" />
+            <option value="$PROJECT_DIR$/screen/cat-image-provider/data" />
+            <option value="$PROJECT_DIR$/screen/cat-image-provider/domain" />
+            <option value="$PROJECT_DIR$/screen/cat-image-provider/presentation" />
             <option value="$PROJECT_DIR$/screen/planfit" />
             <option value="$PROJECT_DIR$/screen/ticket-booking-app" />
             <option value="$PROJECT_DIR$/screen/ticket-booking-app/data" />
