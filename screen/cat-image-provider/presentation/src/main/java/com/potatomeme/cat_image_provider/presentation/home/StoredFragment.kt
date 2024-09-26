@@ -5,14 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.potatomeme.cat_image_provider.presentation.R
 import com.potatomeme.cat_image_provider.presentation.databinding.FragmentHomeBinding
 import com.potatomeme.cat_image_provider.presentation.databinding.FragmentStoredBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class StoredFragment : Fragment() {
     private var binding: FragmentStoredBinding? = null
+    private val viewModel: HomeViewModel by activityViewModels()
+    private val adapter: CatPagingAdapter by lazy {
+        CatPagingAdapter {
+            //todo item click
+            viewModel.deleteCat(it.id)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,8 +38,24 @@ class StoredFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.let {
+        binding?.run {
+            rvRequestedCatImages.apply {
+                adapter = this@StoredFragment.adapter
+                layoutManager =
+                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
+                        gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+                    }
+            }
+        }
 
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.getSavedCats.collect {
+                        adapter.submitData(it)
+                    }
+                }
+            }
         }
     }
 

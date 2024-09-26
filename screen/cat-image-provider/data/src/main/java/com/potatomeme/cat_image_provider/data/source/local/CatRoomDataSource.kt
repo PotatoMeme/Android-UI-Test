@@ -6,6 +6,7 @@ import javax.inject.Inject
 
 class CatRoomDataSource @Inject constructor(private val catDao: CatDao) {
     //select == get
+    fun getPagingCats() = catDao.getPagingCats()
     suspend fun getAllCats() = catDao.getAllCats()
     suspend fun getCatById(id: String) = catDao.getCatById(id)
     suspend fun getCatByUrl(url: String) = catDao.getCatByUrl(url)
