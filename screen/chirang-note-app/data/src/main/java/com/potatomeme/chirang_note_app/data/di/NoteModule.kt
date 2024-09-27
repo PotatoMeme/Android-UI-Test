@@ -21,5 +21,4 @@ class NoteModule {
     @Provides
     @Singleton
     fun provideNoteDao(noteDatabase: NoteDatabase) = noteDatabase.noteDao()
-
 }
