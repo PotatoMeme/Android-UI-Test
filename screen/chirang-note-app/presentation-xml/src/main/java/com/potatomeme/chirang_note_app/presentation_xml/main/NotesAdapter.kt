@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.ItemContainerNoteBinding
-import com.potatomeme.chirang_note_app.presentation_xml.model.Note
+import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 
-class NotesAdapter(private val onItemClick: (note: Note, position: Int) -> Unit) :
-    ListAdapter<Note, NotesAdapter.NoteViewHolder>(diffCallback) {
+class NotesAdapter(private val onItemClick: (note: ParcelableNote, position: Int) -> Unit) :
+    ListAdapter<ParcelableNote, NotesAdapter.NoteViewHolder>(diffCallback) {
     inner class NoteViewHolder(private val binding: ItemContainerNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: Note) {
+        fun bind(note: ParcelableNote) {
             binding.textTitle.text = note.title
             if (note.subtitle?.trim()?.isEmpty() != false) {
                 binding.textSubtitle.visibility = View.GONE
@@ -50,12 +50,12 @@ class NotesAdapter(private val onItemClick: (note: Note, position: Int) -> Unit)
     }
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<Note>() {
-            override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+        private val diffCallback = object : DiffUtil.ItemCallback<ParcelableNote>() {
+            override fun areItemsTheSame(oldItem: ParcelableNote, newItem: ParcelableNote): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+            override fun areContentsTheSame(oldItem: ParcelableNote, newItem: ParcelableNote): Boolean {
                 return oldItem == newItem
             }
         }

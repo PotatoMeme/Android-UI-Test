@@ -3,7 +3,7 @@ package com.potatomeme.chirang_note_app.presentation_xml.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Note(
+data class ParcelableNote(
     val id: Int,
     val title: String?,
     val dateTime: String?,
@@ -42,12 +42,12 @@ data class Note(
         return "$title：$dateTime"
     }
 
-    companion object CREATOR : Parcelable.Creator<Note> {
-        override fun createFromParcel(parcel: Parcel): Note {
-            return Note(parcel)
+    companion object CREATOR : Parcelable.Creator<ParcelableNote> {
+        override fun createFromParcel(parcel: Parcel): ParcelableNote {
+            return ParcelableNote(parcel)
         }
 
-        override fun newArray(size: Int): Array<Note?> {
+        override fun newArray(size: Int): Array<ParcelableNote?> {
             return arrayOfNulls(size)
         }
     }
