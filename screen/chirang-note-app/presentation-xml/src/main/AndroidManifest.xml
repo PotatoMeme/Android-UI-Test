@@ -4,7 +4,7 @@
     <application>
         <activity
             android:theme="@style/Theme.Notes"
-            android:name=".CNAMainActivity"
+            android:name=".main.CNAMainActivity"
             android:exported="false" />
     </application>
 
