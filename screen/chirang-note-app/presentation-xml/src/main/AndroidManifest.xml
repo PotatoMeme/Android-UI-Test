@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--when api 33 or higher not use READ_EXTERNAL_STORAGE permission-->
+    <!--then use READ_MEDIA_IMAGES permission-->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <application>
         <activity
             android:theme="@style/Theme.Notes"

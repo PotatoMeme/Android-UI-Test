@@ -152,13 +152,19 @@ class CNAMainActivity : AppCompatActivity() {
             //todo go to add note activity
             //activityStartForResult.launch(Intent(this, CNANoteActivity::class.java))
         }
+
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
         binding.imageAddImage.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     applicationContext,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+                    permission
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissionLauncher.launch(permission)
             } else {
                 selectImage()
             }
