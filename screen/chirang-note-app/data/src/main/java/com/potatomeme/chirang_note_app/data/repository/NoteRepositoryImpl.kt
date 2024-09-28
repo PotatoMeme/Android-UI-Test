@@ -7,17 +7,19 @@ import com.potatomeme.chirang_note_app.domain.entity.NoteEntity
 import com.potatomeme.chirang_note_app.domain.repository.NoteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class NoteRepositoryImpl @Inject constructor(
-    private val noteDao: NoteDao
-):NoteRepository {
-    override suspend fun getAllNotes(): Flow<List<NoteEntity>> {
+    private val noteDao: NoteDao,
+) : NoteRepository {
+    override fun getAllNotes(): Flow<List<NoteEntity>> {
         return flow {
-            val noteEntities = noteDao.getAllNotes().map {
-                it.toDomain()
+            noteDao.getAllNotes().collect { notes ->
+                emit(notes.map { note ->
+                    note.toDomain()
+                })
             }
-            emit(noteEntities)
         }
     }
 

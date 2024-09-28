@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface NoteRepository {
-    suspend fun getAllNotes(): Flow<List<NoteEntity>>
+    fun getAllNotes(): Flow<List<NoteEntity>>
     suspend fun insertNote(noteEntity: NoteEntity)
     suspend fun deleteNote(noteEntity: NoteEntity)
 }

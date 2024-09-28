@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
 
+    alias(libs.plugins.kotlin.serialization)
     id("kotlin-kapt")
+    alias(libs.plugins.hilt)
 }
 
 android {
