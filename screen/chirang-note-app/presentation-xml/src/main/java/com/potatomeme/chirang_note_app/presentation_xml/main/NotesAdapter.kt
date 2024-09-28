@@ -14,7 +14,7 @@ import android.view.LayoutInflater
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.ItemContainerNoteBinding
 import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 
-class NotesAdapter(private val onItemClick: (note: ParcelableNote, position: Int) -> Unit) :
+class NotesAdapter(private val onItemClick: (note: ParcelableNote) -> Unit) :
     ListAdapter<ParcelableNote, NotesAdapter.NoteViewHolder>(diffCallback) {
     inner class NoteViewHolder(private val binding: ItemContainerNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -44,18 +44,24 @@ class NotesAdapter(private val onItemClick: (note: ParcelableNote, position: Int
                 }
             }
             binding.layoutNote.setOnClickListener {
-                onItemClick(note, adapterPosition)
+                onItemClick(note)
             }
         }
     }
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<ParcelableNote>() {
-            override fun areItemsTheSame(oldItem: ParcelableNote, newItem: ParcelableNote): Boolean {
+            override fun areItemsTheSame(
+                oldItem: ParcelableNote,
+                newItem: ParcelableNote,
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: ParcelableNote, newItem: ParcelableNote): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ParcelableNote,
+                newItem: ParcelableNote,
+            ): Boolean {
                 return oldItem == newItem
             }
         }
