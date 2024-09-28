@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class ParcelableNote(
-    val id: Int,
+    val id: Int = 0,
     val title: String?,
     val dateTime: String?,
     val subtitle: String?,
