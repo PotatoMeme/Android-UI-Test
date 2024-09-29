@@ -21,7 +21,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.potatomeme.chirang_note_app.domain.usecase.DeleteNoteUseCase
 import com.potatomeme.chirang_note_app.domain.usecase.InsertNoteUseCase
@@ -49,7 +48,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
                     val uri = result.data?.data
                     uri?.let {
                         try {
-                            Glide.with(this).load(uri).into(binding.imageNote)
+                            binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(getPathFromUri(uri)))
                             binding.imageNote.visibility = View.VISIBLE
                             binding.imageRemoveImage.visibility = View.VISIBLE
                             selectedImagePath = getPathFromUri(uri) ?: ""
@@ -86,7 +85,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
         addUrlBinding.inputURL.requestFocus()
         addUrlBinding.textAdd.setOnClickListener {
             val inputURLStr = addUrlBinding.inputURL.text.toString().trim()
-            if (inputURLStr.isNotEmpty()) {
+            if (inputURLStr.isEmpty()) {
                 Toast.makeText(this@CNACreateNoteActivity, "Enter URL", Toast.LENGTH_SHORT).show()
             } else if (!Patterns.WEB_URL.matcher(inputURLStr).matches()) {
                 Toast.makeText(this@CNACreateNoteActivity, "Enter valid URL", Toast.LENGTH_SHORT)
@@ -223,7 +222,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
 
         val note = ParcelableNote(
-            id = if (alreadyAvailableNote != null) alreadyAvailableNote!!.id else 0,
+            id =  alreadyAvailableNote?.id ?: 0,
             title = noteTitle,
             dateTime = noteDateTime,
             subtitle = noteSubtitle,

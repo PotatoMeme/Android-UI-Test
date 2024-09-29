@@ -59,8 +59,8 @@ dependencies {
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
 
-    //glide
-    implementation (libs.glide)
+    //roundedimageview
+    implementation (libs.roundedimageview)
 
     //viewmodel - ktx
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
