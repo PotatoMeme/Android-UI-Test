@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -116,9 +117,9 @@ class CNAMainActivity : AppCompatActivity() {
             dialog.window?.setBackgroundDrawable(colorDrawable)
         }
         binding.inputURL.requestFocus()
-        binding.textAdd.setOnClickListener {
+        val doneAction = {
             val inputURLStr = binding.inputURL.text.toString().trim()
-            if (inputURLStr.isNotEmpty()) {
+            if (inputURLStr.isEmpty()) {
                 Toast.makeText(this, "Enter URL", Toast.LENGTH_SHORT).show()
             } else if (!Patterns.WEB_URL.matcher(inputURLStr).matches()) {
                 Toast.makeText(this, "Enter valid URL", Toast.LENGTH_SHORT).show()
@@ -131,6 +132,17 @@ class CNAMainActivity : AppCompatActivity() {
                     putExtra("URL", inputURLStr)
                 })
             }
+        }
+        binding.inputURL.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                doneAction()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+
+        binding.textAdd.setOnClickListener {
+            doneAction()
         }
         binding.textCancel.setOnClickListener { dialog.dismiss() }
         dialog
@@ -179,7 +191,7 @@ class CNAMainActivity : AppCompatActivity() {
                 selectImage()
             }
         }
-        binding.imageAddNote.setOnClickListener {
+        binding.imageAddWebLink.setOnClickListener {
             showAddURLDialog()
         }
 
