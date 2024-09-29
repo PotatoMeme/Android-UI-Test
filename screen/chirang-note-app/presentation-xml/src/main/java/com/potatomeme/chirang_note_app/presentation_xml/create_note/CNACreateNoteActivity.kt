@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.LinearLayout
@@ -48,7 +49,13 @@ class CNACreateNoteActivity : AppCompatActivity() {
                     val uri = result.data?.data
                     uri?.let {
                         try {
-                            binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(getPathFromUri(uri)))
+                            binding.imageNote.setImageBitmap(
+                                BitmapFactory.decodeFile(
+                                    getPathFromUri(
+                                        uri
+                                    )
+                                )
+                            )
                             binding.imageNote.visibility = View.VISIBLE
                             binding.imageRemoveImage.visibility = View.VISIBLE
                             selectedImagePath = getPathFromUri(uri) ?: ""
@@ -205,6 +212,19 @@ class CNACreateNoteActivity : AppCompatActivity() {
             binding.textWebURL.text = webURLStr
             binding.layoutWebURL.visibility = View.VISIBLE
         }
+
+        val colorStr = alreadyAvailableNote?.color
+        if (colorStr != null && colorStr.trim().isNotEmpty()) {
+            selectedNoteColor = colorStr
+            setSubtitleIndicatorColor()
+            when (colorStr) {
+                "#333333" -> binding.layoutMiscellaneous.imageColor1.setImageResource(R.drawable.ic_done)
+                "#FDBE3B" -> binding.layoutMiscellaneous.imageColor2.setImageResource(R.drawable.ic_done)
+                "#FF4842" -> binding.layoutMiscellaneous.imageColor3.setImageResource(R.drawable.ic_done)
+                "#3A52FC" -> binding.layoutMiscellaneous.imageColor4.setImageResource(R.drawable.ic_done)
+                "#000000" -> binding.layoutMiscellaneous.imageColor5.setImageResource(R.drawable.ic_done)
+            }
+        }
     }
 
     private fun saveNote() {
@@ -222,7 +242,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
 
         val note = ParcelableNote(
-            id =  alreadyAvailableNote?.id ?: 0,
+            id = alreadyAvailableNote?.id ?: 0,
             title = noteTitle,
             dateTime = noteDateTime,
             subtitle = noteSubtitle,
@@ -232,6 +252,8 @@ class CNACreateNoteActivity : AppCompatActivity() {
             webLink = if (binding.layoutWebURL.visibility == View.VISIBLE) binding.textWebURL.getText()
                 .toString() else null
         )
+
+        Log.d(TAG, "saveNote: ${note.webLink}")
 
         lifecycleScope.launch {
             insertNoteUseCase.invoke(note.toDomain())

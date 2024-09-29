@@ -42,6 +42,7 @@ class CNAMainActivity : AppCompatActivity() {
     private val viewModel: CNAMainViewModel by viewModels()
     private val adapter: NotesAdapter by lazy {
         NotesAdapter { note ->
+            Log.d(TAG, "noteClicked ${note.webLink}")
             activityStartForResult.launch(
                 Intent(
                     this@CNAMainActivity,
@@ -61,7 +62,7 @@ class CNAMainActivity : AppCompatActivity() {
             ) {
                 //todo image
                 val uri = result.data?.data
-                Log.d(TAG, "getImage : $uri")
+                Log.d(TAG, "getImage : $uri")//content uri
                 uri?.let {
                     try {
                         val selectedImagePath = getPathFromUri(uri)

@@ -32,6 +32,7 @@ data class ParcelableNote(
         parcel.writeString(noteText)
         parcel.writeString(imagePath)
         parcel.writeString(color)
+        parcel.writeString(webLink)
     }
 
     override fun describeContents(): Int {
