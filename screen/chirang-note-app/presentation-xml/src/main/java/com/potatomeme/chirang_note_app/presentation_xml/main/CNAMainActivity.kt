@@ -13,6 +13,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -220,6 +221,22 @@ class CNAMainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.root.setOnTouchListener { _, _ ->
+            if (currentFocus != null) {
+                hideKeyboard()
+            }
+            return@setOnTouchListener false
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputManager =
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(
+            currentFocus!!.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 
     //url dialog 보이기

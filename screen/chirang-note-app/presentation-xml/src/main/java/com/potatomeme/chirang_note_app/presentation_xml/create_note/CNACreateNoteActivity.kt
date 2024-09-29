@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -23,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.potatomeme.chirang_note_app.domain.usecase.DeleteNoteUseCase
 import com.potatomeme.chirang_note_app.domain.usecase.InsertNoteUseCase
 import com.potatomeme.chirang_note_app.presentation_xml.R
@@ -190,8 +192,23 @@ class CNACreateNoteActivity : AppCompatActivity() {
                     binding.layoutWebURL.visibility = View.VISIBLE
                 }
             }
-
         }
+
+        binding.root.setOnTouchListener { _, _ ->
+            if (currentFocus != null) {
+                hideKeyboard()
+            }
+            return@setOnTouchListener false
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputManager =
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(
+            currentFocus!!.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 
     private fun setViewOrUpdateNote() {
@@ -398,6 +415,8 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
         return filePath
     }
+
+
 
 
     companion object {
