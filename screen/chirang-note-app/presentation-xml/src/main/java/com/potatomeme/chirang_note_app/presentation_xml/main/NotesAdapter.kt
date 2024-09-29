@@ -27,7 +27,7 @@ class NotesAdapter(private val onItemClick: (note: ParcelableNote) -> Unit) :
             }
             binding.textDateTime.text = note.dateTime
 
-            binding.layoutNote.background = GradientDrawable().apply {
+            (binding.layoutNote.background as GradientDrawable).apply {
                 setColor(
                     Color.parseColor(
                         note.color ?: "#333333"
