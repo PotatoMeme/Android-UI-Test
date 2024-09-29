@@ -116,9 +116,6 @@ class CNACreateNoteActivity : AppCompatActivity() {
                 alreadyAvailableNote?.let {
                     deleteNoteUseCase.invoke(it.toDomain())
                 } ?: return@launch
-                val intent = Intent()
-                intent.putExtra("isNoteDeleted", true)
-                setResult(RESULT_OK, intent)
                 dialog.dismiss()
                 finish()
             }
@@ -168,7 +165,13 @@ class CNACreateNoteActivity : AppCompatActivity() {
             binding.imageNote.visibility = View.GONE
             binding.imageRemoveImage.visibility = View.GONE
         }
-        if (intent.getBooleanExtra("isViewOrUpdate", false)) {
+
+        binding.imageBack.setOnClickListener {
+            finish()
+        }
+
+        //note add 후 들어왔을때
+        if (intent.getBooleanExtra("isFromQuickActions", false)) {
             val type = intent.getStringExtra("quickActionType")
             if (type != null) {
                 if (type == "image") {
@@ -181,6 +184,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
                     binding.layoutWebURL.visibility = View.VISIBLE
                 }
             }
+
         }
     }
 
@@ -232,8 +236,6 @@ class CNACreateNoteActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             insertNoteUseCase.invoke(note.toDomain())
-            val intent = Intent()
-            setResult(RESULT_OK, intent)
             finish()
         }
     }
@@ -379,7 +381,5 @@ class CNACreateNoteActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "CNACreateNoteActivity"
-        private const val REQUEST_CODE_STORAGE_PERMISSION: Int = 1
-        private const val REQUEST_CODE_SELECT_IMAGE: Int = 2
     }
 }

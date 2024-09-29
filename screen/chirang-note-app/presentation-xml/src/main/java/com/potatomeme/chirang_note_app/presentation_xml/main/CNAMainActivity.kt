@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
@@ -54,9 +55,13 @@ class CNAMainActivity : AppCompatActivity() {
 
     private val activityStartForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.data?.action == Intent.ACTION_PICK && result.resultCode == RESULT_OK) {
+            if (
+            //result.data?.action == Intent.ACTION_PICK &&
+                result.resultCode == RESULT_OK
+            ) {
                 //todo image
                 val uri = result.data?.data
+                Log.d(TAG, "getImage : $uri")
                 uri?.let {
                     try {
                         val selectedImagePath = getPathFromUri(uri)
@@ -126,11 +131,15 @@ class CNAMainActivity : AppCompatActivity() {
             } else {
                 dialog.dismiss()
                 //todo go to add note activity
-                activityStartForResult.launch(Intent(this@CNAMainActivity, CNACreateNoteActivity::class.java).apply {
-                    putExtra("isFromQuickActions", true)
-                    putExtra("quickActionType", "URL")
-                    putExtra("URL", inputURLStr)
-                })
+                activityStartForResult.launch(
+                    Intent(
+                        this@CNAMainActivity,
+                        CNACreateNoteActivity::class.java
+                    ).apply {
+                        putExtra("isFromQuickActions", true)
+                        putExtra("quickActionType", "URL")
+                        putExtra("URL", inputURLStr)
+                    })
             }
         }
         binding.inputURL.setOnEditorActionListener { v, actionId, event ->
@@ -238,5 +247,9 @@ class CNAMainActivity : AppCompatActivity() {
         if (intent.resolveActivity(packageManager) != null) {
             activityStartForResult.launch(intent)
         }
+    }
+
+    companion object {
+        private const val TAG = "CNAMainActivity"
     }
 }
