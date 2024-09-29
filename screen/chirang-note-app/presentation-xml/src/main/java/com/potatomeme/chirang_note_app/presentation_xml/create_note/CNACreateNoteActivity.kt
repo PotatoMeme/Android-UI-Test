@@ -11,63 +11,46 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.internal.ViewUtils.hideKeyboard
-import com.potatomeme.chirang_note_app.domain.usecase.DeleteNoteUseCase
-import com.potatomeme.chirang_note_app.domain.usecase.InsertNoteUseCase
 import com.potatomeme.chirang_note_app.presentation_xml.R
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.ActivityCnaCreateNoteBinding
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutAddUrlBinding
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutDeleteNoteBinding
-import com.potatomeme.chirang_note_app.presentation_xml.mapper.NoteMapper.toDomain
 import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CNACreateNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCnaCreateNoteBinding
+    private val viewModel: CNACreateNoteViewModel by viewModels()
+
     private val activityStartForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            when {
-                result.data?.action == Intent.ACTION_PICK && result.resultCode == RESULT_OK -> {
-                    //todo image
-                    val uri = result.data?.data
-                    uri?.let {
-                        try {
-                            binding.imageNote.setImageBitmap(
-                                BitmapFactory.decodeFile(
-                                    getPathFromUri(
-                                        uri
-                                    )
-                                )
-                            )
-                            binding.imageNote.visibility = View.VISIBLE
-                            binding.imageRemoveImage.visibility = View.VISIBLE
-                            selectedImagePath = getPathFromUri(uri) ?: ""
-                        } catch (e: Exception) {
-                            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-                        }
-                    }
+            if (result.resultCode == RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(getPathFromUri(uri)))
+                    binding.imageNote.visibility = View.VISIBLE
+                    binding.imageRemoveImage.visibility = View.VISIBLE
+                    selectedImagePath = getPathFromUri(uri) ?: ""
                 }
             }
         }
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
@@ -77,28 +60,19 @@ class CNACreateNoteActivity : AppCompatActivity() {
             }
         }
 
-    @Inject
-    lateinit var insertNoteUseCase: InsertNoteUseCase
-
-    @Inject
-    lateinit var deleteNoteUseCase: DeleteNoteUseCase
-
     private val dialogAddURL: AlertDialog by lazy {
         val builder = AlertDialog.Builder(this)
         val addUrlBinding = LayoutAddUrlBinding.inflate(layoutInflater)
         builder.setView(addUrlBinding.root)
         val dialog = builder.create()
-        if (dialog.window != null != null) {
-            dialog.window?.setBackgroundDrawable(ColorDrawable(0))
-        }
+        dialog.window?.setBackgroundDrawable(ColorDrawable(0))
         addUrlBinding.inputURL.requestFocus()
         addUrlBinding.textAdd.setOnClickListener {
             val inputURLStr = addUrlBinding.inputURL.text.toString().trim()
             if (inputURLStr.isEmpty()) {
-                Toast.makeText(this@CNACreateNoteActivity, "Enter URL", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Enter URL", Toast.LENGTH_SHORT).show()
             } else if (!Patterns.WEB_URL.matcher(inputURLStr).matches()) {
-                Toast.makeText(this@CNACreateNoteActivity, "Enter valid URL", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Enter valid URL", Toast.LENGTH_SHORT).show()
             } else {
                 binding.textWebURL.text = addUrlBinding.inputURL.text.toString()
                 binding.layoutWebURL.visibility = View.VISIBLE
@@ -110,6 +84,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
         dialog
     }
+
     private val dialogDeleteNote: AlertDialog by lazy {
         val builder = AlertDialog.Builder(this)
         val deleteNoteBinding = LayoutDeleteNoteBinding.inflate(layoutInflater)
@@ -120,18 +95,30 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
         deleteNoteBinding.textDeleteNote.setOnClickListener {
             //todo delete note
-            lifecycleScope.launch {
-                alreadyAvailableNote?.let {
-                    deleteNoteUseCase.invoke(it.toDomain())
-                } ?: return@launch
-                dialog.dismiss()
-                finish()
-            }
+            alreadyAvailableNote?.let { viewModel.deleteNote(it) } ?: return@setOnClickListener
+            dialog.dismiss()
+            finish()
         }
         deleteNoteBinding.textCancel.setOnClickListener {
             dialog.dismiss()
         }
         dialog
+    }
+
+    private val colorPickerImageViews: List<ImageView> by lazy {
+        listOf(
+            binding.layoutMiscellaneous.imageColor1,
+            binding.layoutMiscellaneous.imageColor2,
+            binding.layoutMiscellaneous.imageColor3,
+            binding.layoutMiscellaneous.imageColor4,
+            binding.layoutMiscellaneous.imageColor5,
+        )
+    }
+
+    private val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        Manifest.permission.READ_MEDIA_IMAGES
+    } else {
+        Manifest.permission.READ_EXTERNAL_STORAGE
     }
 
     private var alreadyAvailableNote: ParcelableNote? = null
@@ -181,13 +168,14 @@ class CNACreateNoteActivity : AppCompatActivity() {
         //note add 후 들어왔을때
         if (intent.getBooleanExtra("isFromQuickActions", false)) {
             val type = intent.getStringExtra("quickActionType")
-            if (type != null) {
-                if (type == "image") {
+            when (type) {
+                "image" -> {
                     selectedImagePath = intent.getStringExtra("imagePath") ?: ""
                     binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath))
                     binding.imageNote.visibility = View.VISIBLE
                     binding.imageRemoveImage.visibility = View.VISIBLE
-                } else if (type == "URL") {
+                }
+                "URL" -> {
                     binding.textWebURL.text = intent.getStringExtra("URL")
                     binding.layoutWebURL.visibility = View.VISIBLE
                 }
@@ -195,10 +183,8 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
 
         binding.root.setOnTouchListener { _, _ ->
-            if (currentFocus != null) {
-                hideKeyboard()
-            }
-            return@setOnTouchListener false
+            currentFocus?.let { hideKeyboard() }
+            false
         }
     }
 
@@ -212,34 +198,23 @@ class CNACreateNoteActivity : AppCompatActivity() {
     }
 
     private fun setViewOrUpdateNote() {
-        binding.inputNoteTitle.setText(alreadyAvailableNote?.title)
-        binding.inputNoteSubtitle.setText(alreadyAvailableNote?.subtitle)
-        binding.inputNoteText.setText(alreadyAvailableNote?.noteText)
-        binding.textDateTime.text = alreadyAvailableNote?.dateTime
+        alreadyAvailableNote?.let {
+            binding.inputNoteTitle.setText(it.title)
+            binding.inputNoteSubtitle.setText(it.subtitle)
+            binding.inputNoteText.setText(it.noteText)
+            binding.textDateTime.text = it.dateTime
 
-        val imagePathStr = alreadyAvailableNote?.imagePath
-        if (imagePathStr != null && imagePathStr.trim().isNotEmpty()) {
-            binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(imagePathStr))
-            binding.imageNote.visibility = View.VISIBLE
-            binding.imageRemoveImage.visibility = View.VISIBLE
-            selectedImagePath = imagePathStr
-        }
-        val webURLStr = alreadyAvailableNote?.webLink
-        if (webURLStr != null && webURLStr.trim().isNotEmpty()) {
-            binding.textWebURL.text = webURLStr
-            binding.layoutWebURL.visibility = View.VISIBLE
-        }
-
-        val colorStr = alreadyAvailableNote?.color
-        if (colorStr != null && colorStr.trim().isNotEmpty()) {
-            selectedNoteColor = colorStr
-            setSubtitleIndicatorColor()
-            when (colorStr) {
-                "#333333" -> binding.layoutMiscellaneous.imageColor1.setImageResource(R.drawable.ic_done)
-                "#FDBE3B" -> binding.layoutMiscellaneous.imageColor2.setImageResource(R.drawable.ic_done)
-                "#FF4842" -> binding.layoutMiscellaneous.imageColor3.setImageResource(R.drawable.ic_done)
-                "#3A52FC" -> binding.layoutMiscellaneous.imageColor4.setImageResource(R.drawable.ic_done)
-                "#000000" -> binding.layoutMiscellaneous.imageColor5.setImageResource(R.drawable.ic_done)
+            val imagePathStr = it.imagePath
+            if (imagePathStr != null && imagePathStr.trim().isNotEmpty()) {
+                binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(imagePathStr))
+                binding.imageNote.visibility = View.VISIBLE
+                binding.imageRemoveImage.visibility = View.VISIBLE
+                selectedImagePath = imagePathStr
+            }
+            val webURLStr = it.webLink
+            if (webURLStr != null && webURLStr.trim().isNotEmpty()) {
+                binding.textWebURL.text = webURLStr
+                binding.layoutWebURL.visibility = View.VISIBLE
             }
         }
     }
@@ -269,91 +244,35 @@ class CNACreateNoteActivity : AppCompatActivity() {
             webLink = if (binding.layoutWebURL.visibility == View.VISIBLE) binding.textWebURL.getText()
                 .toString() else null
         )
-
-        Log.d(TAG, "saveNote: ${note.webLink}")
-
-        lifecycleScope.launch {
-            insertNoteUseCase.invoke(note.toDomain())
-            finish()
-        }
+        viewModel.insertNote(note)
+        finish()
     }
 
     private fun initMiscellaneous() {
         val bottomSheetBehavior: BottomSheetBehavior<LinearLayout> =
             BottomSheetBehavior.from(binding.layoutMiscellaneous.root)
         binding.layoutMiscellaneous.textMiscellaneous.setOnClickListener {
-            if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            } else {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-        }
-
-        binding.layoutMiscellaneous.viewColor1.setOnClickListener {
-            selectedNoteColor = "#333333"
-            binding.layoutMiscellaneous.imageColor1.setImageResource(R.drawable.ic_done)
-            binding.layoutMiscellaneous.imageColor2.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor3.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor4.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor5.setImageResource(0)
-            setSubtitleIndicatorColor()
-        }
-        binding.layoutMiscellaneous.viewColor2.setOnClickListener {
-            selectedNoteColor = "#FDBE3B"
-            binding.layoutMiscellaneous.imageColor1.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor2.setImageResource(R.drawable.ic_done)
-            binding.layoutMiscellaneous.imageColor3.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor4.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor5.setImageResource(0)
-            setSubtitleIndicatorColor()
-        }
-        binding.layoutMiscellaneous.viewColor3.setOnClickListener {
-            selectedNoteColor = "#FF4842"
-            binding.layoutMiscellaneous.imageColor1.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor2.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor3.setImageResource(R.drawable.ic_done)
-            binding.layoutMiscellaneous.imageColor4.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor5.setImageResource(0)
-            setSubtitleIndicatorColor()
-        }
-        binding.layoutMiscellaneous.viewColor4.setOnClickListener {
-            selectedNoteColor = "#3A52FC"
-            binding.layoutMiscellaneous.imageColor1.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor2.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor3.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor4.setImageResource(R.drawable.ic_done)
-            binding.layoutMiscellaneous.imageColor5.setImageResource(0)
-            setSubtitleIndicatorColor()
-        }
-        binding.layoutMiscellaneous.viewColor5.setOnClickListener {
-            selectedNoteColor = "#000000"
-            binding.layoutMiscellaneous.imageColor1.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor2.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor3.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor4.setImageResource(0)
-            binding.layoutMiscellaneous.imageColor5.setImageResource(R.drawable.ic_done)
-            setSubtitleIndicatorColor()
-        }
-
-        if (alreadyAvailableNote != null) {
-            val noteColorCode = alreadyAvailableNote?.color
-            if (noteColorCode != null && noteColorCode.trim().isNotEmpty()) {
-                when (noteColorCode) {
-                    "#FDBE3B" -> binding.layoutMiscellaneous.imageColor2.performClick()
-                    "#FF4842" -> binding.layoutMiscellaneous.imageColor3.performClick()
-                    "#3A52FC" -> binding.layoutMiscellaneous.imageColor4.performClick()
-                    "#000000" -> binding.layoutMiscellaneous.imageColor5.performClick()
+            bottomSheetBehavior.state =
+                if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+                    BottomSheetBehavior.STATE_EXPANDED
+                } else {
+                    BottomSheetBehavior.STATE_COLLAPSED
                 }
+        }
+
+        colorPickerImageViews.forEachIndexed { index, imageView ->
+            imageView.setOnClickListener {
+                selectedNoteColor = COLOR_CODE_LIST[index]
+                colorPickerImageViews.forEach {
+                    it.setImageResource(0)
+                }
+                colorPickerImageViews[index].setImageResource(R.drawable.ic_done)
+                setSubtitleIndicatorColor()
             }
         }
 
         binding.layoutMiscellaneous.layoutAddImage.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                Manifest.permission.READ_MEDIA_IMAGES
-            } else {
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            }
             if (ContextCompat.checkSelfPermission(
                     applicationContext,
                     permission
@@ -364,28 +283,30 @@ class CNACreateNoteActivity : AppCompatActivity() {
                 selectImage()
             }
         }
+
         binding.layoutMiscellaneous.layoutAddUrl.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            showAddURLDialog()
+            dialogAddURL.show()
         }
+
         if (alreadyAvailableNote != null) {
+            //color select
+            val noteColorCode = alreadyAvailableNote?.color
+            if (noteColorCode != null && noteColorCode.trim().isNotEmpty()) {
+                colorPickerImageViews.forEachIndexed { index, imageView ->
+                    if (COLOR_CODE_LIST[index] == noteColorCode) {
+                        imageView.performClick()
+                    }
+                }
+            }
+            //delete button init
             binding.layoutMiscellaneous.layoutDeleteNote.visibility = View.VISIBLE
             binding.layoutMiscellaneous.layoutDeleteNote.setOnClickListener {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                showDeleteNoteDialog()
+                dialogDeleteNote.show()
             }
         }
     }
-
-
-    private fun showAddURLDialog() {
-        dialogAddURL.show()
-    }
-
-    private fun showDeleteNoteDialog() {
-        dialogDeleteNote.show()
-    }
-
 
     private fun setSubtitleIndicatorColor() {
         (binding.viewSubtitleIndicator.background as GradientDrawable).apply {
@@ -416,10 +337,8 @@ class CNACreateNoteActivity : AppCompatActivity() {
         return filePath
     }
 
-
-
-
     companion object {
         private const val TAG = "CNACreateNoteActivity"
+        private val COLOR_CODE_LIST = listOf("#333333", "#FDBE3B", "#FF4842", "#3A52FC", "#000000")
     }
 }
