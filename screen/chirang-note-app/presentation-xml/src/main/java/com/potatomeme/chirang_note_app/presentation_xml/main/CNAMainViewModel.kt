@@ -19,11 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class CNAMainViewModel @Inject constructor(
     private val getNotesUseCase: GetNotesUseCase,
-    private val insertNoteUseCase: InsertNoteUseCase,
-    private val deleteNoteUseCase: DeleteNoteUseCase,
 ) : ViewModel() {
     private val _storedNotes = MutableStateFlow<List<ParcelableNote>>(emptyList())
-    val storedNotes: StateFlow<List<ParcelableNote>> = _storedNotes.asStateFlow()
+    private val storedNotes: StateFlow<List<ParcelableNote>> = _storedNotes.asStateFlow()
 
     private val _searchedResult = MutableStateFlow<SearchedResult>(SearchedResult.Init)
     val searchedResult: StateFlow<SearchedResult> = _searchedResult.asStateFlow()
@@ -56,14 +54,6 @@ class CNAMainViewModel @Inject constructor(
 
     fun search(query: String) {
         _searchedResult.value = SearchedResult.Success(query, storedNotes.value.search(query))
-    }
-
-    fun deleteNote(note: ParcelableNote) = viewModelScope.launch {
-        deleteNoteUseCase(note.toDomain())
-    }
-
-    fun insertNote(note: ParcelableNote) = viewModelScope.launch {
-        insertNoteUseCase(note.toDomain())
     }
 
     private fun List<ParcelableNote>.search(query: String): List<ParcelableNote> {

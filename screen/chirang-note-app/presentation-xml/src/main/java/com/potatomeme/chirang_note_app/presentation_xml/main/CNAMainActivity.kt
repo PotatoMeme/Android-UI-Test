@@ -23,9 +23,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.potatomeme.chirang_note_app.presentation_xml.create_note.CNACreateNoteActivity
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.ActivityCnaMainBinding
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutAddUrlBinding
-import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,46 +40,49 @@ class CNAMainActivity : AppCompatActivity() {
     private val viewModel: CNAMainViewModel by viewModels()
     private val adapter: NotesAdapter by lazy {
         NotesAdapter { note ->
-            //todo note item click
+            activityStartForResult.launch(
+                Intent(
+                    this@CNAMainActivity,
+                    CNACreateNoteActivity::class.java
+                ).apply {
+                    putExtra("isViewOrUpdate", true)
+                    putExtra("note", note)
+                })
         }
     }
 
     private val activityStartForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            when {
-                (result.resultCode == REQUEST_CODE_ADD_NOTE || result.resultCode == REQUEST_CODE_UPDATE_NOTE) && result.resultCode == RESULT_OK -> {
-                    //todo add note
-                    val note = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        result.data?.getParcelableExtra("note", ParcelableNote::class.java)
-                    } else {
-                        result.data?.getParcelableExtra("note")
-                    }
-
-                    note?.let {
-                        viewModel.insertNote(it)
-                    }
-                }
-
-                result.data?.action == Intent.ACTION_PICK && result.resultCode == RESULT_OK -> {
-                    //todo image
-                    val uri = result.data?.data
-                    uri?.let {
-                        try {
-                            val selectedImagePath = getPathFromUri(uri)
-                            //todo add image at intent
-                            //todo go to add note activity
-                        } catch (e: Exception) {
-                            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-                        }
+            if (result.data?.action == Intent.ACTION_PICK && result.resultCode == RESULT_OK) {
+                //todo image
+                val uri = result.data?.data
+                uri?.let {
+                    try {
+                        val selectedImagePath = getPathFromUri(uri)
+                        //todo go to add note activity with image path
+                        val intent =
+                            Intent(this@CNAMainActivity, CNACreateNoteActivity::class.java).apply {
+                                putExtra("isFromQuickActions", true)
+                                putExtra("quickActionType", "image")
+                                putExtra("imagePath", selectedImagePath)
+                            }
+                        //activityStartForResult 정의안에서 해당 activityStartForResult를 사용해버리면 컴파일에러 발생
+                        activityStartForResultLaunch(intent)
+                    } catch (e: Exception) {
+                        Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
 
+    private fun activityStartForResultLaunch(intent: Intent) {
+        activityStartForResult.launch(intent)
+    }
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-
+                selectImage()
             } else {
                 Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show()
             }
@@ -122,6 +125,11 @@ class CNAMainActivity : AppCompatActivity() {
             } else {
                 dialog.dismiss()
                 //todo go to add note activity
+                activityStartForResult.launch(Intent(this@CNAMainActivity, CNACreateNoteActivity::class.java).apply {
+                    putExtra("isFromQuickActions", true)
+                    putExtra("quickActionType", "URL")
+                    putExtra("URL", inputURLStr)
+                })
             }
         }
         binding.textCancel.setOnClickListener { dialog.dismiss() }
@@ -138,8 +146,9 @@ class CNAMainActivity : AppCompatActivity() {
 
     private fun initViews() {
         binding.imageAddNoteMain.setOnClickListener {
+            //일반 노트 만들기
             //todo go to add note activity
-            //activityStartForResult.launch(Intent(this, CNANoteActivity::class.java))
+            activityStartForResult.launch(Intent(this, CNACreateNoteActivity::class.java))
         }
 
         binding.notesRecyclerView.apply {
@@ -149,8 +158,9 @@ class CNAMainActivity : AppCompatActivity() {
 
         binding.inputSearch.addTextChangedListener(textWatcher)
         binding.imageAddNote.setOnClickListener {
+            //일반 노트 만들기
             //todo go to add note activity
-            //activityStartForResult.launch(Intent(this, CNANoteActivity::class.java))
+            activityStartForResult.launch(Intent(this, CNACreateNoteActivity::class.java))
         }
 
         val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -216,13 +226,5 @@ class CNAMainActivity : AppCompatActivity() {
         if (intent.resolveActivity(packageManager) != null) {
             activityStartForResult.launch(intent)
         }
-    }
-
-    companion object {
-        private const val REQUEST_CODE_ADD_NOTE: Int = 1
-        private const val REQUEST_CODE_UPDATE_NOTE: Int = 2
-        private const val REQUEST_CODE_SHOW_NOTES: Int = 3
-        private const val REQUEST_CODE_SELECT_IMAGE: Int = 4
-        private const val REQUEST_CODE_STORAGE_PERMISSION: Int = 5
     }
 }
