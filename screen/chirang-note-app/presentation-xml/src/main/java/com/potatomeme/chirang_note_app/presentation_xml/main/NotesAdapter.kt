@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import androidx.core.net.toUri
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.ItemContainerNoteBinding
 import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 
@@ -35,7 +36,7 @@ class NotesAdapter(private val onItemClick: (note: ParcelableNote) -> Unit) :
             binding.imageNote.apply {
                 if (note.imagePath != null) {
                     visibility = View.VISIBLE
-                    setImageBitmap(BitmapFactory.decodeFile(note.imagePath))
+                    setImageURI(note.imagePath?.toUri())
                 } else {
                     visibility = View.GONE
                 }

@@ -2,9 +2,12 @@ package com.potatomeme.chirang_note_app.presentation_xml.create_note
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
@@ -31,6 +34,9 @@ import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutAddUrl
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutDeleteNoteBinding
 import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -44,10 +50,11 @@ class CNACreateNoteActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(getPathFromUri(uri)))
+                    imageChanged = true
+                    binding.imageNote.setImageURI(uri)
                     binding.imageNote.visibility = View.VISIBLE
                     binding.imageRemoveImage.visibility = View.VISIBLE
-                    selectedImagePath = getPathFromUri(uri) ?: ""
+                    selectedImagePath = uri.path ?: ""
                 }
             }
         }
@@ -125,6 +132,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
     private var alreadyAvailableNote: ParcelableNote? = null
     private var selectedNoteColor = "#333333"
     private var selectedImagePath = ""
+    private var imageChanged = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,11 +179,13 @@ class CNACreateNoteActivity : AppCompatActivity() {
             val type = intent.getStringExtra("quickActionType")
             when (type) {
                 "image" -> {
+                    imageChanged = true
                     selectedImagePath = intent.getStringExtra("imagePath") ?: ""
                     binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath))
                     binding.imageNote.visibility = View.VISIBLE
                     binding.imageRemoveImage.visibility = View.VISIBLE
                 }
+
                 "URL" -> {
                     binding.textWebURL.text = intent.getStringExtra("URL")
                     binding.layoutWebURL.visibility = View.VISIBLE
@@ -234,19 +244,65 @@ class CNACreateNoteActivity : AppCompatActivity() {
             return
         }
 
+        var copyImageFilePath: String? = null
+        if (imageChanged && selectedImagePath.isNotEmpty()) {
+            val strToBitmap = uriToBitmap(Uri.parse(selectedImagePath))
+            val viewToBitMap = viewToBitmap(binding.imageNote)
+
+            val lowBitMap =
+                if (strToBitmap == null || strToBitmap.width > viewToBitMap.width) viewToBitMap else strToBitmap
+            copyImageFilePath = saveBitmapToFile(lowBitMap)?.path
+        }
+
         val note = ParcelableNote(
             id = alreadyAvailableNote?.id ?: 0,
             title = noteTitle,
             dateTime = noteDateTime,
             subtitle = noteSubtitle,
             noteText = noteText,
-            imagePath = selectedImagePath,
+            imagePath = copyImageFilePath ?: selectedImagePath,
             color = selectedNoteColor,
             webLink = if (binding.layoutWebURL.visibility == View.VISIBLE) binding.textWebURL.getText()
                 .toString() else null
         )
         viewModel.insertNote(note)
         finish()
+    }
+
+    private fun uriToBitmap(uri: Uri): Bitmap? {
+        return try {
+            val inputStream = contentResolver.openInputStream(uri)
+            BitmapFactory.decodeStream(inputStream)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun viewToBitmap(view: View): Bitmap {
+        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        val bitmap =
+            Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private fun saveBitmapToFile(bitmap: Bitmap): Uri? {
+        val fileName = "view_image_${System.currentTimeMillis()}.png"
+        val file = File(filesDir, fileName)
+
+        return try {
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            Uri.fromFile(file)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
     }
 
     private fun initMiscellaneous() {
@@ -323,21 +379,6 @@ class CNACreateNoteActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             // Display some error message
         }
-    }
-
-    //이미지 path 가져오기
-    private fun getPathFromUri(contentUri: Uri): String? {
-        val filePath: String?
-        val cursor = contentResolver.query(contentUri, null, null, null, null)
-        if (cursor == null) {
-            filePath = contentUri.path
-        } else {
-            cursor.moveToFirst()
-            val index = cursor.getColumnIndex("_data")
-            filePath = cursor.getString(index)
-            cursor.close()
-        }
-        return filePath
     }
 
     companion object {
