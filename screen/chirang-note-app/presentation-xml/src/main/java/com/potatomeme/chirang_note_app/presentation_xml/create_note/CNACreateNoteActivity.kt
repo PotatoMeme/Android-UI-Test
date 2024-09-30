@@ -1,6 +1,7 @@
 package com.potatomeme.chirang_note_app.presentation_xml.create_note
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -317,8 +318,10 @@ class CNACreateNoteActivity : AppCompatActivity() {
     //이미지 선택창으로 이동
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        if (intent.resolveActivity(packageManager) != null) {
+        try {
             activityStartForResult.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Display some error message
         }
     }
 

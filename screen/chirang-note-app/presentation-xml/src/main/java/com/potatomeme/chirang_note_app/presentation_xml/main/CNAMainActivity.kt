@@ -1,8 +1,10 @@
 package com.potatomeme.chirang_note_app.presentation_xml.main
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -10,7 +12,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -55,10 +59,7 @@ class CNAMainActivity : AppCompatActivity() {
 
     private val activityStartForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (
-                result.resultCode == RESULT_OK
-            ) {
-                //todo image
+            if (result.resultCode == RESULT_OK) {
                 result.data?.data?.let {
                     val selectedImagePath = getPathFromUri(it)
                     //todo go to add note activity with image path
@@ -68,13 +69,10 @@ class CNAMainActivity : AppCompatActivity() {
                             putExtra("quickActionType", "image")
                             putExtra("imagePath", selectedImagePath)
                         }
-                    activityStartForResultLaunch(intent)
+                    startActivity(intent)
                 }
             }
         }
-
-    private val activityStartForResultLaunch: (intent: Intent) -> Unit =
-        { activityStartForResult.launch(intent) }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -240,8 +238,10 @@ class CNAMainActivity : AppCompatActivity() {
     //이미지 선택창으로 이동
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        if (intent.resolveActivity(packageManager) != null) {
+        try {
             activityStartForResult.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Display some error message
         }
     }
 }
