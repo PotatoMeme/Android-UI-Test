@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -43,7 +42,6 @@ class CNAMainActivity : AppCompatActivity() {
     private val viewModel: CNAMainViewModel by viewModels()
     private val adapter: NotesAdapter by lazy {
         NotesAdapter { note ->
-            Log.d(TAG, "noteClicked ${note.webLink}")
             activityStartForResult.launch(
                 Intent(
                     this@CNAMainActivity,
@@ -58,34 +56,25 @@ class CNAMainActivity : AppCompatActivity() {
     private val activityStartForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (
-            //result.data?.action == Intent.ACTION_PICK &&
                 result.resultCode == RESULT_OK
             ) {
                 //todo image
-                val uri = result.data?.data
-                Log.d(TAG, "getImage : $uri")//content uri
-                uri?.let {
-                    try {
-                        val selectedImagePath = getPathFromUri(uri)
-                        //todo go to add note activity with image path
-                        val intent =
-                            Intent(this@CNAMainActivity, CNACreateNoteActivity::class.java).apply {
-                                putExtra("isFromQuickActions", true)
-                                putExtra("quickActionType", "image")
-                                putExtra("imagePath", selectedImagePath)
-                            }
-                        //activityStartForResult 정의안에서 해당 activityStartForResult를 사용해버리면 컴파일에러 발생
-                        activityStartForResultLaunch(intent)
-                    } catch (e: Exception) {
-                        Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-                    }
+                result.data?.data?.let {
+                    val selectedImagePath = getPathFromUri(it)
+                    //todo go to add note activity with image path
+                    val intent =
+                        Intent(this@CNAMainActivity, CNACreateNoteActivity::class.java).apply {
+                            putExtra("isFromQuickActions", true)
+                            putExtra("quickActionType", "image")
+                            putExtra("imagePath", selectedImagePath)
+                        }
+                    activityStartForResultLaunch(intent)
                 }
             }
         }
 
-    private fun activityStartForResultLaunch(intent: Intent) {
-        activityStartForResult.launch(intent)
-    }
+    private val activityStartForResultLaunch: (intent: Intent) -> Unit =
+        { activityStartForResult.launch(intent) }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -144,7 +133,7 @@ class CNAMainActivity : AppCompatActivity() {
                     })
             }
         }
-        binding.inputURL.setOnEditorActionListener { v, actionId, event ->
+        binding.inputURL.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 doneAction()
                 return@setOnEditorActionListener true
@@ -169,8 +158,6 @@ class CNAMainActivity : AppCompatActivity() {
 
     private fun initViews() {
         binding.imageAddNoteMain.setOnClickListener {
-            //일반 노트 만들기
-            //todo go to add note activity
             activityStartForResult.launch(Intent(this, CNACreateNoteActivity::class.java))
         }
 
@@ -181,8 +168,6 @@ class CNAMainActivity : AppCompatActivity() {
 
         binding.inputSearch.addTextChangedListener(textWatcher)
         binding.imageAddNote.setOnClickListener {
-            //일반 노트 만들기
-            //todo go to add note activity
             activityStartForResult.launch(Intent(this, CNACreateNoteActivity::class.java))
         }
 
@@ -203,7 +188,7 @@ class CNAMainActivity : AppCompatActivity() {
             }
         }
         binding.imageAddWebLink.setOnClickListener {
-            showAddURLDialog()
+            dialogAddURL.show()
         }
 
         lifecycleScope.launch {
@@ -223,10 +208,8 @@ class CNAMainActivity : AppCompatActivity() {
         }
 
         binding.root.setOnTouchListener { _, _ ->
-            if (currentFocus != null) {
-                hideKeyboard()
-            }
-            return@setOnTouchListener false
+            currentFocus?.let { hideKeyboard() }
+            false
         }
     }
 
@@ -237,11 +220,6 @@ class CNAMainActivity : AppCompatActivity() {
             currentFocus!!.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS
         )
-    }
-
-    //url dialog 보이기
-    private fun showAddURLDialog() {
-        dialogAddURL.show()
     }
 
     //이미지 path 가져오기
@@ -265,9 +243,5 @@ class CNAMainActivity : AppCompatActivity() {
         if (intent.resolveActivity(packageManager) != null) {
             activityStartForResult.launch(intent)
         }
-    }
-
-    companion object {
-        private const val TAG = "CNAMainActivity"
     }
 }
