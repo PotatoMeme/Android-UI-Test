@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <!-- when api 33 or higher not use READ_EXTERNAL_STORAGE permission -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" /> <!-- when api 33 or higher not use READ_EXTERNAL_STORAGE permission -->
     <!-- then use READ_MEDIA_IMAGES permission -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application>
+        <activity
+            android:name=".on_boarding.CNAOnBoardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Notes" />
         <activity
             android:name=".create_note.CNACreateNoteActivity"
             android:exported="false"
