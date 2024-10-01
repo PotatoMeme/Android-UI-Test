@@ -118,7 +118,7 @@ class MainActivity : ComponentActivity() {
         Route.ItemRoute(
             route = "CNA Chirang Note App",
             contentDescription = "CNA :  Chirang Note App Refactoring",
-            drawableId = R.drawable.ic_launcher_foreground,
+            drawableId = R.drawable.cna_logo,
             itemType = ItemType.UI_SCREEN,
             subItems = arrayOf(
                 Pair(
