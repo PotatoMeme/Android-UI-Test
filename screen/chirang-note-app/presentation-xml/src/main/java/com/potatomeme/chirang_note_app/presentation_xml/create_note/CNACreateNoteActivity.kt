@@ -2,7 +2,6 @@ package com.potatomeme.chirang_note_app.presentation_xml.create_note
 
 import android.Manifest
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -27,6 +26,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.potatomeme.chirang_note_app.presentation_xml.R
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.ActivityCnaCreateNoteBinding
@@ -34,6 +37,7 @@ import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutAddUrl
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutDeleteNoteBinding
 import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -50,11 +54,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    imageChanged = true
-                    binding.imageNote.setImageURI(uri)
-                    binding.imageNote.visibility = View.VISIBLE
-                    binding.imageRemoveImage.visibility = View.VISIBLE
-                    selectedImagePath = uri.path ?: ""
+                    viewModel.setSelectedImagePath(uri.toString())
                 }
             }
         }
@@ -82,8 +82,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
             } else if (!Patterns.WEB_URL.matcher(inputURLStr).matches()) {
                 Toast.makeText(this, "Enter valid URL", Toast.LENGTH_SHORT).show()
             } else {
-                binding.textWebURL.text = addUrlBinding.inputURL.text.toString()
-                binding.layoutWebURL.visibility = View.VISIBLE
+                viewModel.setSelectedWebURL(addUrlBinding.inputURL.text.toString())
                 dialog.dismiss()
             }
         }
@@ -102,7 +101,6 @@ class CNACreateNoteActivity : AppCompatActivity() {
             dialog.window?.setBackgroundDrawable(ColorDrawable(0))
         }
         deleteNoteBinding.textDeleteNote.setOnClickListener {
-            //todo delete note
             alreadyAvailableNote?.let { viewModel.deleteNote(it) } ?: return@setOnClickListener
             dialog.dismiss()
             finish()
@@ -130,9 +128,6 @@ class CNACreateNoteActivity : AppCompatActivity() {
     }
 
     private var alreadyAvailableNote: ParcelableNote? = null
-    private var selectedNoteColor = "#333333"
-    private var selectedImagePath = ""
-    private var imageChanged = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,15 +136,13 @@ class CNACreateNoteActivity : AppCompatActivity() {
 
         initViews()
         initMiscellaneous()
-        setSubtitleIndicatorColor()
     }
 
     private fun initViews() {
         binding.textDateTime.text =
             SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.KOREA).format(Date().time)
-        binding.imageSave.setOnClickListener {
-            saveNote()
-        }
+
+        binding.imageSave.setOnClickListener { saveNote() }
 
         if (intent.getBooleanExtra("isViewOrUpdate", false)) {
             alreadyAvailableNote = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -157,38 +150,54 @@ class CNACreateNoteActivity : AppCompatActivity() {
             } else {
                 intent.getParcelableExtra("note")
             }
+            alreadyAvailableNote?.let { viewModel.whenIntentToNote(it) }
             setViewOrUpdateNote()
         }
 
-        binding.imageRemoveWebURL.setOnClickListener {
-            binding.textWebURL.text = null
-            binding.layoutWebURL.visibility = View.GONE
-        }
-        binding.imageRemoveImage.setOnClickListener {
-            binding.imageNote.setImageDrawable(null)
-            binding.imageNote.visibility = View.GONE
-            binding.imageRemoveImage.visibility = View.GONE
-        }
+        binding.imageRemoveWebURL.setOnClickListener { viewModel.setSelectedWebURL("") }
+        binding.imageRemoveImage.setOnClickListener { viewModel.setSelectedImagePath("") }
+        binding.imageBack.setOnClickListener { finish() }
 
-        binding.imageBack.setOnClickListener {
-            finish()
-        }
-
-        //note add 후 들어왔을때
         if (intent.getBooleanExtra("isFromQuickActions", false)) {
             val type = intent.getStringExtra("quickActionType")
             when (type) {
-                "image" -> {
-                    imageChanged = true
-                    selectedImagePath = intent.getStringExtra("imagePath") ?: ""
-                    binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath))
-                    binding.imageNote.visibility = View.VISIBLE
-                    binding.imageRemoveImage.visibility = View.VISIBLE
-                }
+                "image" -> viewModel.setSelectedImagePath(intent.getStringExtra("imagePath") ?: "")
+                "URL" -> viewModel.setSelectedWebURL(intent.getStringExtra("URL") ?: "")
+            }
+        }
 
-                "URL" -> {
-                    binding.textWebURL.text = intent.getStringExtra("URL")
-                    binding.layoutWebURL.visibility = View.VISIBLE
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.selectedNoteColor.collect {
+                        colorPickerImageViews.forEach { iv -> iv.setImageResource(0) }
+                        colorPickerImageViews[it].setImageResource(R.drawable.ic_done)
+                        setSubtitleIndicatorColor(it)
+                    }
+                }
+                launch {
+                    viewModel.selectedImagePath.collect {
+                        if (it.isEmpty()) {
+                            binding.imageNote.setImageDrawable(null)
+                            binding.imageNote.visibility = View.GONE
+                            binding.imageRemoveImage.visibility = View.GONE
+                        } else {
+                            binding.imageNote.setImageURI(it.toUri())
+                            binding.imageNote.visibility = View.VISIBLE
+                            binding.imageRemoveImage.visibility = View.VISIBLE
+                        }
+                    }
+                }
+                launch {
+                    viewModel.selectedWebURL.collect {
+                        if (it.isEmpty()) {
+                            binding.textWebURL.text = null
+                            binding.layoutWebURL.visibility = View.GONE
+                        } else {
+                            binding.textWebURL.text = it
+                            binding.layoutWebURL.visibility = View.VISIBLE
+                        }
+                    }
                 }
             }
         }
@@ -216,19 +225,6 @@ class CNACreateNoteActivity : AppCompatActivity() {
             binding.inputNoteSubtitle.setText(it.subtitle)
             binding.inputNoteText.setText(it.noteText)
             binding.textDateTime.text = it.dateTime
-
-            val imagePathStr = it.imagePath
-            if (imagePathStr != null && imagePathStr.trim().isNotEmpty()) {
-                binding.imageNote.setImageBitmap(BitmapFactory.decodeFile(imagePathStr))
-                binding.imageNote.visibility = View.VISIBLE
-                binding.imageRemoveImage.visibility = View.VISIBLE
-                selectedImagePath = imagePathStr
-            }
-            val webURLStr = it.webLink
-            if (webURLStr != null && webURLStr.trim().isNotEmpty()) {
-                binding.textWebURL.text = webURLStr
-                binding.layoutWebURL.visibility = View.VISIBLE
-            }
         }
     }
 
@@ -247,8 +243,8 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
 
         var copyImageFilePath: String? = null
-        if (imageChanged && selectedImagePath.isNotEmpty()) {
-            val strToBitmap = uriToBitmap(Uri.parse(selectedImagePath))
+        if (viewModel.imageChanged.value && viewModel.selectedImagePath.value.isNotEmpty()) {
+            val strToBitmap = uriToBitmap(Uri.parse(viewModel.selectedImagePath.value))
             val viewToBitMap = viewToBitmap(binding.imageNote)
 
             val lowBitMap =
@@ -262,8 +258,8 @@ class CNACreateNoteActivity : AppCompatActivity() {
             dateTime = noteDateTime,
             subtitle = noteSubtitle,
             noteText = noteText,
-            imagePath = copyImageFilePath ?: selectedImagePath,
-            color = selectedNoteColor,
+            imagePath = copyImageFilePath ?: viewModel.selectedImagePath.value,
+            color = COLOR_CODE_LIST[viewModel.selectedNoteColor.value],
             webLink = if (binding.layoutWebURL.visibility == View.VISIBLE) binding.textWebURL.getText()
                 .toString() else null
         )
@@ -321,12 +317,7 @@ class CNACreateNoteActivity : AppCompatActivity() {
 
         colorPickerImageViews.forEachIndexed { index, imageView ->
             imageView.setOnClickListener {
-                selectedNoteColor = COLOR_CODE_LIST[index]
-                colorPickerImageViews.forEach {
-                    it.setImageResource(0)
-                }
-                colorPickerImageViews[index].setImageResource(R.drawable.ic_done)
-                setSubtitleIndicatorColor()
+                viewModel.setSelectedNoteColor(index)
             }
         }
 
@@ -367,13 +358,12 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
     }
 
-    private fun setSubtitleIndicatorColor() {
+    private fun setSubtitleIndicatorColor(idx: Int) {
         (binding.viewSubtitleIndicator.background as GradientDrawable).apply {
-            setColor(Color.parseColor(selectedNoteColor))
+            setColor(Color.parseColor(COLOR_CODE_LIST[idx]))
         }
     }
 
-    //이미지 선택창으로 이동
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         try {
@@ -384,7 +374,6 @@ class CNACreateNoteActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "CNACreateNoteActivity"
-        private val COLOR_CODE_LIST = listOf("#333333", "#FDBE3B", "#FF4842", "#3A52FC", "#000000")
+        val COLOR_CODE_LIST = listOf("#333333", "#FDBE3B", "#FF4842", "#3A52FC", "#000000")
     }
 }
