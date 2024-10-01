@@ -70,6 +70,10 @@ dependencies {
     implementation(project(":screen:cat-image-provider:presentation"))
     implementation(project(":screen:cat-image-provider:domain"))
     implementation(project(":screen:cat-image-provider:data"))
+    //cna - chirang note app
+    implementation(project(":screen:chirang-note-app:presentation-xml"))
+    implementation(project(":screen:chirang-note-app:domain"))
+    implementation(project(":screen:chirang-note-app:data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

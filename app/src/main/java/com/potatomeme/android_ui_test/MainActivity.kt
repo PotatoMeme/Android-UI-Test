@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.content.ContextCompat.startActivity
 import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.MainNavHost
 import com.potatomeme.android_ui_test.main.Route
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
 import com.potatomeme.cat_image_provider.presentation.on_boarding.CIPOnBoardingActivity
+import com.potatomeme.chirang_note_app.presentation_xml.on_boarding.CNAOnBoardingActivity
 import com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
@@ -114,7 +114,25 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             )
-        )
+        ),
+        Route.ItemRoute(
+            route = "CNA Chirang Note App",
+            contentDescription = "CNA :  Chirang Note App Refactoring",
+            drawableId = R.drawable.cna_logo,
+            itemType = ItemType.UI_SCREEN,
+            subItems = arrayOf(
+                Pair(
+                    "xml"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CNAOnBoardingActivity::class.java
+                        )
+                    )
+                }
+            )
+        ),
     )
 
 

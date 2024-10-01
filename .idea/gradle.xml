@@ -18,6 +18,10 @@
             <option value="$PROJECT_DIR$/screen/cat-image-provider/data" />
             <option value="$PROJECT_DIR$/screen/cat-image-provider/domain" />
             <option value="$PROJECT_DIR$/screen/cat-image-provider/presentation" />
+            <option value="$PROJECT_DIR$/screen/chirang-note-app" />
+            <option value="$PROJECT_DIR$/screen/chirang-note-app/data" />
+            <option value="$PROJECT_DIR$/screen/chirang-note-app/domain" />
+            <option value="$PROJECT_DIR$/screen/chirang-note-app/presentation-xml" />
             <option value="$PROJECT_DIR$/screen/planfit" />
             <option value="$PROJECT_DIR$/screen/ticket-booking-app" />
             <option value="$PROJECT_DIR$/screen/ticket-booking-app/data" />
