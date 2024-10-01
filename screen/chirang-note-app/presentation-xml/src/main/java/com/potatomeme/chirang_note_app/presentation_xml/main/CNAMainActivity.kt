@@ -61,13 +61,11 @@ class CNAMainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.data?.let {
-                    val selectedImagePath = it.path
-                    contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     val intent =
                         Intent(this@CNAMainActivity, CNACreateNoteActivity::class.java).apply {
                             putExtra("isFromQuickActions", true)
                             putExtra("quickActionType", "image")
-                            putExtra("imagePath", selectedImagePath)
+                            putExtra("imagePath", getPathFromUri(it))
                         }
                     startActivity(intent)
                 }
@@ -220,6 +218,20 @@ class CNAMainActivity : AppCompatActivity() {
             currentFocus!!.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS
         )
+    }
+
+    private fun getPathFromUri(contentUri: Uri): String? {
+        val filePath: String?
+        val cursor = contentResolver.query(contentUri, null, null, null, null)
+        if (cursor == null) {
+            filePath = contentUri.path
+        } else {
+            cursor.moveToFirst()
+            val index = cursor.getColumnIndex("_data")
+            filePath = cursor.getString(index)
+            cursor.close()
+        }
+        return filePath
     }
 
     //이미지 선택창으로 이동
