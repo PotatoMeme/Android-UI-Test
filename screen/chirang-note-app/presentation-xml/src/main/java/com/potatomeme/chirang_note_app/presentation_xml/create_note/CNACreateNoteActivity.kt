@@ -194,7 +194,9 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
 
         binding.root.setOnTouchListener { _, _ ->
-            currentFocus?.let { hideKeyboard() }
+            if (currentFocus != null) {
+                hideKeyboard()
+            }
             false
         }
     }
