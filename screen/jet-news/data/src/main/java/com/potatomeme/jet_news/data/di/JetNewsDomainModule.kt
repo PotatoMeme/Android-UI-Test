@@ -3,6 +3,8 @@ package com.potatomeme.jet_news.data.di
 import com.potatomeme.jet_news.data.repository.BlockingFakePostsRepository
 import com.potatomeme.jet_news.data.repository.FakeInterestsRepository
 import com.potatomeme.jet_news.data.repository.FakePostsRepository
+import com.potatomeme.jet_news.domain.anotation.BlockingPosts
+import com.potatomeme.jet_news.domain.anotation.FakePosts
 import com.potatomeme.jet_news.domain.repository.InterestsRepository
 import com.potatomeme.jet_news.domain.repository.PostsRepository
 import dagger.Binds
@@ -17,6 +19,7 @@ abstract class JetNewsDomainModule {
     abstract fun bindInterestsRepository(repository: FakeInterestsRepository): InterestsRepository
 
     @Binds
+    @FakePosts
     abstract fun bindPostsRepository(repository: FakePostsRepository): PostsRepository
 
     @Binds

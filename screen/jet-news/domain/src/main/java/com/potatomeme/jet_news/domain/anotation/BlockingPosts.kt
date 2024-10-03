@@ -1,4 +1,4 @@
-package com.potatomeme.jet_news.data.di
+package com.potatomeme.jet_news.domain.anotation
 
 import javax.inject.Qualifier
 
