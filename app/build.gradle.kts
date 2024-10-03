@@ -59,8 +59,10 @@ android {
 }
 
 dependencies {
+    //custom-ui
     implementation(project(":custom-ui:sample"))
     implementation(project(":custom-ui:chart"))
+    //planfit
     implementation(project(":screen:planfit"))
     //tba - ticket booking app
     implementation(project(":screen:ticket-booking-app:presentation"))
@@ -74,6 +76,10 @@ dependencies {
     implementation(project(":screen:chirang-note-app:presentation-xml"))
     implementation(project(":screen:chirang-note-app:domain"))
     implementation(project(":screen:chirang-note-app:data"))
+    //jn - jet news
+    implementation(project(":screen:jet-news:presentation"))
+    implementation(project(":screen:jet-news:domain"))
+    implementation(project(":screen:jet-news:data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
