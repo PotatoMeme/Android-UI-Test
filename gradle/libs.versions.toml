@@ -83,6 +83,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
 androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
 roundedimageview = { module = "com.makeramen:roundedimageview", version.ref = "roundedimageview" }
+androidx-compose-materialWindow = { module = "androidx.compose.material3:material3-window-size-class" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
