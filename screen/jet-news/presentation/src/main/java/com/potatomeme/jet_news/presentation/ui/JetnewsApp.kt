@@ -76,6 +76,11 @@ fun JetnewsApp(
             /**
              * todo add navhost
              * **/
+            JetnewsNavGraph(
+                isExpandedScreen = isExpandedScreen,
+                navController = navController,
+                openDrawer = { coroutineScope.launch { sizeAwareDrawerState.open() } },
+            )
         }
     }
 }

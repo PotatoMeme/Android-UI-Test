@@ -1,6 +1,5 @@
 package com.potatomeme.android_ui_test.item
 
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,14 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.potatomeme.android_ui_test.MainActivity
 import com.potatomeme.android_ui_test.R
 import com.potatomeme.android_ui_test.main.ItemType
 import com.potatomeme.android_ui_test.main.Route
@@ -32,7 +29,6 @@ import com.potatomeme.android_ui_test.main.Route
 @Composable
 fun ItemScreen(itemRoute: Route.ItemRoute) {
     val scrollState = rememberScrollState()
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()

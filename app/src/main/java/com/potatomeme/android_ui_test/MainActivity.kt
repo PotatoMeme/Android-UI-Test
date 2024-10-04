@@ -11,6 +11,7 @@ import com.potatomeme.android_ui_test.main.Route
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
 import com.potatomeme.cat_image_provider.presentation.on_boarding.CIPOnBoardingActivity
 import com.potatomeme.chirang_note_app.presentation_xml.on_boarding.CNAOnBoardingActivity
+import com.potatomeme.jet_news.presentation.ui.JNMainActivity
 import com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
@@ -128,6 +129,24 @@ class MainActivity : ComponentActivity() {
                         Intent(
                             this,
                             CNAOnBoardingActivity::class.java
+                        )
+                    )
+                }
+            )
+        ),
+        Route.ItemRoute(
+            route = "JN Jetnews App CloneCoding",
+            contentDescription = "JN : Jetnews App CloneCoding",
+            drawableId = R.drawable.ic_launcher_foreground,
+            itemType = ItemType.UI_SCREEN,
+            subItems = arrayOf(
+                Pair(
+                    "compose"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            JNMainActivity::class.java
                         )
                     )
                 }
