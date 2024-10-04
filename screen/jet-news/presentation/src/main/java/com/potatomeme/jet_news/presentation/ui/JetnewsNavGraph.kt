@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * This code has been modified by KimSeongHwan in 2024.
+ * Changes: modified to current environment
+ */
 package com.potatomeme.jet_news.presentation.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import com.potatomeme.jet_news.presentation.ui.home.HomeRoute
 import com.potatomeme.jet_news.presentation.util.JetnewsObj.JETNEWS_APP_URI
 
 const val POST_ID = "postId"
@@ -50,6 +54,11 @@ fun JetnewsNavGraph(
             )
         ) { navBackStackEntry ->
             //todo home route
+            HomeRoute(
+                preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID),
+                isExpandedScreen = isExpandedScreen,
+                openDrawer = openDrawer
+            )
         }
         composable(JetnewsDestinations.INTERESTS_ROUTE) {
             //todo interests route

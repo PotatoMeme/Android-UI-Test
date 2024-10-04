@@ -65,18 +65,18 @@ dependencies {
     implementation(libs.androidx.material3)
     //materialWindow
     implementation(libs.androidx.compose.materialWindow)
+    //hilt
+    implementation(libs.hilt)
     //navigation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
     testImplementation(libs.junit)
+    kapt(libs.hilt.compiler)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
-    //hilt
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
 }

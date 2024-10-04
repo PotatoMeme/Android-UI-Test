@@ -4,7 +4,7 @@ import com.potatomeme.jet_news.domain.anotation.FakePosts
 import com.potatomeme.jet_news.domain.repository.PostsRepository
 import javax.inject.Inject
 
-class ToggleFakeFavorite @Inject constructor(
+class ToggleFakeFavoriteUseCase @Inject constructor(
     @FakePosts
     private val postsRepository: PostsRepository,
 ){
