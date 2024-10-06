@@ -40,7 +40,10 @@ import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutAddUrl
 import com.potatomeme.chirang_note_app.presentation_xml.databinding.LayoutDeleteNoteBinding
 import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -245,29 +248,36 @@ class CNACreateNoteActivity : AppCompatActivity() {
             return
         }
 
-        var copyImageFilePath: String? = null
-        if (viewModel.imageChanged.value && viewModel.selectedImagePath.value.isNotEmpty()) {
-            val strToBitmap = uriToBitmap(Uri.parse(viewModel.selectedImagePath.value))
-            val viewToBitMap = viewToBitmap(binding.imageNote)
+        binding.layoutLoading.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.IO).launch {
+            var copyImageFilePath: String? = null
+            if (viewModel.imageChanged.value && viewModel.selectedImagePath.value.isNotEmpty()) {
+                val strToBitmap = uriToBitmap(Uri.parse(viewModel.selectedImagePath.value))
+                val viewToBitMap = viewToBitmap(binding.imageNote)
 
-            val lowBitMap =
-                if (strToBitmap == null || strToBitmap.width > viewToBitMap.width) viewToBitMap else strToBitmap
-            copyImageFilePath = saveBitmapToFile(lowBitMap)?.path
+                val lowBitMap =
+                    if (strToBitmap == null || strToBitmap.width > viewToBitMap.width) viewToBitMap else strToBitmap
+                copyImageFilePath = saveBitmapToFile(lowBitMap)?.path
+            }
+
+            val note = ParcelableNote(
+                id = alreadyAvailableNote?.id ?: 0,
+                title = noteTitle,
+                dateTime = noteDateTime,
+                subtitle = noteSubtitle,
+                noteText = noteText,
+                imagePath = copyImageFilePath ?: viewModel.selectedImagePath.value,
+                color = COLOR_CODE_LIST[viewModel.selectedNoteColor.value],
+                webLink = if (binding.layoutWebURL.visibility == View.VISIBLE) binding.textWebURL.text.toString() else null
+            )
+
+            viewModel.insertNote(note)
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@CNACreateNoteActivity, "Note saved successfully!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
         }
-
-        val note = ParcelableNote(
-            id = alreadyAvailableNote?.id ?: 0,
-            title = noteTitle,
-            dateTime = noteDateTime,
-            subtitle = noteSubtitle,
-            noteText = noteText,
-            imagePath = copyImageFilePath ?: viewModel.selectedImagePath.value,
-            color = COLOR_CODE_LIST[viewModel.selectedNoteColor.value],
-            webLink = if (binding.layoutWebURL.visibility == View.VISIBLE) binding.textWebURL.getText()
-                .toString() else null
-        )
-        viewModel.insertNote(note)
-        finish()
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap? {

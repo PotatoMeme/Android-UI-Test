@@ -3,6 +3,8 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="Android-UI-Test.screen.cat-image-provider.presentation" target="17" />
+      <module name="Android-UI-Test.screen.jet-news.data" target="17" />
+      <module name="Android-UI-Test.screen.jet-news.presentation" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

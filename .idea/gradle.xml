@@ -22,6 +22,10 @@
             <option value="$PROJECT_DIR$/screen/chirang-note-app/data" />
             <option value="$PROJECT_DIR$/screen/chirang-note-app/domain" />
             <option value="$PROJECT_DIR$/screen/chirang-note-app/presentation-xml" />
+            <option value="$PROJECT_DIR$/screen/jet-news" />
+            <option value="$PROJECT_DIR$/screen/jet-news/data" />
+            <option value="$PROJECT_DIR$/screen/jet-news/domain" />
+            <option value="$PROJECT_DIR$/screen/jet-news/presentation" />
             <option value="$PROJECT_DIR$/screen/planfit" />
             <option value="$PROJECT_DIR$/screen/ticket-booking-app" />
             <option value="$PROJECT_DIR$/screen/ticket-booking-app/data" />

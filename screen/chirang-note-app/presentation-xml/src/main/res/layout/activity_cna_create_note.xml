@@ -200,4 +200,18 @@
         android:id="@+id/layoutMiscellaneous"
         layout="@layout/layout_miscellaneous" />
 
+    <LinearLayout
+        android:id="@+id/layoutLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" />
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
