@@ -9,6 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.potatomeme.cat_image_provider.presentation.R
 import com.potatomeme.cat_image_provider.presentation.databinding.FragmentHomeBinding
@@ -41,10 +43,7 @@ class StoredFragment : Fragment() {
         binding?.run {
             rvRequestedCatImages.apply {
                 adapter = this@StoredFragment.adapter
-                layoutManager =
-                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
-                        gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-                    }
+                layoutManager = GridLayoutManager(this@StoredFragment.context, 2)
             }
         }
 

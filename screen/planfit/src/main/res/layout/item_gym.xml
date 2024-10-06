@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:textColor="@drawable/text_white_color_selector"
-        android:textSize="18dp"
+        android:textSize="@dimen/text_size_large"
         android:textStyle="bold"
         tools:text="스포애니 강남역점" />
 
@@ -23,7 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="@dimen/margin_medium">
 
         <TextView
             android:layout_width="80dp"
@@ -34,26 +34,27 @@
             android:paddingVertical="4dp"
             android:text="도로명"
             android:textColor="@drawable/text_blue_color_selector"
+            android:textSize="@dimen/text_size_small_medium"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_road_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/margin_medium"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:paddingVertical="4dp"
             android:singleLine="true"
             android:text="서울특별시 서초구 서초대로 78길 44 (서초동, 동일빌딩)"
             android:textColor="@drawable/text_white_color_selector"
-            android:textSize="17dp" />
+            android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="@dimen/margin_medium">
 
         <TextView
             android:layout_width="80dp"
@@ -64,20 +65,21 @@
             android:paddingVertical="4dp"
             android:text="우편번호"
             android:textColor="@drawable/text_light_gray_color_selector"
+            android:textSize="@dimen/text_size_small_medium"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_post_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/margin_medium"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:paddingVertical="4dp"
             android:singleLine="true"
             android:text="02835"
             android:textColor="@drawable/text_light_gray_color_selector"
-            android:textSize="17dp" />
+            android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 
 

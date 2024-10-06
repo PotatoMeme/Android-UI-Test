@@ -36,11 +36,6 @@ class TBAFilmDetailActivity : AppCompatActivity() {
         binding = ActivityTbaFilmDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-
         initViews()
     }
 
