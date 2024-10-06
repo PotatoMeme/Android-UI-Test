@@ -42,6 +42,7 @@ import com.potatomeme.chirang_note_app.presentation_xml.model.ParcelableNote
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -55,6 +56,8 @@ import java.util.Locale
 class CNACreateNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCnaCreateNoteBinding
     private val viewModel: CNACreateNoteViewModel by viewModels()
+    private var saveJob: Job? = null
+    private var lastClickTime = 0L
 
     private val activityStartForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -148,7 +151,15 @@ class CNACreateNoteActivity : AppCompatActivity() {
         binding.textDateTime.text =
             SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.KOREA).format(Date().time)
 
-        binding.imageSave.setOnClickListener { saveNote() }
+        binding.imageSave.setOnClickListener {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastClickTime < 1000) {
+                return@setOnClickListener
+            }
+            lastClickTime = currentTime
+            it.isEnabled = false
+            saveNote()
+        }
 
         if (intent.getBooleanExtra("isViewOrUpdate", false)) {
             alreadyAvailableNote = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -249,7 +260,9 @@ class CNACreateNoteActivity : AppCompatActivity() {
         }
 
         binding.layoutLoading.visibility = View.VISIBLE
-        CoroutineScope(Dispatchers.IO).launch {
+        saveJob?.cancel()
+
+        saveJob = CoroutineScope(Dispatchers.IO).launch {
             var copyImageFilePath: String? = null
             if (viewModel.imageChanged.value && viewModel.selectedImagePath.value.isNotEmpty()) {
                 val strToBitmap = uriToBitmap(Uri.parse(viewModel.selectedImagePath.value))
