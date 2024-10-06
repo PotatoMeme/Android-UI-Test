@@ -71,7 +71,6 @@ class LoadingRoutineFragment : Fragment() {
                             animateProgress(75,100)
                             delay(500L)
                             //todo 다음 화면으로 이동
-                            findNavController().navigate(R.id.action_loadingRoutineFragment_to_advertisementFragment)
                         }
                     }
                 }
