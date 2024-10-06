@@ -16,17 +16,26 @@
 package com.potatomeme.jet_news.presentation.ui.home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.potatomeme.jet_news.domain.entity.Post
 import com.potatomeme.jet_news.domain.entity.PostsFeed
+import com.potatomeme.jet_news.domain.entity.Result
 import com.potatomeme.jet_news.domain.usecase.posts.fake_posts.GetFakePostsFeedUseCase
 import com.potatomeme.jet_news.domain.usecase.posts.fake_posts.ObserveFakeFavoritesUseCase
 import com.potatomeme.jet_news.domain.usecase.posts.fake_posts.ToggleFakeFavoriteUseCase
+import com.potatomeme.jet_news.presentation.R
 import com.potatomeme.jet_news.presentation.util.ErrorMessage
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 sealed interface HomeUiState {
 
@@ -43,7 +52,7 @@ sealed interface HomeUiState {
     data class NoPosts(
         override val isLoading: Boolean,
         override val errorMessages: List<ErrorMessage>,
-        override val searchInput: String
+        override val searchInput: String,
     ) : HomeUiState
 
     /**
@@ -58,7 +67,7 @@ sealed interface HomeUiState {
         val favorites: Set<String>,
         override val isLoading: Boolean,
         override val errorMessages: List<ErrorMessage>,
-        override val searchInput: String
+        override val searchInput: String,
     ) : HomeUiState
 }
 
@@ -104,16 +113,138 @@ private data class HomeViewModelState(
         }
 }
 
-@HiltViewModel(assistedFactory = HomeViewModel.HomeViewModelFactory::class)
 class HomeViewModel @AssistedInject constructor(
-    @Assisted preSelectedPostId: String?,
     private val getFakePostsFeedUseCase: GetFakePostsFeedUseCase,
     private val observeFakeFavoritesUseCase: ObserveFakeFavoritesUseCase,
     private val toggleFakeFavoriteUseCase: ToggleFakeFavoriteUseCase,
+    @Assisted
+    private val preSelectedPostId: String?,
 ) : ViewModel() {
+
+    private val viewModelState = MutableStateFlow(
+        HomeViewModelState(
+            isLoading = true,
+            selectedPostId = preSelectedPostId,
+        )
+    )
+
+    val uiState = viewModelState
+        .map(HomeViewModelState::toUiState)
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            viewModelState.value.toUiState()
+        )
+
+    init {
+        refreshPosts()
+
+        // Observe for favorite changes in the repo layer
+        viewModelScope.launch {
+            observeFakeFavoritesUseCase().collect { favorites ->
+                viewModelState.update { it.copy(favorites = favorites) }
+            }
+        }
+    }
+
+    /**
+     * Refresh posts and update the UI state accordingly
+     */
+    fun refreshPosts() {
+        // Ui state is refreshing
+        viewModelState.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch {
+            val result = getFakePostsFeedUseCase()
+            viewModelState.update {
+                when (result) {
+                    is Result.Success -> it.copy(postsFeed = result.data, isLoading = false)
+                    is Result.Error -> {
+                        val errorMessages = it.errorMessages + ErrorMessage(
+                            id = UUID.randomUUID().mostSignificantBits,
+                            messageId = R.string.load_error
+                        )
+                        it.copy(errorMessages = errorMessages, isLoading = false)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Toggle favorite of a post
+     */
+    fun toggleFavourite(postId: String) {
+        viewModelScope.launch {
+            toggleFakeFavoriteUseCase(postId)
+        }
+    }
+
+    /**
+     * Selects the given article to view more information about it.
+     */
+    fun selectArticle(postId: String) {
+        // Treat selecting a detail as simply interacting with it
+        interactedWithArticleDetails(postId)
+    }
+
+    /**
+     * Notify that an error was displayed on the screen
+     */
+    fun errorShown(errorId: Long) {
+        viewModelState.update { currentUiState ->
+            val errorMessages = currentUiState.errorMessages.filterNot { it.id == errorId }
+            currentUiState.copy(errorMessages = errorMessages)
+        }
+    }
+
+    /**
+     * Notify that the user interacted with the feed
+     */
+    fun interactedWithFeed() {
+        viewModelState.update {
+            it.copy(isArticleOpen = false)
+        }
+    }
+
+    /**
+     * Notify that the user interacted with the article details
+     */
+    fun interactedWithArticleDetails(postId: String) {
+        viewModelState.update {
+            it.copy(
+                selectedPostId = postId,
+                isArticleOpen = true
+            )
+        }
+    }
+
+    /**
+     * Notify that the user updated the search query
+     */
+    fun onSearchInputChanged(searchInput: String) {
+        viewModelState.update {
+            it.copy(searchInput = searchInput)
+        }
+    }
+
 
     @AssistedFactory
     interface HomeViewModelFactory {
         fun create(preSelectedPostId: String?): HomeViewModel
+    }
+
+    /**
+     * Factory for HomeViewModel that takes PostsRepository as a dependency
+     */
+    companion object {
+        fun provideFactory(
+            homeViewModelFactory: HomeViewModelFactory,
+            preSelectedPostId: String?,
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return homeViewModelFactory.create(preSelectedPostId) as T
+            }
+        }
     }
 }

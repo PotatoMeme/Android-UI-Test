@@ -19,15 +19,22 @@
  */
 package com.potatomeme.jet_news.presentation.ui
 
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import com.potatomeme.jet_news.presentation.ui.home.HomeRoute
+import com.example.jetnews.ui.home.HomeRoute
+import com.potatomeme.jet_news.presentation.di.ViewModelFactoryProvider
+import com.potatomeme.jet_news.presentation.ui.home.HomeViewModel
 import com.potatomeme.jet_news.presentation.util.JetnewsObj.JETNEWS_APP_URI
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.EntryPointAccessors
 
 const val POST_ID = "postId"
 
@@ -54,10 +61,20 @@ fun JetnewsNavGraph(
             )
         ) { navBackStackEntry ->
             //todo home route
+            val factory = EntryPointAccessors.fromActivity(
+                LocalContext.current as Activity,
+                ViewModelFactoryProvider::class.java
+            ).homeViewModelFactory()
+            val viewModel: HomeViewModel = viewModel(
+                factory = HomeViewModel.provideFactory(
+                    factory,
+                    navBackStackEntry.arguments?.getString(POST_ID)
+                )
+            )
             HomeRoute(
-                preSelectedPostId = navBackStackEntry.arguments?.getString(POST_ID),
-                isExpandedScreen = isExpandedScreen,
-                openDrawer = openDrawer
+                viewModel,
+                isExpandedScreen,
+                openDrawer
             )
         }
         composable(JetnewsDestinations.INTERESTS_ROUTE) {
