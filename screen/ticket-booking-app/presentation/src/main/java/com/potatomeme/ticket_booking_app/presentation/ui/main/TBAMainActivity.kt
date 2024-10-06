@@ -1,10 +1,13 @@
 package com.potatomeme.ticket_booking_app.presentation.ui.main
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -25,6 +28,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+
 
 @AndroidEntryPoint
 class TBAMainActivity : AppCompatActivity() {
@@ -52,14 +56,25 @@ class TBAMainActivity : AppCompatActivity() {
         binding = ActivityTbaMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-
         initBanner()
         initTopMovies()
         initUpComingMovies()
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        if (event?.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     private fun initBanner() {
@@ -220,6 +235,7 @@ class TBAMainActivity : AppCompatActivity() {
             binding.vpBanner.setCurrentItem(1, false) // 마지막 페이지 -> 첫 번째 실제 페이지
         }
     }
+
 
     companion object {
         private const val TAG = "TBAMainActivity"
