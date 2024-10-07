@@ -28,6 +28,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.jetnews.ui.home.HomeScreenType.ArticleDetails
 import com.example.jetnews.ui.home.HomeScreenType.Feed
 import com.example.jetnews.ui.home.HomeScreenType.FeedWithArticleDetails
+import com.potatomeme.jet_news.presentation.ui.home.HomeFeedScreen
+import com.potatomeme.jet_news.presentation.ui.home.HomeFeedWithArticleDetailsScreen
 import com.potatomeme.jet_news.presentation.ui.home.HomeUiState
 import com.potatomeme.jet_news.presentation.ui.home.HomeViewModel
 
@@ -113,17 +115,41 @@ fun HomeRoute(
     val homeScreenType = getHomeScreenType(isExpandedScreen, uiState)
     when (homeScreenType) {
         HomeScreenType.FeedWithArticleDetails -> {
-
+            HomeFeedWithArticleDetailsScreen(
+                uiState = uiState,
+                showTopAppBar = !isExpandedScreen,
+                onToggleFavorite = onToggleFavorite,
+                onSelectPost = onSelectPost,
+                onRefreshPosts = onRefreshPosts,
+                onErrorDismiss = onErrorDismiss,
+                onInteractWithList = onInteractWithFeed,
+                onInteractWithDetail = onInteractWithArticleDetails,
+                openDrawer = openDrawer,
+                homeListLazyListState = homeListLazyListState,
+                articleDetailLazyListStates = articleDetailLazyListStates,
+                snackbarHostState = snackbarHostState,
+                onSearchInputChanged = onSearchInputChanged,
+            )
         }
 
         HomeScreenType.Feed -> {
-
+            HomeFeedScreen(
+                uiState = uiState,
+                showTopAppBar = !isExpandedScreen,
+                onToggleFavorite = onToggleFavorite,
+                onSelectPost = onSelectPost,
+                onRefreshPosts = onRefreshPosts,
+                onErrorDismiss = onErrorDismiss,
+                openDrawer = openDrawer,
+                homeListLazyListState = homeListLazyListState,
+                snackbarHostState = snackbarHostState,
+                onSearchInputChanged = onSearchInputChanged,
+            )
         }
 
         HomeScreenType.ArticleDetails -> {
             // Guaranteed by above condition for home screen type
             check(uiState is HomeUiState.HasPosts)
-
 
             // If we are just showing the detail, have a back press switch to the list.
             // This doesn't take anything more than notifying that we "interacted with the list"
