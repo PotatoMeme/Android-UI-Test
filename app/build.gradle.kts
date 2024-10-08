@@ -74,6 +74,8 @@ dependencies {
     implementation(project(":screen:chirang-note-app:presentation-xml"))
     implementation(project(":screen:chirang-note-app:domain"))
     implementation(project(":screen:chirang-note-app:data"))
+    //compose-basic
+    implementation(project(":screen:clone-compose-codelabs:compose-basic"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
