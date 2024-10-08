@@ -99,6 +99,7 @@ import androidx.compose.ui.unit.dp
 import com.potatomeme.jet_news.domain.entity.Post
 import com.potatomeme.jet_news.domain.entity.PostsFeed
 import com.potatomeme.jet_news.presentation.R
+import com.potatomeme.jet_news.presentation.ui.component.JetnewsSnackbarHost
 import com.potatomeme.jet_news.presentation.ui.theme.JetnewsTheme
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.isActive
@@ -142,8 +143,8 @@ fun HomeFeedWithArticleDetailsScreen(
                 onToggleFavorite = onToggleFavorite,
                 contentPadding = contentPadding,
                 modifier = Modifier
-                    .width(334.dp),
-                /*.notifyInput(onInteractWithList)*/
+                    .width(334.dp)
+                    .notifyInput(onInteractWithList),
                 state = homeListLazyListState,
                 searchInput = hasPostsUiState.searchInput,
                 onSearchInputChanged = onSearchInputChanged,
@@ -169,9 +170,9 @@ fun HomeFeedWithArticleDetailsScreen(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .fillMaxSize()
-                            /*.notifyInput {
-                                onInteractWithDetail(detailPost.id)
-                            }*/
+                                .notifyInput {
+                                    onInteractWithDetail(detailPost.id)
+                                }
                         ) {
                             //postContentItems(detailPost)
                         }
@@ -199,18 +200,20 @@ fun HomeFeedWithArticleDetailsScreen(
 /**
  * A [Modifier] that tracks all input, and calls [block] every time input is received.
  */
-/*private fun Modifier.notifyInput(block: () -> Unit): Modifier =
-    composed {
-        val blockState = rememberUpdatedState(block)
-        pointerInput(Unit) {
-            while (currentCoroutineContext().isActive) {
-                awaitPointerEventScope {
-                    awaitPointerEvent(PointerEventPass.Initial)
-                    blockState.value()
+private fun Modifier.notifyInput(block: () -> Unit): Modifier =
+    this.then(
+        composed {
+            val blockState = rememberUpdatedState(block)
+            pointerInput(Unit) {
+                while (currentCoroutineContext().isActive) {
+                    awaitPointerEventScope {
+                        awaitPointerEvent(PointerEventPass.Initial)
+                        blockState.value()
+                    }
                 }
             }
         }
-    }*/
+    )
 
 /**
  * The home screen displaying just the article feed.
@@ -283,7 +286,7 @@ private fun HomeScreenWithList(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
     Scaffold(
         snackbarHost = {
-            //JetnewsSnackbarHost(hostState = snackbarHostState)
+            JetnewsSnackbarHost(hostState = snackbarHostState)
         },
         topBar = {
             if (showTopAppBar) {
