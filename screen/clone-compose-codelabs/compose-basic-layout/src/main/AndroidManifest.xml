@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".CBLMainActivity"
+            android:name=".ui.CBLMainActivity"
             android:exported="false"
             android:label="@string/title_activity_cblmain"
             android:theme="@style/Theme.AndroidUITest" />
