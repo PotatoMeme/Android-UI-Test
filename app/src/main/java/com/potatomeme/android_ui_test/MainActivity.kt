@@ -12,6 +12,7 @@ import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
 import com.potatomeme.cat_image_provider.presentation.on_boarding.CIPOnBoardingActivity
 import com.potatomeme.chirang_note_app.presentation_xml.on_boarding.CNAOnBoardingActivity
 import com.potatomeme.screen.clone_compose_codelabs.compose_basic.CBMainActivity
+import com.potatomeme.screen.clone_compose_codelabs.compose_basic_layout.ui.CBLMainActivity
 import com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
@@ -147,6 +148,16 @@ class MainActivity : ComponentActivity() {
                         Intent(
                             this,
                             CBMainActivity::class.java
+                        )
+                    )
+                },
+                Pair(
+                    "compose - basic layout"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CBLMainActivity::class.java
                         )
                     )
                 }
