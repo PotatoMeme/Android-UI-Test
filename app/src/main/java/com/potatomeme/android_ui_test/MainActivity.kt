@@ -13,6 +13,7 @@ import com.potatomeme.cat_image_provider.presentation.on_boarding.CIPOnBoardingA
 import com.potatomeme.chirang_note_app.presentation_xml.on_boarding.CNAOnBoardingActivity
 import com.potatomeme.screen.clone_compose_codelabs.compose_basic.CBMainActivity
 import com.potatomeme.screen.clone_compose_codelabs.compose_basic_layout.ui.CBLMainActivity
+import com.potatomeme.screen.clone_compose_codelabs.compose_state.CSMainActivity
 import com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
@@ -158,6 +159,16 @@ class MainActivity : ComponentActivity() {
                         Intent(
                             this,
                             CBLMainActivity::class.java
+                        )
+                    )
+                },
+                Pair(
+                    "compose - state"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CSMainActivity::class.java
                         )
                     )
                 }

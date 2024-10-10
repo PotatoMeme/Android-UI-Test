@@ -78,6 +78,8 @@ dependencies {
     implementation(project(":screen:clone-compose-codelabs:compose-basic"))
     //compose-basic-layout
     implementation(project(":screen:clone-compose-codelabs:compose-basic-layout"))
+    //compose-state
+    implementation(project(":screen:clone-compose-codelabs:compose-state"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
