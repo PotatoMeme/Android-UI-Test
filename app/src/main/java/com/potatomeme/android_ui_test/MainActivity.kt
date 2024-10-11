@@ -14,6 +14,7 @@ import com.potatomeme.chirang_note_app.presentation_xml.on_boarding.CNAOnBoardin
 import com.potatomeme.screen.clone_compose_codelabs.compose_basic.CBMainActivity
 import com.potatomeme.screen.clone_compose_codelabs.compose_basic_layout.ui.CBLMainActivity
 import com.potatomeme.screen.clone_compose_codelabs.compose_state.CSMainActivity
+import com.potatomeme.screen.clone_compose_codelabs.compose_theming.ui.CTMainActivity
 import com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
@@ -169,6 +170,16 @@ class MainActivity : ComponentActivity() {
                         Intent(
                             this,
                             CSMainActivity::class.java
+                        )
+                    )
+                },
+                Pair(
+                    "compose - theming"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CTMainActivity::class.java
                         )
                     )
                 }
