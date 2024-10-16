@@ -11,6 +11,10 @@ import com.potatomeme.android_ui_test.main.Route
 import com.potatomeme.android_ui_test.ui.theme.AndroidUITestTheme
 import com.potatomeme.cat_image_provider.presentation.on_boarding.CIPOnBoardingActivity
 import com.potatomeme.chirang_note_app.presentation_xml.on_boarding.CNAOnBoardingActivity
+import com.potatomeme.screen.clone_compose_codelabs.compose_basic.CBMainActivity
+import com.potatomeme.screen.clone_compose_codelabs.compose_basic_layout.ui.CBLMainActivity
+import com.potatomeme.screen.clone_compose_codelabs.compose_state.CSMainActivity
+import com.potatomeme.screen.clone_compose_codelabs.compose_theming.ui.CTMainActivity
 import com.potatomeme.screen.planfit.presentation.on_board.PlanfitOnBoardingActivity
 import com.potatomeme.ticket_booking_app.presentation.ui.on_boarding.TBAOnBoardingActivity
 
@@ -133,6 +137,54 @@ class MainActivity : ComponentActivity() {
                 }
             )
         ),
+        Route.ItemRoute(
+            route = "Compose Codelab Basic CloneCoding",
+            contentDescription = "Compose Codelab Basic CloneCoding",
+            drawableId = R.drawable.ic_launcher_foreground,
+            itemType = ItemType.UI_SCREEN,
+            subItems = arrayOf(
+                Pair(
+                    "compose - basic"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CBMainActivity::class.java
+                        )
+                    )
+                },
+                Pair(
+                    "compose - basic layout"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CBLMainActivity::class.java
+                        )
+                    )
+                },
+                Pair(
+                    "compose - state"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CSMainActivity::class.java
+                        )
+                    )
+                },
+                Pair(
+                    "compose - theming"
+                ) {
+                    startActivity(
+                        Intent(
+                            this,
+                            CTMainActivity::class.java
+                        )
+                    )
+                }
+            )
+        )
     )
 
 
